@@ -1,0 +1,81 @@
+buildscript {
+    ext.kotlin_version = kotlinVersion
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '0.4.9'
+}
+
+group 'de.mariushoefler'
+version '1.0.0'
+
+apply plugin: 'kotlin'
+
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'com.google.code.gson:gson:2.8.5'
+    compile 'com.github.kittinunf.fuel:fuel:2.0.1'
+    compile 'com.github.kittinunf.fuel:fuel-gson:2.0.1'
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = javaVersion
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = javaVersion
+}
+
+// See https://github.com/JetBrains/gradle-intellij-plugin/
+intellij {
+    version ideaVersion
+    pluginName 'Flutter Enhancement Suite'
+    plugins 'kotlin', 'yaml'
+    updateSinceUntilBuild false
+    publishPlugin {
+        username publishUsername
+        password publishPassword
+    }
+}
+
+patchPluginXml {
+    changeNotes """
+    <h2>1.0.0</h2>
+    <ul>
+    <li>Added support for automatically checking for updates in pubspec.yaml</li>
+    <li>Added support for autocompleting pub.dev dependencies</li>
+    <li>Added snippets</li>
+    </ul>
+    """
+}
+
+verifyPlugin {
+    pluginDirectory "resources/META-INF"
+    ignoreFailures true
+}
+
+//apply plugin: 'idea'
+//idea {
+//    project {
+//        jdkName = javaVersion
+//        languageLevel = javaVersion
+//        vcs = 'Git'
+//    }
+//}

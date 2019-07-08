@@ -1,0 +1,31 @@
+<idea-plugin>
+    <id>de.mariushoefler.flutter_enhancement_suite</id>
+    <name>Flutter Enhancement Suite</name>
+    <vendor email="mariushofler2000@gmail.com"
+            url="https://github.com/marius-h/flutter_enhancement_suite">
+        Marius Höfler
+    </vendor>
+
+    <description><![CDATA[
+    The Flutter Enhancement Suite makes developing for Flutter much easier.
+    <p>
+    <h2>Features</h2>
+    <li>Autocomplete pub.dev dependencies</li>
+    <li>Automatically check for updates in pubspec.yaml (inspired by FlutterPubVersionChecker)</li>
+    <li>Code Snippets</li>
+    ]]></description>
+
+    <depends>com.intellij.modules.lang</depends>
+    <depends>org.jetbrains.plugins.yaml</depends>
+    <depends>org.jetbrains.kotlin</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <defaultLiveTemplatesProvider implementation="livetemplates.FlutterTemplateProvider"/>
+        <liveTemplateContext implementation="livetemplates.FlutterContext"/>
+        <inspectionToolProvider implementation="pubassist.PackagesInspectionProvider"/>
+        <completion.contributor language="yaml" implementationClass="pubassist.PubspecCompletionContributor"/>
+    </extensions>
+
+    <actions>
+    </actions>
+</idea-plugin>
