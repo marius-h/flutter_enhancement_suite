@@ -1,4 +1,4 @@
-
+<img src="https://plugins.jetbrains.com/files/12693/65249/icon/pluginIcon.svg" height="100"/>
 
 # Flutter Enhancement Suite
 
