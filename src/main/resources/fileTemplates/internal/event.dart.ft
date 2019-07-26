@@ -1,0 +1,4 @@
+part of '${NAME}_bloc.dart';
+
+@immutable
+abstract class ${CLASS_NAME}Event {}

@@ -1,32 +1,88 @@
 <idea-plugin>
     <id>de.mariushoefler.flutter_enhancement_suite</id>
     <name>Flutter Enhancement Suite</name>
-    <vendor email="mariushofler2000@gmail.com"
-            url="https://github.com/marius-h/flutter_enhancement_suite">
-        Marius Höfler
-    </vendor>
+    <vendor email="mariushofler2000@gmail.com">Marius Höfler</vendor>
     <idea-version since-build="191.7479.19"/>
 
     <description><![CDATA[
-    The Flutter Enhancement Suite makes developing for Flutter much easier.
+    The essential plugin for making working with Flutter easier than ever!
     <p>
-    <h2>Features</h2>
-    <li>Autocomplete pub.dev dependencies</li>
-    <li>Automatically check for updates in pubspec.yaml (inspired by FlutterPubVersionChecker)</li>
-    <li>Code Snippets</li>
+    <h1>Features</h1>
+    <h3>Autocomplete Pub Dependencies</h3>
+    <p>When adding a new dependency to your pubspec.yaml file, suggestions will show up. After auto-completing the name, the latest version will be added automatically.</p><br>
+    <p>
+    <img src="https://giant.gfycat.com/PastObviousAmericanquarterhorse.gif" width="400"/>
+    <p>
+    <h3>Update Pub Dependencies</h3>
+    <p>If there's a new version available for a dependency, it will be highlighted. You can update these dependencies by opening the quick fix menu (Show Intention Actions) and choosing <em>Update Package</em></p><br>
+    <p>
+    <img src="https://i.imgur.com/jNdjRfo.png" width="400"/>
+    <p>
+    <h3>Dart & Flutter Code Snippets</h3>
+    A bunch of snippets/LiveTemplates for quicker coding. Use <code>Ctrl+Q</code> when hovering over a snippet to get a preview of it.<br>
+    (<a href="https://github.com/marius-h/flutter_enhancement_suite/blob/master/SNIPPETS.md">Click here to view all</a>)
+    <p>
+    <h3>Generate Widgets</h3>
+    When creating a new file, choose the <em>"New Flutter Widget"</em> option.
+    Enter the name for your widget and select its type.
+    <p>
+    <h3>Generate Blocs</h3>
+    When creating a new file, choose the <em>"New Flutter Bloc"</em> option.
+    Enter a name for your bloc and it will automatically generate all required classes for you.<br>
+    <strong>Please note:</strong> This requires you to add the package "bloc" to your pub dependencies.
+    <p>
     ]]></description>
 
     <depends>com.intellij.modules.lang</depends>
     <depends>org.jetbrains.plugins.yaml</depends>
     <depends>org.jetbrains.kotlin</depends>
+    <depends>Dart</depends>
+    <depends>io.flutter</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <defaultLiveTemplatesProvider implementation="livetemplates.FlutterTemplateProvider"/>
-        <liveTemplateContext implementation="livetemplates.FlutterContext"/>
-        <inspectionToolProvider implementation="pubassist.PackagesInspectionProvider"/>
-        <completion.contributor language="yaml" implementationClass="pubassist.PubspecCompletionContributor"/>
+        <!--        Dart Code Snippets-->
+        <defaultLiveTemplatesProvider implementation="de.mariushoefler.flutter_enhancement_suite.livetemplates.dart.DartTemplateProvider"/>
+        <liveTemplateContext implementation="de.mariushoefler.flutter_enhancement_suite.livetemplates.dart.DartContext"/>
+
+        <!--        Flutter Widget Snippets-->
+        <defaultLiveTemplatesProvider implementation="de.mariushoefler.flutter_enhancement_suite.livetemplates.flutter.FlutterTemplateProvider"/>
+        <liveTemplateContext implementation="de.mariushoefler.flutter_enhancement_suite.livetemplates.flutter.FlutterContext"/>
+
+        <!--        Pub package version checker-->
+        <inspectionToolProvider implementation="de.mariushoefler.flutter_enhancement_suite.pubassist.PackagesInspectionProvider"/>
+
+        <!--        Pub package auto-complete-->
+        <completion.contributor language="yaml"
+                                implementationClass="de.mariushoefler.flutter_enhancement_suite.pubassist.PubspecCompletionContributor"/>
+
+        <!--        Snippet Preview-->
+        <documentationProvider implementation="de.mariushoefler.flutter_enhancement_suite.livetemplates.LiveTemplatePreviewProvider"
+                               order="first"/>
+        <lang.documentationProvider language="HTML"
+                                    implementationClass="de.mariushoefler.flutter_enhancement_suite.livetemplates.LiveTemplatePreviewProvider"
+                                    order="first"/>
+
+        <!--        File Templates-->
+        <internalFileTemplate name="stateful_widget"/>
+        <internalFileTemplate name="stateless_widget"/>
     </extensions>
 
     <actions>
+        <action id="Flutter.NewWidget"
+                class="de.mariushoefler.flutter_enhancement_suite.actions.NewFlutterWidgetAction"
+                text="Flutter Widget"
+                description="Create a new Flutter widget">
+            <add-to-group group-id="NewGroup"
+                          anchor="before"
+                          relative-to-action="NewFromTemplate"/>
+        </action>
+        <action id="Flutter.NewBloc"
+                class="de.mariushoefler.flutter_enhancement_suite.actions.NewFlutterBlocAction"
+                text="Flutter Bloc"
+                description="Create a new Flutter bloc">
+            <add-to-group group-id="NewGroup"
+                          anchor="after"
+                          relative-to-action="Flutter.NewWidget"/>
+        </action>
     </actions>
 </idea-plugin>

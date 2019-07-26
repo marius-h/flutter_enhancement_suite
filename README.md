@@ -1,4 +1,4 @@
-<img src="https://plugins.jetbrains.com/files/12693/65249/icon/pluginIcon.svg" height="100"/>
+<img src="https://plugins.jetbrains.com/files/12693/65249/icon/pluginIcon_dark.svg" height="100"/>
 
 # Flutter Enhancement Suite
 
@@ -8,15 +8,29 @@ The IntelliJ and Android Studio plugin which makes developing for Flutter much e
 
 ## Features
 
-<ul>
-<li>Autocomplete pub.dev dependencies</li>
-<li>Automatically check for updates in pubspec.yaml (inspired by FlutterPubVersionChecker)</li>
-<li>Code Snippets</li>
-</ul>
+<h4>Autocomplete Pub Dependencies</h4>
+<p>When adding a new dependency to your pubspec.yaml file, suggestions will show up. After auto-completing the name, the latest version will be added automatically.</p><br>
 <p>
-
-![Dependency auto-completion](https://giant.gfycat.com/PastObviousAmericanquarterhorse.gif)<br>
-_An example of using the dependency auto-completion feature_
+<img src="https://giant.gfycat.com/PastObviousAmericanquarterhorse.gif" width="400"/>
+<p>
+<h4>Update Pub Dependencies</h4>
+<p>If there's a new version available for a dependency, it will be highlighted. You can update these dependencies by opening the quick fix menu (Show Intention Actions) and choosing <em>Update Package</em></p><br>
+<p>
+<img src="https://i.imgur.com/jNdjRfo.png" width="400"/>
+<p>
+<h4>Dart & Flutter Code Snippets</h4>
+A bunch of snippets/LiveTemplates for quicker coding. Use <code>Ctrl+Q</code> when hovering over a snippet to get a preview of it.<br>
+(<a href="https://github.com/marius-h/flutter_enhancement_suite/blob/master/SNIPPETS.md">Click here to view all</a>)
+<p>
+<h4>Generate Widgets</h4>
+When creating a new file, choose the <em>"New Flutter Widget"</em> option.
+Enter the name for your widget and select its type.
+<p>
+<h4>Generate Blocs</h4>
+When creating a new file, choose the <em>"New Flutter Bloc"</em> option.
+Enter a name for your bloc and it will automatically generate all required classes for you.<br>
+<strong>Please note:</strong> This requires you to add the package "bloc" to your pub dependencies.
+<p>
 
 
 ## How to install?
@@ -29,6 +43,13 @@ You can install plugin directly from IntelliJ IDEA or Android Studio:
 5. Click on _install_
 
 ## What's new?
+
+### 1.1.0
+<ul>
+    <li>Added support for automatically checking for updates in pubspec.yaml</li>
+    <li>Added support for autocompleting pub.dev dependencies</li>
+    <li>Added snippets</li>
+</ul>
 
 ### 1.0.0
 <ul>

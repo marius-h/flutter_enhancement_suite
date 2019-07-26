@@ -31,6 +31,7 @@
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries
+.gradle/
 
 # Gradle and Maven with auto-import
 # When using Gradle or Maven with auto-import, you should exclude module files,
@@ -38,6 +39,7 @@
 # auto-import.
 .idea/modules.xml
 .idea/*.iml
+.idea/
 .idea/modules
 *.iml
 *.ipr
@@ -54,6 +56,7 @@ cmake-build-*/
 # IntelliJ
 out/
 bin/
+build/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/

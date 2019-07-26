@@ -1,0 +1,27 @@
+import 'package:flutter/material.dart';
+
+#set( $CamelCaseName = "" )
+#set( $part = "" )
+#foreach($part in $NAME.split("_"))
+    #set( $CamelCaseName = "${CamelCaseName}$part.substring(0,1).toUpperCase()$part.substring(1).toLowerCase()" )
+#end
+#parse("File Header.java")
+class ${CamelCaseName} extends InheritedWidget {
+  const ${CamelCaseName}({
+    Key key,
+    @required this.object,
+    @required Widget child,
+  })  : assert(child != null),
+        super(key: key, child: child);
+
+  final dynamic object;
+
+  static ${CamelCaseName} of(BuildContext context) {
+    return context.inheritFromWidgetOfExactType(${CamelCaseName}) as ${CamelCaseName};
+  }
+
+  @override
+  bool updateShouldNotify(${CamelCaseName} old) {
+    return object != old.object;
+  }
+}
