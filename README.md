@@ -4,7 +4,7 @@
 
 [![Pub](https://img.shields.io/jetbrains/plugin/v/12693-flutter-enhancement-suite.svg?label=Flutter%20Enhancement%20Suite)](https://plugins.jetbrains.com/plugin/12693-flutter-enhancement-suite)
 
-The IntelliJ and Android Studio plugin which makes developing for Flutter much easier
+The essential plugin for making working with Flutter easier than ever!
 
 ## Features
 
