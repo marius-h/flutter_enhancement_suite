@@ -46,9 +46,10 @@ You can install plugin directly from IntelliJ IDEA or Android Studio:
 
 ### 1.1.0
 <ul>
-    <li>Added support for automatically checking for updates in pubspec.yaml</li>
-    <li>Added support for autocompleting pub.dev dependencies</li>
-    <li>Added snippets</li>
+    <li>Added "New Flutter Widget" option to the "New File" menu</li>
+    <li>Added "New Flutter Bloc" option to the "New File" menu</li>
+    <li>Added even more snippets</li>
+    <li>Improved the performance of autocompleting pub dependencies</li>
 </ul>
 
 ### 1.0.0
