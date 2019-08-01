@@ -44,7 +44,7 @@ object PubApi {
 				.httpGet()
 				.responseObject(PubPackage.Deserializer()) { _, _, res ->
 					when (res) {
-						is Result.Failure -> throw res.getException()
+						is Result.Failure -> println(res.getException())
 						is Result.Success -> result = res.get()
 					}
 				}.join()

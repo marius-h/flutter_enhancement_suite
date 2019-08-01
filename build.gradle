@@ -17,7 +17,7 @@ plugins {
 }
 
 group 'de.mariushoefler'
-version '1.1.0'
+version '1.1.1'
 
 apply plugin: 'kotlin'
 
@@ -54,6 +54,11 @@ intellij {
 
 patchPluginXml {
     changeNotes """
+    <h2>1.1.1</h2>
+    <ul>
+        <li>Added icon previews</li>
+        <li>Fixed issue caused by autocompleting pub dependencies</li>
+    </ul>
     <h2>1.1.0</h2>
     <ul>
         <li>Added "New Flutter Widget" option to the "New File" menu</li>

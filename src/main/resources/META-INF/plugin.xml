@@ -2,7 +2,7 @@
     <id>de.mariushoefler.flutter_enhancement_suite</id>
     <name>Flutter Enhancement Suite</name>
     <vendor email="mariushofler2000@gmail.com">Marius Höfler</vendor>
-    <idea-version since-build="191.7479.19"/>
+    <idea-version since-build="192.2549"/>
 
     <description><![CDATA[
     The essential plugin for making working with Flutter easier than ever!
@@ -11,29 +11,39 @@
     <h3>Autocomplete Pub Dependencies</h3>
     <p>When adding a new dependency to your pubspec.yaml file, suggestions will show up. After auto-completing the name, the latest version will be added automatically.</p><br>
     <p>
-    <img src="https://giant.gfycat.com/PastObviousAmericanquarterhorse.gif" width="400"/>
+    <img src="https://giant.gfycat.com/PastObviousAmericanquarterhorse.gif" width="400" alt="Autocomplete pub dependencies screenshot"/>
     <p>
     <h3>Update Pub Dependencies</h3>
-    <p>If there's a new version available for a dependency, it will be highlighted. You can update these dependencies by opening the quick fix menu (Show Intention Actions) and choosing <em>Update Package</em></p><br>
+    <p>If there's a new version available for a dependency, it will be highlighted. You can update these dependencies by opening the quick fix menu (Show Intention Actions) and choosing <em>Update package</em>.</p><br>
     <p>
-    <img src="https://i.imgur.com/jNdjRfo.png" width="400"/>
+    <img src="https://i.imgur.com/orIVdDj.png" width="400" alt="Update pub dependencies screenshot"/>
     <p>
     <h3>Dart & Flutter Code Snippets</h3>
     A bunch of snippets/LiveTemplates for quicker coding. Use <code>Ctrl+Q</code> when hovering over a snippet to get a preview of it.<br>
     (<a href="https://github.com/marius-h/flutter_enhancement_suite/blob/master/SNIPPETS.md">Click here to view all</a>)
     <p>
     <h3>Generate Widgets</h3>
-    When creating a new file, choose the <em>"New Flutter Widget"</em> option.
-    Enter the name for your widget and select its type.
+    <p>When creating a new file, choose the <em>"New Flutter Widget"</em> option.
+    Enter the name for your widget and select its type.</p><br>
+    <p>
+    <img src="https://i.imgur.com/FKQtOVa.png" width="400" alt="Generate widgets screenshot"/>
     <p>
     <h3>Generate Blocs</h3>
     When creating a new file, choose the <em>"New Flutter Bloc"</em> option.
     Enter a name for your bloc and it will automatically generate all required classes for you.<br>
-    <strong>Please note:</strong> This requires you to add the package "bloc" to your pub dependencies.
+    <strong>Please note:</strong> This requires you to add the package <em>"bloc"</em> to your pub dependencies.
+    <p>
+    <h3>Icon Previews</h3>
+    <p>When creating a new file, choose the <em>"New Flutter Bloc"</em> option.
+    Enter a name for your bloc and it will automatically generate all required classes for you.<br>
+    <strong>Please note:</strong> This requires you to add the package <em>"flutter_vector_icons"</em> to your pub dependencies. The only compatible iconpacks for now are FontAwesome, Ionicons and MaterialCommunityIcons.</p><br>
+    <p>
+    <img src="https://i.imgur.com/JB9MkjA.png" width="400" alt="Icon previews screenshot"/>
     <p>
     ]]></description>
 
     <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.java</depends>
     <depends>org.jetbrains.plugins.yaml</depends>
     <depends>org.jetbrains.kotlin</depends>
     <depends>Dart</depends>
@@ -55,6 +65,10 @@
         <completion.contributor language="yaml"
                                 implementationClass="de.mariushoefler.flutter_enhancement_suite.pubassist.PubspecCompletionContributor"/>
 
+        <!--        Gutter Icon Provider-->
+        <annotator language="Dart"
+                   implementationClass="de.mariushoefler.flutter_enhancement_suite.editor.FlutterEditorAnnotator"/>
+
         <!--        Snippet Preview-->
         <documentationProvider implementation="de.mariushoefler.flutter_enhancement_suite.livetemplates.LiveTemplatePreviewProvider"
                                order="first"/>
@@ -65,6 +79,11 @@
         <!--        File Templates-->
         <internalFileTemplate name="stateful_widget"/>
         <internalFileTemplate name="stateless_widget"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="Dart">
+        <completionExtension implementation="de.mariushoefler.flutter_enhancement_suite.editor.FlutterIconCompletionContributor"
+                             order="last"/>
     </extensions>
 
     <actions>
