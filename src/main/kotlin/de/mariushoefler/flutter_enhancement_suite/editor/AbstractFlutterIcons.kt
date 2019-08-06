@@ -1,9 +1,6 @@
 package de.mariushoefler.flutter_enhancement_suite.editor
 
 import com.intellij.openapi.util.IconLoader
-import com.jetbrains.rd.util.printlnError
-import io.flutter.editor.FlutterEditorAnnotator
-import java.io.PrintWriter
 import java.util.*
 import javax.swing.Icon
 

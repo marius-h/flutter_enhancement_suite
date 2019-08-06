@@ -1,4 +1,4 @@
-package de.mariushoefler.flutter_enhancement_suite.pubassist
+package de.mariushoefler.flutter_enhancement_suite.pub
 
 import com.google.gson.Gson
 import com.intellij.util.containers.getIfSingle

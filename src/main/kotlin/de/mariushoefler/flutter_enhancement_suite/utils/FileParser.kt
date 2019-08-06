@@ -1,8 +1,8 @@
 package de.mariushoefler.flutter_enhancement_suite.utils
 
 import com.intellij.psi.PsiFile
-import de.mariushoefler.flutter_enhancement_suite.pubassist.DependencyChecker
-import de.mariushoefler.flutter_enhancement_suite.pubassist.UnableToGetLatestVersionException
+import de.mariushoefler.flutter_enhancement_suite.pub.DependencyChecker
+import de.mariushoefler.flutter_enhancement_suite.pub.UnableToGetLatestVersionException
 import java.util.regex.Pattern
 
 const val REGEX_DEPENDENCY = ".*(?!version|sdk)\\b\\S+:.+\\.[0-9]+\\.[0-9]+(.*)"
@@ -60,7 +60,7 @@ private fun PsiFile.readPackageLines(): List<Pair<String, Int>> {
         counter++
         if (it == '\n') {
             line = line.trim()
-            if (!line.startsWith("#") && line.isPackageName()) {
+            if (!line.startsWith("#") && line.isPackageName() && line.contains("^")) {
                 linesList.add(line to counter - 2)
             }
             line = ""
@@ -79,8 +79,7 @@ fun String.isPackageName(): Boolean {
 
 
 private fun getCurrentVersion(dependency: String): String {
-    val currentVersion = dependency.split(':')[1].replace("^", "").trim()
-    return currentVersion
+	return dependency.split(':')[1].replace("^", "").trim()
 }
 
 

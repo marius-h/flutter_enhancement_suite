@@ -1,4 +1,4 @@
-package de.mariushoefler.flutter_enhancement_suite.pubassist
+package de.mariushoefler.flutter_enhancement_suite.pub
 
 import com.intellij.codeInsight.completion.*
 import com.intellij.codeInsight.lookup.LookupElement

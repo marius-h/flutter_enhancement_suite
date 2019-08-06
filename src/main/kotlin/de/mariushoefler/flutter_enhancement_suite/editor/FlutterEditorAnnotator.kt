@@ -11,7 +11,6 @@ import de.mariushoefler.flutter_enhancement_suite.editor.icons.FontAwesomeIcons
 import de.mariushoefler.flutter_enhancement_suite.editor.icons.IonIcons
 import de.mariushoefler.flutter_enhancement_suite.editor.icons.MaterialCommunityIcons
 import javax.swing.Icon
-import javaslang.Lazy.`val`
 
 
 class FlutterEditorAnnotator : Annotator {

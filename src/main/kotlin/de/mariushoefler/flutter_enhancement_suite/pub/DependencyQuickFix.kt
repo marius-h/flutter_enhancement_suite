@@ -1,4 +1,4 @@
-package de.mariushoefler.flutter_enhancement_suite.pubassist
+package de.mariushoefler.flutter_enhancement_suite.pub
 
 import com.intellij.codeInspection.LocalQuickFixOnPsiElement
 import com.intellij.lang.Language
@@ -15,7 +15,6 @@ class DependencyQuickFix(psiElement: PsiElement, private val latestVersion: Stri
 	override fun getText(): String = "Update package"
 
 	override fun invoke(project: Project, file: PsiFile, startElement: PsiElement, endElement: PsiElement) {
-		KotlinJavaPsiFacade.getInstance(project)
 		val factory = JavaPsiFacade.getInstance(project).elementFactory
 		val psiExpression = factory.createDummyHolder(
 				"^$latestVersion",

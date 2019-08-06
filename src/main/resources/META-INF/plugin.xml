@@ -2,7 +2,7 @@
     <id>de.mariushoefler.flutter_enhancement_suite</id>
     <name>Flutter Enhancement Suite</name>
     <vendor email="mariushofler2000@gmail.com">Marius Höfler</vendor>
-    <idea-version since-build="192.2549"/>
+    <idea-version since-build="183.6156"/>
 
     <description><![CDATA[
     The essential plugin for making working with Flutter easier than ever!
@@ -43,7 +43,7 @@
     ]]></description>
 
     <depends>com.intellij.modules.lang</depends>
-    <depends>com.intellij.modules.java</depends>
+<!--    <depends>com.intellij.modules.java</depends>-->
     <depends>org.jetbrains.plugins.yaml</depends>
     <depends>org.jetbrains.kotlin</depends>
     <depends>Dart</depends>
@@ -59,11 +59,11 @@
         <liveTemplateContext implementation="de.mariushoefler.flutter_enhancement_suite.livetemplates.flutter.FlutterContext"/>
 
         <!--        Pub package version checker-->
-        <inspectionToolProvider implementation="de.mariushoefler.flutter_enhancement_suite.pubassist.PackagesInspectionProvider"/>
+        <inspectionToolProvider implementation="de.mariushoefler.flutter_enhancement_suite.pub.PackagesInspectionProvider"/>
 
         <!--        Pub package auto-complete-->
         <completion.contributor language="yaml"
-                                implementationClass="de.mariushoefler.flutter_enhancement_suite.pubassist.PubspecCompletionContributor"/>
+                                implementationClass="de.mariushoefler.flutter_enhancement_suite.pub.PubspecCompletionContributor"/>
 
         <!--        Gutter Icon Provider-->
         <annotator language="Dart"

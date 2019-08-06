@@ -29,7 +29,7 @@ Enter the name for your widget and select its type.</p>
 <img src="https://i.imgur.com/FKQtOVa.png" width="400" alt="Generate widgets screenshot"/>
 <p>
 <h4>Generate Blocs</h4>
-When creating a new file, choose the <em>"New Flutter Bloc"</em> option.
+<p>When creating a new file, choose the <em>"New Flutter Bloc"</em> option.
 Enter a name for your bloc and it will automatically generate all required classes for you.<br>
 
 ><strong>Please note:</strong> This requires you to add the package <em>"bloc"</em> to your pub dependencies.
@@ -54,6 +54,11 @@ You can install plugin directly from IntelliJ IDEA or Android Studio:
 5. Click on _install_
 
 ## :fire: &nbsp;What's new?
+
+### 1.1.2
+<ul>
+    <li>Fixed compatibility issues with Android Studio 3.4.2</li>
+</ul>
 
 ### 1.1.1
 <ul>
