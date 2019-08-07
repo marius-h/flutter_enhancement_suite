@@ -3,7 +3,9 @@ package de.mariushoefler.flutter_enhancement_suite.utils
 import com.intellij.psi.PsiFile
 import de.mariushoefler.flutter_enhancement_suite.pub.DependencyChecker
 import de.mariushoefler.flutter_enhancement_suite.pub.UnableToGetLatestVersionException
+import kotlinx.coroutines.*
 import java.util.regex.Pattern
+import kotlin.coroutines.CoroutineContext
 
 const val REGEX_DEPENDENCY = ".*(?!version|sdk)\\b\\S+:.+\\.[0-9]+\\.[0-9]+(.*)"
 const val YML_EXTENSIONS = "yml"
@@ -11,9 +13,15 @@ const val YML_EXTENSIONS = "yml"
 class FileParser(
     private val file: PsiFile,
     private val dependencyChecker: DependencyChecker
-) {
+) : CoroutineScope {
 
-    fun checkFile(): List<VersionDescription> {
+	private val scope = CoroutineScope(Dispatchers.IO)
+
+	override val coroutineContext: CoroutineContext
+		get() = scope.coroutineContext
+
+    suspend fun checkFile(): List<VersionDescription> {
+
         return if (file.isPubspecFile()) {
             return getVersionsFromFile()
         } else {
@@ -21,20 +29,22 @@ class FileParser(
         }
     }
 
-    private fun getVersionsFromFile(): MutableList<VersionDescription> {
-        val problemDescriptionList = mutableListOf<VersionDescription>()
-        file.readPackageLines().forEach {
-            try {
-                val versionDescription = mapToVersionDescription(it)
-                if (versionDescription.latestVersion != versionDescription.currentVersion) {
-                    problemDescriptionList.add(versionDescription)
-                }
-            } catch (e: UnableToGetLatestVersionException) {
-                //no-op
-            }
-        }
-        return problemDescriptionList
-    }
+    private suspend fun getVersionsFromFile(): MutableList<VersionDescription> {
+		return coroutineScope {
+			val problemDescriptionList = mutableListOf<VersionDescription>()
+			val lines = file.readPackageLines().map { async { mapToVersionDescription(it) } }.awaitAll()
+			lines.forEach { versionDescription ->
+				try {
+					if (versionDescription.latestVersion != versionDescription.currentVersion) {
+						problemDescriptionList.add(versionDescription)
+					}
+				} catch (e: UnableToGetLatestVersionException) {
+					//no-op
+				}
+			}
+			return@coroutineScope problemDescriptionList
+		}
+	}
 
     @Throws(UnableToGetLatestVersionException::class)
     private fun mapToVersionDescription(it: Pair<String, Int>): VersionDescription {

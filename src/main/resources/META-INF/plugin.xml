@@ -43,7 +43,7 @@
     ]]></description>
 
     <depends>com.intellij.modules.lang</depends>
-<!--    <depends>com.intellij.modules.java</depends>-->
+    <depends>com.intellij.modules.java</depends>
     <depends>org.jetbrains.plugins.yaml</depends>
     <depends>org.jetbrains.kotlin</depends>
     <depends>Dart</depends>

@@ -6,6 +6,7 @@ import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
 import de.mariushoefler.flutter_enhancement_suite.utils.FileParser
+import kotlinx.coroutines.runBlocking
 
 class PubPackagesInspection : LocalInspectionTool() {
 
@@ -33,11 +34,13 @@ class YamlElementVisitor(
 	override fun visitFile(file: PsiFile) {
 		if (!isOnTheFly) return
 
-		val fileParser = FileParser(file, dependencyChecker)
-		val problemDescriptions = fileParser.checkFile()
+		runBlocking {
+			val fileParser = FileParser(file, dependencyChecker)
+			val problemDescriptions = fileParser.checkFile()
 
-		problemDescriptions.forEach {
-			holder.showProblem(file, it.counter, it.latestVersion)
+			problemDescriptions.forEach {
+				holder.showProblem(file, it.counter, it.latestVersion)
+			}
 		}
 	}
 }

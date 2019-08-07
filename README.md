@@ -53,7 +53,16 @@ You can install plugin directly from IntelliJ IDEA or Android Studio:
 4. Search for **Flutter Enhancement Suite**
 5. Click on _install_
 
+## :card_file_box:  &nbsp;How can I contribute to this plugin?
+
+* Create a bug report when accounting a bug
+
 ## :fire: &nbsp;What's new?
+
+### 1.1.3
+<ul>
+    <li>Fixed plugin verification error due to missing Java dependency</li>
+</ul>
 
 ### 1.1.2
 <ul>
@@ -80,7 +89,3 @@ You can install plugin directly from IntelliJ IDEA or Android Studio:
     <li>Added support for autocompleting pub.dev dependencies</li>
     <li>Added snippets</li>
 </ul>
-
-## :handshake:  &nbsp;How can I contribute to this plugin?
-
-Feel free to send a pull request or file an issue.
