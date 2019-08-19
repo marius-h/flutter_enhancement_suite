@@ -67,3 +67,5 @@
 | `fstfulbuilder` | Flutter `StatefulBuilder` widget                                                           |
 | `fstreambuilder`| Flutter `StreamBuilder` widget                                                             |
 | `ftext`         | Flutter `Text` widget                                                                      |
+| `fmedqw`        | Media Query height                                                                         |
+| `fmedqh`        | Media Query width                                                                          |

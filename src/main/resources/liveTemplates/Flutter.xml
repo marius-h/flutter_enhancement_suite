@@ -649,4 +649,28 @@
         </context>
     </template>
 
+
+    <!--    MediaQuery-->
+    <template name="fmedqw"
+              value="MediaQuery.of(context).size.width"
+              description="Media query Width"
+              toReformat="true"
+              toShortenFQNames="true">
+        <context>
+            <option name="DART_STATEMENT"
+                    value="true"/>
+        </context>
+    </template>
+
+    <template name="fmedqh"
+              value="MediaQuery.of(context).size.height"
+              description="Media query Height"
+              toReformat="true"
+              toShortenFQNames="true">
+        <context>
+            <option name="DART_STATEMENT"
+                    value="true"/>
+        </context>
+    </template>
+
 </templateSet>
