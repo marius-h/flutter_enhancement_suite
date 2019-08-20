@@ -1,15 +1,17 @@
 package de.mariushoefler.flutter_enhancement_suite.livetemplates
 
-import com.intellij.codeInsight.template.impl.LiveTemplateLookupElement
 import com.intellij.codeInsight.template.impl.LiveTemplateLookupElementImpl
 import com.intellij.lang.documentation.AbstractDocumentationProvider
-import com.intellij.lang.documentation.ExternalDocumentationProvider
-import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.text.StringUtil
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiManager
 
-class LiveTemplatePreviewProvider : AbstractDocumentationProvider(), ExternalDocumentationProvider {
+class LiveTemplatePreviewProvider : AbstractDocumentationProvider() {
+
+	companion object {
+		val REPLACES_REFS = listOf("&lt;", "&gt;", "&amp;", "&#39;", "&quot;")
+		val REPLACES_DISP = listOf("<", ">", "&", "'", "\"")
+	}
 
 	override fun getDocumentationElementForLookupItem(psiManager: PsiManager, obj: Any?, element: PsiElement?): PsiElement? {
 		if (obj !is LiveTemplateLookupElementImpl) {
@@ -26,7 +28,7 @@ class LiveTemplatePreviewProvider : AbstractDocumentationProvider(), ExternalDoc
 		val liveTemplateLookupElement = element.element as LiveTemplateLookupElementImpl
 		val template = liveTemplateLookupElement.template
 
-		var templateHtml = StringUtil.escapeXmlEntities(template.string)
+		var templateHtml = StringUtil.replace(template.string, REPLACES_DISP, REPLACES_REFS)
 
 		templateHtml = templateHtml.replace(Regex("\\\$\\w+\\\$")) { matchResult ->
 			if (matchResult.value == "\$END\$") {
@@ -45,16 +47,4 @@ class LiveTemplatePreviewProvider : AbstractDocumentationProvider(), ExternalDoc
 
 		return result.toString()
 	}
-
-	override fun fetchExternalDocumentation(project: Project?, element: PsiElement?, docUrls: MutableList<String>?): String? = null
-
-	override fun hasDocumentationFor(element: PsiElement?, originalElement: PsiElement?): Boolean {
-		return element is LiveTemplateLookupElement
-	}
-
-	override fun canPromptToConfigureDocumentation(element: PsiElement?): Boolean {
-		return false
-	}
-
-	override fun promptToConfigureDocumentation(element: PsiElement?) {}
 }

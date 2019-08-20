@@ -52,6 +52,8 @@
 | `ficon`         | Flutter `Icon` widget                                                                      |
 | `flayoutbuilder`| Flutter `LayoutBuilder` widget                                                             |
 | `flistvbuilder` | Flutter `ListView.builder()` widget                                                        |
+| `fmedqh`        | Flutter `MediaQuery` widget with `height`                                                  |
+| `fmedqw`        | Flutter `MediaQuery` widget with `width`                                                   |
 | `forientbuilder`| Flutter `OrientationBuilder` widget                                                        |
 | `frow`          | Flutter `Row` widget                                                                       |
 | `fscaffold`     | Flutter `Scaffold` widget                                                                  |
@@ -67,5 +69,3 @@
 | `fstfulbuilder` | Flutter `StatefulBuilder` widget                                                           |
 | `fstreambuilder`| Flutter `StreamBuilder` widget                                                             |
 | `ftext`         | Flutter `Text` widget                                                                      |
-| `fmedqw`        | Media Query height                                                                         |
-| `fmedqh`        | Media Query width                                                                          |

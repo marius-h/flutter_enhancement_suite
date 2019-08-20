@@ -16,11 +16,20 @@ import java.nio.charset.StandardCharsets
 
 object PubApi {
 
+	// https://pub.dartlang.org/api/
 	init {
 		FuelManager.instance.basePath = "https://pub.dartlang.org/api/"
 	}
 
+	var lastPackages = mapOf<String, PubPackage>()
+
 	fun searchPackage(query: String, page: Int): PubPackageSearch? {
+//		+--- Uncomment to test bug report dialog
+//		|
+//		V
+//		val test = listOf(1,2,3)
+//		println(test[4])
+
 		return try {
 			runWithCheckCanceled {
 				val response = HttpRequests
@@ -29,10 +38,10 @@ object PubApi {
 				Gson().fromJson(response, PubPackageSearch::class.java)
 			}
 		} catch (e: IOException) {
-			//context.project.showBalloon("Could not reach crates.io", NotificationType.WARNING)
+			//context.project.showBalloon("Could not reach pub", NotificationType.WARNING)
 			null
 		} catch (e: JsonSyntaxException) {
-			//context.project.showBalloon("Bad answer from crates.io", NotificationType.WARNING)
+			//context.project.showBalloon("Bad answer from pub", NotificationType.WARNING)
 			null
 		}
 	}
@@ -44,10 +53,14 @@ object PubApi {
 				.httpGet()
 				.responseObject(PubPackage.Deserializer()) { _, _, res ->
 					when (res) {
-						is Result.Failure -> println(res.getException())
+						is Result.Failure -> println("Error")
 						is Result.Success -> result = res.get()
 					}
 				}.join()
+
+		if (!lastPackages.containsKey(name)) {
+			lastPackages.map { result to name }
+		}
 
 		return result
 	}

@@ -9,7 +9,7 @@ import com.intellij.psi.PsiManager
 import com.intellij.psi.impl.FakePsiElement
 
 
-class LiveTemplateElement(val psiManager: PsiManager, val element: LiveTemplateLookupElement) : FakePsiElement() {
+class LiveTemplateElement(private val psiManager: PsiManager, val element: LiveTemplateLookupElement) : FakePsiElement() {
 	override fun getParent(): PsiElement? = null
 
 	override fun isValid() = true

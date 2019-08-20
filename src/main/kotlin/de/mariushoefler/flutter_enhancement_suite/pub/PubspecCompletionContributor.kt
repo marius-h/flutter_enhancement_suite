@@ -3,11 +3,17 @@ package de.mariushoefler.flutter_enhancement_suite.pub
 import com.intellij.codeInsight.completion.*
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
+import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.project.ProjectLocator
+import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.patterns.PlatformPatterns
 import com.intellij.util.ProcessingContext
 import de.mariushoefler.flutter_enhancement_suite.models.PubPackageResult
+import de.mariushoefler.flutter_enhancement_suite.utils.FlutterProjectUtils
 import de.mariushoefler.flutter_enhancement_suite.utils.PubApi
 import icons.DartIcons
+import io.flutter.pub.PubRoot
+import io.flutter.sdk.FlutterSdk
 
 class PubspecCompletionContributor : CompletionContributor() {
 
@@ -18,12 +24,17 @@ class PubspecCompletionContributor : CompletionContributor() {
 				PubspecCompletionProvider()
 		)
 	}
+
+	override fun handleEmptyLookup(parameters: CompletionParameters, editor: Editor?): String? {
+		return "No packages found"
+	}
 }
 
 class PubspecCompletionProvider : CompletionProvider<CompletionParameters>() {
 
 	var lastResults = arrayListOf<LookupElement>()
 	var lastSearchterm = ""
+	var file: VirtualFile? = null
 
 	override fun addCompletions(
 			parameters: CompletionParameters,
@@ -38,6 +49,9 @@ class PubspecCompletionProvider : CompletionProvider<CompletionParameters>() {
 		if (lastSearchterm == userInput) {
 			result.addAllElements(lastResults)
 		} else if (userInput.length > 2) {
+			if (file == null) {
+				file = parameters.originalFile.virtualFile
+			}
 			lastSearchterm = userInput
 			lastResults.clear()
 			for (page in 1..2) {
@@ -60,8 +74,9 @@ class PubspecCompletionProvider : CompletionProvider<CompletionParameters>() {
 					.create(pubPackage.generateDependencyString())
 					.withPresentableText("package: ${pubPackage.name}")
 					.withLookupString(pubPackage.name)
-					.withTypeText(pubPackage.authorName(), true)
+					.withTypeText(pubPackage.getAuthorName(), true)
 					.withIcon(DartIcons.Dart_16)
+					.withInsertHandler { _, _ -> FlutterProjectUtils.runPackagesGet(file) }
 			lastResults.add(item)
 			result.addElement(item)
 		}

@@ -7,16 +7,23 @@
     <description><![CDATA[
     The essential plugin for making working with Flutter easier than ever!
     <p>
+    Tools for managing your pubspec.yaml, snippets & more
+    <p>
     <h1>Features</h1>
-    <h3>Autocomplete Pub Dependencies</h3>
-    <p>When adding a new dependency to your pubspec.yaml file, suggestions will show up. After auto-completing the name, the latest version will be added automatically.</p><br>
+    <h3>Autocomplete Pub Packages</h3>
+    <p>When adding a new package to your pubspec.yaml file, suggestions will show up. After auto-completing the name, the latest version will be added automatically.</p><br>
     <p>
-    <img src="https://giant.gfycat.com/PastObviousAmericanquarterhorse.gif" width="400" alt="Autocomplete pub dependencies screenshot"/>
+    <img src="https://giant.gfycat.com/PastObviousAmericanquarterhorse.gif" width="400" alt="Autocomplete pub packages screenshot"/>
     <p>
-    <h3>Update Pub Dependencies</h3>
-    <p>If there's a new version available for a dependency, it will be highlighted. You can update these dependencies by opening the quick fix menu (Show Intention Actions) and choosing <em>Update package</em>.</p><br>
+    <h3>Update Pub Packages</h3>
+    <p>If there's a new version available for a package, it will be highlighted. You can update these packages by opening the quick fix menu (Show Intention Actions) and choosing <em>"Update package"</em>.</p><br>
     <p>
-    <img src="https://i.imgur.com/orIVdDj.png" width="400" alt="Update pub dependencies screenshot"/>
+    <img src="https://i.imgur.com/orIVdDj.png" width="400" alt="Update pub packages screenshot"/>
+    <p>
+    <h3>View Pub Package's Documentation</h3>
+    <p>When auto-completing packages or viewing packages inside your pubspec.yaml, press <code>Ctrl+Q</code> to show additional information for the package such as its documentation or a link which leads to examples showing how to use the plugin. In order to get a larger dialog for reading the documentation, click the settings icon in the documentation dialog and select the option <em>"Open as tool window"</em>.</p><br>
+    <p>
+    <img src="https://i.imgur.com/xWelqpT.png" width="400" alt="View package's documentation screenshot"/>
     <p>
     <h3>Dart & Flutter Code Snippets</h3>
     A bunch of snippets/LiveTemplates for quicker coding. Use <code>Ctrl+Q</code> when hovering over a snippet to get a preview of it.<br>
@@ -79,6 +86,22 @@
         <!--        File Templates-->
         <internalFileTemplate name="stateful_widget"/>
         <internalFileTemplate name="stateless_widget"/>
+
+        <errorHandler implementation="de.mariushoefler.flutter_enhancement_suite.PluginBugReportSubmitter"/>
+
+        <!--        <externalAnnotator implementationClass="de.mariushoefler.flutter_enhancement_suite.editor.FlutterDocumentationAnnotator" language="yaml"/>-->
+        <documentationProvider implementation="de.mariushoefler.flutter_enhancement_suite.actions.UrlDocumentationProvider"
+                               order="first"/>
+        <annotator implementationClass="de.mariushoefler.flutter_enhancement_suite.editor.UrlAnnotator"
+                   order="first"
+                   language="yaml"/>
+
+<!--        <psi.referenceProvider providerClass="de.mariushoefler.flutter_enhancement_suite.actions.RefProvider"/>-->
+
+
+        <!--        <referenceProviderType key="commentsReferenceProvider"
+                                       implementationClass="de.mariushoefler.flutter_enhancement_suite.actions.DocProvider"/>
+                <psi.referenceContributor implementation="de.mariushoefler.flutter_enhancement_suite.actions.UrlReferenceContributor"/>-->
     </extensions>
 
     <extensions defaultExtensionNs="Dart">

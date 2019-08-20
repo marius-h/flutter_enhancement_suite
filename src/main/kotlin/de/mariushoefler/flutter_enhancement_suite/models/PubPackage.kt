@@ -3,25 +3,26 @@ package de.mariushoefler.flutter_enhancement_suite.models
 import com.github.kittinunf.fuel.core.ResponseDeserializable
 import com.google.gson.Gson
 
-class PubPackage(val name: String, private val version: String, private val dependencies: Map<String, Any>, private val author: Any, val homepage: String?) {
+data class PubPackage(val name: String,
+					  private val version: String,
+					  private val dependencies: Map<String, Any>,
+					  private val author: String?,
+					  private val authors: ArrayList<String>?,
+					  val description: String?,
+					  val homepage: String?) {
 
-	fun authorName() = try {
-		val a = author as String
-		a.split("<")[0]
-	} catch (err: Exception) {
-		try {
-			println(author)
-			val b = author as List<*>
-			var authors = ""
-			b.forEach {
-				val c = it as String
-				authors += c
-				if (c != b.last() as String) authors += ", "
+	fun getAuthorName(): String {
+		if (author != null) {
+			return author.split("<")[0].trim()
+		} else if (!authors.isNullOrEmpty()) {
+			val authorsString = if (authors.size - 1 > 0) {
+				" & ${authors.size - 1} more"
+			} else {
+				""
 			}
-			authors
-		} catch (err: Exception) {
-			""
+			return authors[0].split("<")[0].trim() + authorsString
 		}
+		return ""
 	}
 
 	fun isFlutterCompatible() = dependencies["flutter"] != null

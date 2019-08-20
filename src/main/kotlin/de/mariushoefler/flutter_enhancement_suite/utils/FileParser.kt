@@ -58,7 +58,7 @@ class FileParser(
     }
 }
 
-private fun PsiFile.isPubspecFile(): Boolean {
+public fun PsiFile.isPubspecFile(): Boolean {
     return fileType.defaultExtension == YML_EXTENSIONS && name.contains("pubspec")
 }
 
@@ -70,7 +70,7 @@ private fun PsiFile.readPackageLines(): List<Pair<String, Int>> {
         counter++
         if (it == '\n') {
             line = line.trim()
-            if (!line.startsWith("#") && line.isPackageName() && line.contains("^")) {
+            if (!line.startsWith("#") && line.isPubPackageName() && line.contains("^")) {
                 linesList.add(line to counter - 2)
             }
             line = ""
@@ -82,7 +82,7 @@ private fun PsiFile.readPackageLines(): List<Pair<String, Int>> {
 }
 
 
-fun String.isPackageName(): Boolean {
+fun String.isPubPackageName(): Boolean {
     val regexPattern = Pattern.compile(REGEX_DEPENDENCY)
     return regexPattern.matcher(this).matches()
 }

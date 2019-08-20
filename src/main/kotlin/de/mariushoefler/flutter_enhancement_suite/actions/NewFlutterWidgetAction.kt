@@ -29,29 +29,18 @@ class NewFlutterWidgetAction : CreateFileFromTemplateAction("Flutter Widget", "C
 				?.addKind("Stateful widget", FlutterIcons.Flutter, "stateful_widget")
 				?.addKind("Stateful widget with AnimationController", FlutterIcons.Flutter, "animated_widget")
 				?.addKind("Inherited widget", FlutterIcons.Flutter, "inherited_widget")
-
-//		builder?.setValidator(object : InputValidatorEx {
-//			override fun getErrorText(inputString: String): String? {
-//				return "This is not a valid Dart qualified name"
-//			}
-//
-//			override fun checkInput(inputString: String): Boolean {
-//				return true
-//			}
-//
-//			override fun canClose(inputString: String): Boolean {
-//				return !StringUtil.isEmptyOrSpaces(inputString) && PsiNameHelper.getInstance(project).isQualifiedName(inputString)
-//			}
-//		})
 	}
 
 	override fun isAvailable(dataContext: DataContext?): Boolean {
 		if (dataContext != null) {
 			val module: Module? = LangDataKeys.MODULE.getData(dataContext)
-			return super.isAvailable(dataContext)
-					&& module != null
-					&& (FileTypeIndex.containsFileOfType(DartFileType.INSTANCE, module.moduleContentScope)) || DartSdk.getDartSdk(module!!.project) != null
-					&& ModuleTypeWithWebFeatures.isAvailable(module)
+
+			if (module != null) {
+				return super.isAvailable(dataContext)
+						&& FileTypeIndex.containsFileOfType(DartFileType.INSTANCE, module.moduleContentScope)
+						|| (DartSdk.getDartSdk(module.project) != null
+						&& ModuleTypeWithWebFeatures.isAvailable(module))
+			}
 		}
 		return super.isAvailable(dataContext)
 	}

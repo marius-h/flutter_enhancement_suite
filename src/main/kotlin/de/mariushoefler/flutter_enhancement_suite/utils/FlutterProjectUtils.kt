@@ -1,8 +1,11 @@
 package de.mariushoefler.flutter_enhancement_suite.utils
 
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.project.ProjectLocator
 import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.openapi.vfs.VirtualFile
+import io.flutter.pub.PubRoot
+import io.flutter.sdk.FlutterSdk
 import org.yaml.snakeyaml.DumperOptions
 import org.yaml.snakeyaml.Yaml
 import org.yaml.snakeyaml.constructor.SafeConstructor
@@ -21,7 +24,7 @@ object FlutterProjectUtils {
 	}
 
 	@Throws(IOException::class)
-	private fun readPubspecFileToMap(pubspec: VirtualFile): Map<String, Any>? {
+	fun readPubspecFileToMap(pubspec: VirtualFile): Map<String, Any>? {
 		val contents = String(pubspec.contentsToByteArray(true))
 		return loadPubspecInfo(contents)
 	}
@@ -44,5 +47,19 @@ object FlutterProjectUtils {
 			null
 		}
 
+	}
+
+	/**
+	 * Runs `flutter pub get` in project
+	 *
+	 * @since v1.2
+	 */
+	fun runPackagesGet(file: VirtualFile?) {
+		val project = ProjectLocator.getInstance().guessProjectForFile(file)
+		val sdk = project?.let { FlutterSdk.getFlutterSdk(it) }
+
+		PubRoot.forDirectory(file?.parent)?.let {
+			sdk?.startPackagesGet(it, project)
+		}
 	}
 }

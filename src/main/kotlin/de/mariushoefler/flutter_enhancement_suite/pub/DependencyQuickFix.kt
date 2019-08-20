@@ -7,6 +7,7 @@ import com.intellij.psi.JavaPsiFacade
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.tree.IElementType
+import de.mariushoefler.flutter_enhancement_suite.utils.FlutterProjectUtils
 import org.jetbrains.kotlin.resolve.jvm.KotlinJavaPsiFacade
 
 class DependencyQuickFix(psiElement: PsiElement, private val latestVersion: String) : LocalQuickFixOnPsiElement(psiElement) {
@@ -23,5 +24,7 @@ class DependencyQuickFix(psiElement: PsiElement, private val latestVersion: Stri
 		)
 
 		startElement.replace(psiExpression)
+
+		FlutterProjectUtils.runPackagesGet(file.virtualFile)
 	}
 }

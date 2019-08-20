@@ -27,7 +27,7 @@
 
     <!--    AnimatedBuilder    -->
     <template name="fanimbuilder"
-              value="AnimatedBuilder(&#10;  animation: $animationController$,&#10;  child: $childWidget$,&#10;  builder: (BuildContext context, Widget child) {&#10;    return $buildWidget$;&#10;  },&#10;);"
+              value="AnimatedBuilder(&#10;  animation: $animationController$,&#10;  child: $childWidget$,&#10;  builder: (BuildContext context, Widget child) {&#10;    return $buildWidget$;&#10;  },&#10;)$END$"
               description="New AnimatedBuilder widget"
               toReformat="true"
               toShortenFQNames="true">
@@ -51,7 +51,7 @@
 
     <!--    AspectRatio-->
     <template name="faspratio"
-              value="AspectRatio(&#10;aspectRatio: $aspectRatio$,&#10;child: $child$&#10;)"
+              value="AspectRatio(&#10;  aspectRatio: $aspectRatio$,&#10;  child: $child$,&#10;)$END$"
               description="New AspectRatio widget"
               toReformat="true"
               toShortenFQNames="true">
@@ -71,12 +71,12 @@
 
     <!--    Center-->
     <template name="fcent"
-              value="Center(child: $child$)"
+              value="Center(child: $child$)$END$"
               description="New Center widget"
               toReformat="true"
               toShortenFQNames="true">
-        <variable name="goto"
-                  expression="&quot;&quot;"
+        <variable name="child"
+                  expression=""
                   defaultValue=""
                   alwaysStopAt="true"/>
         <context>
@@ -87,12 +87,12 @@
 
     <!--    Column-->
     <template name="fcol"
-              value="Column(&#10;  children: &lt;Widget&gt;[$goto$],&#10;)"
+              value="Column(&#10;  children: &lt;Widget&gt;[&#10;    $children$&#10;  ],&#10;)$END$"
               description="New Column widget"
               toReformat="true"
               toShortenFQNames="true">
-        <variable name="goto"
-                  expression="&quot;&quot;"
+        <variable name="children"
+                  expression=""
                   defaultValue=""
                   alwaysStopAt="true"/>
         <context>
@@ -103,12 +103,12 @@
 
     <!--    Container-->
     <template name="fcont"
-              value="Container(&#10;  child: $Widget$(),&#10;)"
+              value="Container(&#10;  child: $child$,&#10;)$END$"
               description="New Container widget"
               toReformat="true"
               toShortenFQNames="true">
-        <variable name="Widget"
-                  expression="&quot;Widget&quot;"
+        <variable name="child"
+                  expression="&quot;child&quot;"
                   defaultValue=""
                   alwaysStopAt="true"/>
         <context>
@@ -119,7 +119,7 @@
 
     <!--    CustomClipper-->
     <template name="fcustomclipper"
-              value="class $name$Clipper extends CustomClipper&lt;Path&gt; {&#10;    &#10;@override&#10;Path getClip(Size size) {&#10;// TODO: implement getClip&#10;}&#10;&#10;@override&#10;bool shouldReclip(CustomClipper&lt;Path&gt; oldClipper) {&#10;// TODO: implement shouldReclip&#10;}&#10;}"
+              value="class $name$Clipper extends CustomClipper&lt;Path&gt; {&#10;    &#10;  @override&#10;  Path getClip(Size size) {&#10;    // TODO: implement getClip&#10;  }&#10;&#10;  @override&#10;  bool shouldReclip(CustomClipper&lt;Path&gt; oldClipper) {&#10;    // TODO: implement shouldReclip&#10;  }&#10;}"
               description="Create a CustomClipper widget"
               toReformat="true"
               toShortenFQNames="true">
@@ -135,7 +135,7 @@
 
     <!--    CustomPainter-->
     <template name="fcustompainter"
-              value="class $name$Painter extends CustomPainter {&#10;&#10;@override&#10;void paint(Canvas canvas, Size size) {&#10;//TODO Implement paint&#10;}&#10;&#10;      @override&#10;bool shouldRepaint($name$Painter oldDelegate) {&#10;//TODO Implement shouldRepaint&#10;}&#10;&#10;@override&#10;bool shouldRebuildSemantics($name$Painter oldDelegate) {&#10;//TODO Implement shouldRebuildSemantics&#10;}&#10;}"
+              value="class $name$Painter extends CustomPainter {&#10;&#10;  @override&#10;  void paint(Canvas canvas, Size size) {&#10;    // TODO: implement paint&#10;  }&#10;  &#10;  @override&#10;  bool shouldRepaint($name$Painter oldDelegate) {&#10;    // TODO: implement shouldRepaint&#10;  }&#10;  &#10;  @override&#10;  bool shouldRebuildSemantics($name$Painter oldDelegate) {&#10;    // TODO: implement shouldRebuildSemantics&#10;  }&#10;}"
               description="Create a CustomPainter widget"
               toReformat="true"
               toShortenFQNames="true">
@@ -151,20 +151,12 @@
 
     <!--    CustomScrollView-->
     <template name="fcustomscroll"
-              value="CustomScrollView(&#10;slivers: &lt;Widget&gt;[&#10;$childWidget1$,&#10;$childWidget2$,&#10;$childWidget3$,&#10;],&#10;)"
+              value="CustomScrollView(&#10;  slivers: &lt;Widget&gt;[&#10;    $childWidget$,&#10;  ],&#10;)$END$"
               description="New CustomScrollView widget"
               toReformat="true"
               toShortenFQNames="true">
-        <variable name="childWidget1"
-                  expression="&quot;childWidget1&quot;"
-                  defaultValue=""
-                  alwaysStopAt="true"/>
-        <variable name="childWidget2"
-                  expression="&quot;childWidget2&quot;"
-                  defaultValue=""
-                  alwaysStopAt="true"/>
-        <variable name="childWidget3"
-                  expression="&quot;childWidget3&quot;"
+        <variable name="childWidget"
+                  expression="&quot;childWidget&quot;"
                   defaultValue=""
                   alwaysStopAt="true"/>
         <context>
@@ -275,7 +267,7 @@
 
     <!--    FutureBuilder-->
     <template name="ffuturebuilder"
-              value="FutureBuilder(&#10;future: $FUTURE$,initialData: $INITIAL$,builder: (BuildContext context, AsyncSnapshot snapshot) {if (snapshot.hasData) {if (snapshot.data!=null) {return $WIDGET$;} else {return CircularProgressIndicator();}}),"
+              value="FutureBuilder(&#10;  future: $FUTURE$,&#10;  initialData: $INITIAL$,&#10;  builder: (BuildContext context, AsyncSnapshot snapshot) {&#10;    if (snapshot.hasData) {&#10;      if (snapshot.data != null) {&#10;        return $WIDGET$;&#10;      } else {&#10;        return CircularProgressIndicator();&#10;      }&#10;    }&#10;  }  &#10;),"
               description="New FutureBuilder widget"
               toReformat="true"
               toShortenFQNames="true">
@@ -319,7 +311,7 @@
 
     <!--    LayoutBuilder-->
     <template name="flayoutbuilder"
-              value="LayoutBuilder(&#10;builder: (BuildContext context, BoxConstraints constraints) {&#10;return $widget$;&#10;},&#10;),"
+              value="LayoutBuilder(&#10;  builder: (BuildContext context, BoxConstraints constraints) {&#10;    return $widget$;&#10;  },&#10;)$END$"
               description="New LayoutBuilder widget"
               toReformat="true"
               toShortenFQNames="true">
@@ -335,7 +327,7 @@
 
     <!--    ListView.builder-->
     <template name="flistvbuilder"
-              value="ListView.builder(itemCount: $COUNT$,itemBuilder: (BuildContext context, int index) {return $WIDGET$;}, ),"
+              value="ListView.builder(&#10;  itemCount: $COUNT$,&#10;  itemBuilder: (BuildContext context, int index) {&#10;    return $WIDGET$;&#10;  },&#10;)$END$"
               description="New ListView.builder widget"
               toReformat="true"
               toShortenFQNames="true">
@@ -355,7 +347,7 @@
 
     <!--    OrientationBuilder-->
     <template name="forientbuilder"
-              value="OrientationBuilder(&#10;  builder: (BuildContext context, Orientation orientation) {&#10;return GridView.count(&#10;// Create a grid with 2 columns in portrait mode, or 3 columns in&#10;// landscape mode.&#10;crossAxisCount: orientation == Orientation.portrait ? 2 : 3,&#10;);&#10;},&#10;);"
+              value="OrientationBuilder(&#10;  builder: (BuildContext context, Orientation orientation) {&#10;    return GridView.count(&#10;      // Create a grid with 2 columns in portrait mode&#10;      // or 3 columns in landscape mode.&#10;      crossAxisCount: orientation == Orientation.portrait ? 2 : 3,&#10;    );&#10;  },&#10;);"
               description="New OrientationBuilder widget"
               toReformat="true"
               toShortenFQNames="true">
@@ -367,12 +359,12 @@
 
     <!--    Row-->
     <template name="frow"
-              value="Row(&#10;  children: &lt;Widget&gt;[$goto$],&#10;)"
+              value="Row(&#10;  children: &lt;Widget&gt;[&#10;    $children$&#10;  ],&#10;)"
               description="New Row widget"
               toReformat="true"
               toShortenFQNames="true">
-        <variable name="goto"
-                  expression="&quot;&quot;"
+        <variable name="children"
+                  expression=""
                   defaultValue=""
                   alwaysStopAt="true"/>
         <context>
@@ -383,7 +375,7 @@
 
     <!--    Scaffold-->
     <template name="fscaffold"
-              value="Scaffold(&#10;body: $body$,&#10;)$END$"
+              value="Scaffold(&#10;  body: $body$,&#10;)$END$"
               description="New Scaffold widget"
               toReformat="true"
               toShortenFQNames="true">
@@ -399,7 +391,7 @@
 
     <!--    Scaffold with AppBar-->
     <template name="fscaffoldab"
-              value="Scaffold(&#10;appBar: AppBar(&#10;title: Text('$appbarTitle$'),&#10;),&#10;body: $body$&#10;)$END$"
+              value="Scaffold(&#10;  appBar: AppBar(&#10;    title: Text('$appbarTitle$'),&#10;  ),&#10;  body: $body$&#10;)$END$"
               description="New Scaffold widget with AppBar"
               toReformat="true"
               toShortenFQNames="true">
@@ -419,7 +411,7 @@
 
     <!--    Scaffold with AppBar and Bottom Nav Bar-->
     <template name="fscaffoldabbn"
-              value="int _index = 0; // Make sure this is outside build(), otherwise every setState will change the value back to 0 &#10;&#10;Scaffold(&#10;appBar: AppBar(&#10;title: Text('$appbarTitle$'),&#10;),&#10;body: Center(&#10;child: Container(child: Text('You are looking at the message for bottom navigation item $_index')),&#10;),&#10;bottomNavigationBar: BottomNavigationBar(&#10;onTap: (tappedItemIndex) =&gt; setState(() {&#10;_index = tappedItemIndex;&#10; }),&#10;currentIndex: _index,&#10;items: [&#10;BottomNavigationBarItem(icon: Icon(Icons.av_timer), title: Text('$navBarItem1Text$')),&#10;BottomNavigationBarItem(icon: Icon(Icons.add), title: Text('$navBarItem2Text$'))&#10;])&#10;)$END$"
+              value="int _index = 0; // TODO: make sure this is outside build(), otherwise every setState will change the value back to 0 &#10;&#10;Scaffold(&#10;  appBar: AppBar(&#10;    title: Text('$appbarTitle$'),&#10;  ),&#10;  body: Center(&#10;    child: Container(&#10;      child: Text('You are looking at the message for bottom navigation item $_index'),&#10;    ),&#10;  ),&#10;  bottomNavigationBar: BottomNavigationBar(&#10;    onTap: (tappedItemIndex) =&gt; setState(() {&#10;      _index = tappedItemIndex;&#10;    }),&#10;    currentIndex: _index,&#10;    items: [&#10;      BottomNavigationBarItem(icon: Icon(Icons.av_timer), title: Text('$navBarItem1Text$')),&#10;      BottomNavigationBarItem(icon: Icon(Icons.add), title: Text('$navBarItem2Text$'))&#10;    ],&#10;  ),&#10;)$END$"
               description="New Scaffold widget with AppBar &amp; Bottom Nav Bar"
               toReformat="true"
               toShortenFQNames="true">
@@ -443,7 +435,7 @@
 
     <!--    Scaffold with AppBar and Fab-->
     <template name="fscaffoldabfab"
-              value="int _index = 0; // Make sure this is outside build(), otherwise every setState will chage the value back to 0 &#10;&#10;Scaffold(&#10;appBar: AppBar(&#10;        title: Text('$appbarTitle$'),&#10;),&#10;body: Center(&#10;child: Container(child: Text('You tapped the FAB $_index times')),&#10;),&#10;floatingActionButton: FloatingActionButton(&#10;onPressed: () =&gt; setState(() {&#10;_index++;&#10;}),&#10;tooltip: 'Increment Counter',&#10;child: Icon(Icons.add), //Change Icon&#10;),&#10;floatingActionButtonLocation: FloatingActionButtonLocation.endFloat, //Change for different locations&#10;)$END$"
+              value="int _index = 0; // TODO: make sure this is outside build(), otherwise every setState will chage the value back to 0 &#10;&#10;Scaffold(&#10;  appBar: AppBar(&#10;    title: Text('$appbarTitle$'),&#10;  ),&#10;  body: Center(&#10;    child: Container(&#10;      child: Text('You tapped the FAB $_index times'),&#10;    ),&#10;  ),&#10;  floatingActionButton: FloatingActionButton(&#10;    onPressed: () =&gt; setState(() {&#10;      _index++;&#10;    }),&#10;    tooltip: 'Increment Counter',&#10;    child: Icon(Icons.add),&#10;  ),&#10;  floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,&#10;)$END$"
               description="New Scaffold widget with AppBar and Fab"
               toReformat="true"
               toShortenFQNames="true">
@@ -459,7 +451,7 @@
 
     <!--    Scaffold with AppBar, Fab and Bottom Nav Bar-->
     <template name="fscaffoldall"
-              value="int _index = 0; // Make sure this is outside build(), otherwise every setState will chage the value back to 0 &#10;&#10;Scaffold(&#10;appBar: AppBar(&#10;title: Text('$appbarTitle$'),&#10;),&#10;body: Center(&#10;child: Container(child: Text('You are looking at the message for bottom navigation item $_index')),&#10;),&#10;bottomNavigationBar: BottomNavigationBar(&#10;onTap: (tappedItemIndex)=&gt; setState(() {&#10;_index = tappedItemIndex;&#10;}),&#10;currentIndex: _index,&#10;items: [&#10;BottomNavigationBarItem(icon: Icon(Icons.av_timer), title: Text('$navBarItem1Text$')),&#10;BottomNavigationBarItem(icon: Icon(Icons.add), title: Text('$navBarItem2Text$'))&#10;]),&#10;floatingActionButton: FloatingActionButton(&#10;onPressed: () =&gt; setState(() {&#10;=_index = 0;&#10;}),&#10;tooltip: 'Reset Navigation Index',&#10;        child: Icon(Icons.clear), //Change Icon&#10;),&#10;floatingActionButtonLocation: FloatingActionButtonLocation.endFloat, //Change for different locations&#10;)$END$"
+              value="int _index = 0; // TODO: make sure this is outside build(), otherwise every setState will chage the value back to 0 &#10;&#10;Scaffold(&#10;  appBar: AppBar(&#10;    title: Text('$appbarTitle$'),&#10;  ),&#10;  body: Center(&#10;    child: Container(&#10;      child: Text('You are looking at the message for bottom navigation item $_index'),&#10;    ),&#10;  ),&#10;  bottomNavigationBar: BottomNavigationBar(&#10;    onTap: (tappedItemIndex) =&gt; setState(() {&#10;      _index = tappedItemIndex;&#10;    }),&#10;    currentIndex: _index,&#10;    items: [&#10;      BottomNavigationBarItem(icon: Icon(Icons.av_timer), title: Text('$navBarItem1Text$')),&#10;      BottomNavigationBarItem(icon: Icon(Icons.add), title: Text('$navBarItem2Text$'))&#10;    ],&#10;  ),&#10;  floatingActionButton: FloatingActionButton(&#10;    child: Icon(Icons.clear),&#10;    onPressed: () =&gt; setState(() {&#10;      _index = 0;&#10;    }),&#10;    tooltip: 'Reset Navigation Index',&#10;  ),&#10;  floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,&#10;)$END$"
               description="New Scaffold widget with AppBar, Fab and Bottom Nav Bar"
               toReformat="true"
               toShortenFQNames="true">
@@ -483,7 +475,7 @@
 
     <!--    showDialog-->
     <template name="fdialog"
-              value="showDialog&lt;void&gt;(&#10;context: $context$,&#10;barrierDismissible: $dismiss$, // false = user must tap button, true = tap outside dialog&#10;builder: (BuildContext dialogContext){&#10;return AlertDialog(&#10;title: Text('$title$'),&#10;content: Text('$content$'),&#10;actions: &lt;Widget&gt;[&#10;FlatButton(&#10;child: Text('$buttonText$'),&#10;onPressed: () {&#10;Navigator.of(dialogContext).pop(); // Dismiss alert dialog&#10;},&#10;),&#10;],&#10;);&#10;},&#10;);"
+              value="showDialog&lt;void&gt;(&#10;  context: $context$,&#10;  barrierDismissible: $dismiss$, // false = user must tap button, true = tap outside dialog&#10;  builder: (BuildContext dialogContext) {&#10;    return AlertDialog(&#10;      title: Text('$title$'),&#10;      content: Text('$content$'),&#10;      actions: &lt;Widget&gt;[&#10;        FlatButton(&#10;          child: Text('$buttonText$'),&#10;          onPressed: () {&#10;            Navigator.of(dialogContext).pop(); // Dismiss alert dialog&#10;          },&#10;        ),&#10;      ],&#10;    );&#10;  },&#10;);"
               description="New Dialog widget"
               toReformat="true"
               toShortenFQNames="true">
@@ -515,7 +507,7 @@
 
     <!--    SingleChildScrollView-->
     <template name="fsinglechildsc"
-              value="SingleChildScrollView(&#10;controller: $controller$, // Optional&#10;child: $widget$,&#10;),"
+              value="SingleChildScrollView(&#10;  controller: $controller$, // Optional&#10;  child: $widget$,&#10;)$END$"
               description="New SingleChildScrollView widget"
               toReformat="true"
               toShortenFQNames="true">
@@ -587,7 +579,7 @@
 
     <!--    StatefulBuilder-->
     <template name="fstfulbuilder"
-              value="StatefulBuilder(&#10;builder: (BuildContext context, StateSetter setState){&#10;return $widget$&#10;}&#10;),"
+              value="StatefulBuilder(&#10;  builder: (BuildContext context, StateSetter setState) {&#10;    return $widget$&#10;  },&#10;)$END$"
               description="New StatefulBuilder widget"
               toReformat="true"
               toShortenFQNames="true">
@@ -603,12 +595,16 @@
 
     <!--    StreamBuilder-->
     <template name="fstreambuilder"
-              value="StreamBuilder(stream: $STREAM$, builder: (BuildContext context, AsyncSnapshot snapshot) {if(snapshot.hasError) return $ERRORWIDGET$; switch (snapshot.connectionState) {case ConnectionState.none: return $DEFAULTWIDGET$;case ConnectionState.waiting: return $LOADINGWIDGET$;case ConnectionState.active: return $ACTIVEWIDGET$;case ConnectionState.done: return $FINISHEDWIDGET$;}return null; // unreachable}, ),"
+              value="StreamBuilder(&#10;  stream: $STREAM$, &#10;  builder: (BuildContext context, AsyncSnapshot snapshot) {&#10;    if(snapshot.hasError) {&#10;      return $ERRORWIDGET$; &#10;    }  &#10;    switch (snapshot.connectionState) {&#10;      case ConnectionState.none: &#10;        return $DEFAULTWIDGET$;&#10;      case ConnectionState.waiting: &#10;        return $LOADINGWIDGET$;&#10;      case ConnectionState.active: &#10;        return $ACTIVEWIDGET$;&#10;      case ConnectionState.done: &#10;        return $FINISHEDWIDGET$;&#10;    }&#10;    return null;&#10;  },&#10;),"
               description="New StreamBuilder widget"
               toReformat="true"
               toShortenFQNames="true">
         <variable name="STREAM"
                   expression="&quot;stream&quot;"
+                  defaultValue=""
+                  alwaysStopAt="true"/>
+        <variable name="ERRORWIDGET"
+                  expression=""
                   defaultValue=""
                   alwaysStopAt="true"/>
         <variable name="DEFAULTWIDGET"
@@ -650,10 +646,10 @@
     </template>
 
 
-    <!--    MediaQuery-->
+    <!--    MediaQuery by width-->
     <template name="fmedqw"
               value="MediaQuery.of(context).size.width"
-              description="Media query Width"
+              description="New MediaQuery by width widget"
               toReformat="true"
               toShortenFQNames="true">
         <context>
@@ -662,9 +658,10 @@
         </context>
     </template>
 
+    <!--    MediaQuery by height-->
     <template name="fmedqh"
               value="MediaQuery.of(context).size.height"
-              description="Media query Height"
+              description="New MediaQuery by height widget"
               toReformat="true"
               toShortenFQNames="true">
         <context>
