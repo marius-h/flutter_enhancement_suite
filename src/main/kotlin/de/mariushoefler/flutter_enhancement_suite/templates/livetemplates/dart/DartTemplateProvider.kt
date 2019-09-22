@@ -1,11 +1,11 @@
-package de.mariushoefler.flutter_enhancement_suite.livetemplates.flutter
+package de.mariushoefler.flutter_enhancement_suite.templates.livetemplates.dart
 
 import com.intellij.codeInsight.template.impl.DefaultLiveTemplatesProvider
 
-class FlutterTemplateProvider : DefaultLiveTemplatesProvider {
+class DartTemplateProvider : DefaultLiveTemplatesProvider {
 
 	override fun getDefaultLiveTemplateFiles(): Array<String> {
-		return arrayOf("liveTemplates/Flutter")
+		return arrayOf("liveTemplates/Dart")
 	}
 
 	override fun getHiddenLiveTemplateFiles(): Array<String>? {

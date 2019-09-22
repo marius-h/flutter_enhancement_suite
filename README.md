@@ -15,35 +15,66 @@ Tools for managing your pubspec.yaml, snippets & more
 <p>
 <img src="https://giant.gfycat.com/PastObviousAmericanquarterhorse.gif" width="400" alt="Autocomplete pub packages screenshot"/>
 <p>
+
+
+
 <h4>Update Pub Packages</h4>
 <p>If there's a new version available for a dependency, it will be highlighted. You can update these packages by opening the quick fix menu (Show Intention Actions) and choosing <em>"Update package"</em>.</p>
 <p>
 <img src="https://i.imgur.com/orIVdDj.png" width="400" alt="Update pub packages screenshot"/>
 <p>
+
+
+
 <h4>View Pub Package's Documentation</h4>
 <p>When auto-completing packages or viewing packages inside your pubspec.yaml, press <code>Ctrl+Q</code> to show additional information for the package such as its documentation or a link which leads to examples showing how to use the plugin. In order to get a larger dialog for reading the documentation, click the settings icon in the documentation dialog and select the option <em>"Open as tool window"</em>.</p>
 <p>
-<img src="https://i.imgur.com/xWelqpT.png" width="400" alt="View package's documentation screenshot"/>
+<img src="https://i.imgur.com/yTlNDiK.png" width="400" alt="View package's documentation screenshot"/>
 <p>
+
+
+
 <h4>Dart & Flutter Code Snippets</h4>
 A bunch of snippets/LiveTemplates for quicker coding. Use <code>Ctrl+Q</code> when hovering over a snippet to get a preview of it.<br>
-(<a href="https://github.com/marius-h/flutter_enhancement_suite/blob/master/SNIPPETS.md">Click here to view all</a>)
+<ul>
+    <li>Dart snippets (<a href="https://github.com/marius-h/flutter_enhancement_suite/blob/master/SNIPPETS.md#dart-code-snippets">Show snippets</a>)</li>
+    <li>Flutter snippets (<a href="https://github.com/marius-h/flutter_enhancement_suite/blob/master/SNIPPETS.md#flutter-widget-snippets">Show snippets</a>)</li>
+    <li>Flutter Hooks snippets (<a href="https://github.com/marius-h/flutter_enhancement_suite/blob/master/SNIPPETS.md#flutter-hooks-snippets">Show snippets</a>)</li>
+</ul>
 <p>
+
+
+
 <h4>Generate Widgets</h4>
 <p>When creating a new file, choose the <em>"New Flutter Widget"</em> option.
 Enter the name for your widget and select its type.</p>
 <p>
 <img src="https://i.imgur.com/FKQtOVa.png" width="400" alt="Generate widgets screenshot"/>
 <p>
+
+
+
 <h4>Generate Blocs</h4>
 <p>When creating a new file, choose the <em>"New Flutter Bloc"</em> option.
 Enter a name for your bloc and it will automatically generate all required classes for you.<br>
 
 ><strong>Please note:</strong> This requires you to add the package <a href="https://pub.dev/packages/bloc">bloc</a> to your pub dependencies.
 <p>
+
+
+
+<h4>Edit Linting Rules</h4>
+<p>When viewing the <em>"analysis_options.yaml"</em> file, 
+select the "Linter Rules Editor" tab at the bottom to see all linting options available.
+</p>
+<p>
+<img src="https://i.imgur.com/kg9GeiY.png" width="400" alt="Edit linting rules screenshot"/>
+<p>
+
+
+
 <h4>Icon Previews</h4>
-<p>When creating a new file, choose the <em>"New Flutter Bloc"</em> option.
-Enter a name for your bloc and it will automatically generate all required classes for you.<br>
+<p>Preview icons from different icon packs in the sidebar.<br>
 
 ><strong>Please note:</strong> This requires you to add the package <a href="https://pub.dev/packages/flutter_vector_icons">flutter_vector_icons</a> to your pub dependencies. The only compatible iconpacks for now are FontAwesome, Ionicons and MaterialCommunityIcons.</p>
 <p>
@@ -67,6 +98,15 @@ You can install plugin directly from IntelliJ IDEA or Android Studio:
 * Open up a [pull request](https://github.com/marius-h/flutter_enhancement_suite/pulls)
 
 ## :fire:&nbsp;What's new?
+
+### 1.3
+<ul>
+    <li>Added GUI for editing linting rules</li>
+    <li>Added refactor option to extract widgets to a new file (#13)</li>
+    <li>Added snippets for Flutter Hooks (#14)</li>
+    <li>Added more dart snippets (#10)</li>
+    <li>Fixed PicoPluginExtensionInitializationException (#16)</li>
+</ul>
 
 ### 1.2
 <ul>

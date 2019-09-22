@@ -25,7 +25,195 @@
         </context>
     </template>
 
-    <!--    AnimatedBuilder    -->
+    <!--    HookWidget-->
+    <template name="hook"
+              value="class $NAME$ extends HookWidget {&#10;  const $NAME$({Key key}) : super(key: key);&#10;  &#10;  @override&#10;  Widget build(BuildContext context) {&#10;    $END$&#10;  }&#10;}"
+              description="New Hook widget"
+              toReformat="false"
+              toShortenFQNames="true">
+        <variable name="NAME"
+                  expression=""
+                  defaultValue=""
+                  alwaysStopAt="true"/>
+        <context>
+            <option name="DART_TOPLEVEL"
+                    value="true"/>
+        </context>
+    </template>
+
+    <template name="uAnim"
+              value="useAnimation&lt;$T$&gt;($animation$)"
+              description="New useAnimation function"
+              toReformat="false"
+              toShortenFQNames="true">
+        <variable name="T"
+                  expression=""
+                  defaultValue=""
+                  alwaysStopAt="true"/>
+        <variable name="animation"
+                  expression=""
+                  defaultValue=""
+                  alwaysStopAt="true"/>
+        <context>
+            <option name="DART_STATEMENT"
+                    value="true"/>
+        </context>
+    </template>
+
+    <template name="uAnimCont"
+              value="useAnimationController({&#10;  $duration$, &#10;  debugLabel, &#10;  initialValue: 0, &#10;  lowerBound: 0, &#10;  upperBound: 1, &#10;  vsync, &#10;  animationBehavior: AnimationBehavior.normal, &#10;  keys, &#10;}) "
+              description="New useAnimationController function"
+              toReformat="false"
+              toShortenFQNames="true">
+        <variable name="duration"
+                  expression=""
+                  defaultValue=""
+                  alwaysStopAt="true"/>
+        <context>
+            <option name="DART_STATEMENT"
+                    value="true"/>
+        </context>
+    </template>
+
+    <template name="uContext"
+              value="useContext()"
+              description="New useContext function"
+              toReformat="false"
+              toShortenFQNames="true">
+        <context>
+            <option name="DART_STATEMENT"
+                    value="true"/>
+        </context>
+    </template>
+
+    <template name="uEffect"
+              value="useEffect(() {&#10;  $END$&#10;})"
+              description="New useEffect function"
+              toReformat="false"
+              toShortenFQNames="true">
+        <context>
+            <option name="DART_STATEMENT"
+                    value="true"/>
+        </context>
+    </template>
+
+    <template name="uFuture"
+              value="useFuture($future$)"
+              description="New useFuture function"
+              toReformat="false"
+              toShortenFQNames="true">
+        <variable name="future"
+                  expression=""
+                  defaultValue=""
+                  alwaysStopAt="true"/>
+        <context>
+            <option name="DART_STATEMENT"
+                    value="true"/>
+        </context>
+    </template>
+
+    <template name="uListenable"
+              value="useListenable($listenable$)"
+              description="New useListenable function"
+              toReformat="false"
+              toShortenFQNames="true">
+        <variable name="listenable"
+                  expression=""
+                  defaultValue=""
+                  alwaysStopAt="true"/>
+        <context>
+            <option name="DART_STATEMENT"
+                    value="true"/>
+        </context>
+    </template>
+
+    <template name="uMem"
+              value="useMemoized(() {&#10;  $END$&#10;})"
+              description="New useMemoized function"
+              toReformat="false"
+              toShortenFQNames="true">
+        <context>
+            <option name="DART_STATEMENT"
+                    value="true"/>
+        </context>
+    </template>
+
+    <template name="uState"
+              value="useState($initialData$)"
+              description="New useState function"
+              toReformat="false"
+              toShortenFQNames="true">
+        <variable name="initialData"
+                  expression=""
+                  defaultValue=""
+                  alwaysStopAt="true"/>
+        <context>
+            <option name="DART_STATEMENT"
+                    value="true"/>
+        </context>
+    </template>
+
+    <template name="uStream"
+              value="useStream($stream$)"
+              description="New useStream function"
+              toReformat="false"
+              toShortenFQNames="true">
+        <variable name="stream"
+                  expression=""
+                  defaultValue=""
+                  alwaysStopAt="true"/>
+        <context>
+            <option name="DART_STATEMENT"
+                    value="true"/>
+        </context>
+    </template>
+
+    <template name="uValChanged"
+              value="useValueChanged($value$, (oldValue, oldResult) {&#10;  $END$      &#10;})"
+              description="New useValueChanged function"
+              toReformat="false"
+              toShortenFQNames="true">
+        <variable name="value"
+                  expression=""
+                  defaultValue=""
+                  alwaysStopAt="true"/>
+        <context>
+            <option name="DART_STATEMENT"
+                    value="true"/>
+        </context>
+    </template>
+
+    <template name="uValListenable"
+              value="useValueListenable($valueListenable$)"
+              description="New useValueListenable function"
+              toReformat="false"
+              toShortenFQNames="true">
+        <variable name="valueListenable"
+                  expression=""
+                  defaultValue=""
+                  alwaysStopAt="true"/>
+        <context>
+            <option name="DART_STATEMENT"
+                    value="true"/>
+        </context>
+    </template>
+
+    <template name="uValNotifier"
+              value="useValueNotifier($initialData$)"
+              description="New useValueNotifier function"
+              toReformat="false"
+              toShortenFQNames="true">
+        <variable name="initialData"
+                  expression=""
+                  defaultValue=""
+                  alwaysStopAt="true"/>
+        <context>
+            <option name="DART_STATEMENT"
+                    value="true"/>
+        </context>
+    </template>
+
+    <!--    AnimatedBuilder-->
     <template name="fanimbuilder"
               value="AnimatedBuilder(&#10;  animation: $animationController$,&#10;  child: $childWidget$,&#10;  builder: (BuildContext context, Widget child) {&#10;    return $buildWidget$;&#10;  },&#10;)$END$"
               description="New AnimatedBuilder widget"

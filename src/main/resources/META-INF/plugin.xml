@@ -5,49 +5,79 @@
     <idea-version since-build="183.6156"/>
 
     <description><![CDATA[
-    The essential plugin for making working with Flutter easier than ever!
-    <p>
-    Tools for managing your pubspec.yaml, snippets & more
-    <p>
-    <h1>Features</h1>
-    <h3>Autocomplete Pub Packages</h3>
-    <p>When adding a new package to your pubspec.yaml file, suggestions will show up. After auto-completing the name, the latest version will be added automatically.</p><br>
-    <p>
-    <img src="https://giant.gfycat.com/PastObviousAmericanquarterhorse.gif" width="400" alt="Autocomplete pub packages screenshot"/>
-    <p>
-    <h3>Update Pub Packages</h3>
-    <p>If there's a new version available for a package, it will be highlighted. You can update these packages by opening the quick fix menu (Show Intention Actions) and choosing <em>"Update package"</em>.</p><br>
-    <p>
-    <img src="https://i.imgur.com/orIVdDj.png" width="400" alt="Update pub packages screenshot"/>
-    <p>
-    <h3>View Pub Package's Documentation</h3>
-    <p>When auto-completing packages or viewing packages inside your pubspec.yaml, press <code>Ctrl+Q</code> to show additional information for the package such as its documentation or a link which leads to examples showing how to use the plugin. In order to get a larger dialog for reading the documentation, click the settings icon in the documentation dialog and select the option <em>"Open as tool window"</em>.</p><br>
-    <p>
-    <img src="https://i.imgur.com/xWelqpT.png" width="400" alt="View package's documentation screenshot"/>
-    <p>
-    <h3>Dart & Flutter Code Snippets</h3>
-    A bunch of snippets/LiveTemplates for quicker coding. Use <code>Ctrl+Q</code> when hovering over a snippet to get a preview of it.<br>
-    (<a href="https://github.com/marius-h/flutter_enhancement_suite/blob/master/SNIPPETS.md">Click here to view all</a>)
-    <p>
-    <h3>Generate Widgets</h3>
-    <p>When creating a new file, choose the <em>"New Flutter Widget"</em> option.
-    Enter the name for your widget and select its type.</p><br>
-    <p>
-    <img src="https://i.imgur.com/FKQtOVa.png" width="400" alt="Generate widgets screenshot"/>
-    <p>
-    <h3>Generate Blocs</h3>
-    When creating a new file, choose the <em>"New Flutter Bloc"</em> option.
-    Enter a name for your bloc and it will automatically generate all required classes for you.<br>
-    <strong>Please note:</strong> This requires you to add the package <em>"bloc"</em> to your pub dependencies.
-    <p>
-    <h3>Icon Previews</h3>
-    <p>When creating a new file, choose the <em>"New Flutter Bloc"</em> option.
-    Enter a name for your bloc and it will automatically generate all required classes for you.<br>
-    <strong>Please note:</strong> This requires you to add the package <em>"flutter_vector_icons"</em> to your pub dependencies. The only compatible iconpacks for now are FontAwesome, Ionicons and MaterialCommunityIcons.</p><br>
-    <p>
-    <img src="https://i.imgur.com/JB9MkjA.png" width="400" alt="Icon previews screenshot"/>
-    <p>
-    ]]></description>
+        <h3>The essential plugin for making working with Flutter easier than ever!</h3>
+        <br>
+        <p>Tools for managing your pubspec.yaml, snippets & more<p>
+
+
+        <h1>Features</h1>
+
+        <h2>Autocomplete Pub Packages</h2>
+        <p>When adding a new package to your pubspec.yaml file, suggestions will show up. After auto-completing the name, the latest version will be added automatically.</p><br>
+        <p>
+            <img src="https://giant.gfycat.com/PastObviousAmericanquarterhorse.gif" width="400" alt="Autocomplete pub packages screenshot"/>
+        <p>
+
+
+        <h2>Update Pub Packages</h2>
+        <p>If there's a new version available for a package, it will be highlighted. You can update these packages by opening the quick fix menu (Show Intention Actions) and choosing <em>"Update
+            package"</em>.</p><br>
+        <p>
+            <img src="https://i.imgur.com/orIVdDj.png" width="400" alt="Update pub packages screenshot"/>
+        <p>
+
+
+        <h2>View Pub Package's Documentation</h2>
+        <p>When auto-completing packages or viewing packages inside your pubspec.yaml, press <code>Ctrl+Q</code> to show additional information for the package such as its documentation or a link
+            which leads to examples showing how to use the plugin. In order to get a larger dialog for reading the documentation, click the settings icon in the documentation dialog and select the
+            option <em>"Open as tool window"</em>.</p><br>
+        <p>
+            <img src="https://i.imgur.com/yTlNDiK.png" width="400" alt="View package's documentation screenshot"/>
+        <p>
+
+
+        <h2>Dart & Flutter Code Snippets</h2>
+        A bunch of snippets/LiveTemplates for quicker coding. Use <code>Ctrl+Q</code> when hovering over a snippet to get a preview of it.<br>
+        <ul>
+            <li>Dart snippets (<a href="https://github.com/marius-h/flutter_enhancement_suite/blob/master/SNIPPETS.md#dart-code-snippets">Show snippets</a>)</li>
+            <li>Flutter snippets (<a href="https://github.com/marius-h/flutter_enhancement_suite/blob/master/SNIPPETS.md#flutter-widget-snippets">Show snippets</a>)</li>
+            <li>Flutter Hooks snippets (<a href="https://github.com/marius-h/flutter_enhancement_suite/blob/master/SNIPPETS.md#flutter-hooks-snippets">Show snippets</a>)</li>
+        </ul>
+        <p>
+
+
+        <h2>Generate Widgets</h2>
+        <p>When creating a new file, choose the <em>"New Flutter Widget"</em> option.
+            Enter the name for your widget and select its type.</p><br>
+        <p>
+            <img src="https://i.imgur.com/FKQtOVa.png" width="400" alt="Generate widgets screenshot"/>
+        <p>
+
+
+        <h2>Generate Blocs</h2>
+        When creating a new file, choose the <em>"New Flutter Bloc"</em> option.
+        Enter a name for your bloc and it will automatically generate all required classes for you.<br>
+        <strong>Please note:</strong> This requires you to add the package <em>"bloc"</em> to your pub dependencies.
+        <p>
+
+
+        <h2>Edit Linting Rules</h2>
+        <p>When viewing the <em>"analysis_options.yaml"</em> file,
+            select the "Linter Rules Editor" tab at the bottom to see all linting options available.
+        </p><br>
+        <p>
+            <img src="https://i.imgur.com/kg9GeiY.png" width="400" alt="Edit linting rules screenshot"/>
+        <p>
+
+
+        <h2>Icon Previews</h2>
+        <p>Preview icons from different icon packs in the sidebar.<br>
+            <strong>Please note:</strong> This requires you to add the package <em>"flutter_vector_icons"</em> to your pub dependencies. The only compatible iconpacks for now are FontAwesome, Ionicons
+            and MaterialCommunityIcons.</p><br>
+        <p>
+            <img src="https://i.imgur.com/JB9MkjA.png" width="400" alt="Icon previews screenshot"/>
+        <p>
+        ]]></description>
 
     <depends>com.intellij.modules.lang</depends>
     <depends>com.intellij.modules.java</depends>
@@ -58,12 +88,14 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!--        Dart Code Snippets-->
-        <defaultLiveTemplatesProvider implementation="de.mariushoefler.flutter_enhancement_suite.livetemplates.dart.DartTemplateProvider"/>
-        <liveTemplateContext implementation="de.mariushoefler.flutter_enhancement_suite.livetemplates.dart.DartContext"/>
+        <defaultLiveTemplatesProvider implementation="de.mariushoefler.flutter_enhancement_suite.templates.livetemplates.dart.DartTemplateProvider"/>
+        <liveTemplateContext implementation="de.mariushoefler.flutter_enhancement_suite.templates.livetemplates.dart.DartContext"/>
+        <codeInsight.template.postfixTemplateProvider implementationClass="de.mariushoefler.flutter_enhancement_suite.templates.postfixtemplates.FlutterPostfixTemplateProvider"
+                                                      language="Dart"/>
 
         <!--        Flutter Widget Snippets-->
-        <defaultLiveTemplatesProvider implementation="de.mariushoefler.flutter_enhancement_suite.livetemplates.flutter.FlutterTemplateProvider"/>
-        <liveTemplateContext implementation="de.mariushoefler.flutter_enhancement_suite.livetemplates.flutter.FlutterContext"/>
+        <defaultLiveTemplatesProvider implementation="de.mariushoefler.flutter_enhancement_suite.templates.livetemplates.flutter.FlutterTemplateProvider"/>
+        <liveTemplateContext implementation="de.mariushoefler.flutter_enhancement_suite.templates.livetemplates.flutter.FlutterContext"/>
 
         <!--        Pub package version checker-->
         <inspectionToolProvider implementation="de.mariushoefler.flutter_enhancement_suite.pub.PackagesInspectionProvider"/>
@@ -77,10 +109,10 @@
                    implementationClass="de.mariushoefler.flutter_enhancement_suite.editor.FlutterEditorAnnotator"/>
 
         <!--        Snippet Preview-->
-        <documentationProvider implementation="de.mariushoefler.flutter_enhancement_suite.livetemplates.LiveTemplatePreviewProvider"
+        <documentationProvider implementation="de.mariushoefler.flutter_enhancement_suite.templates.livetemplates.LiveTemplatePreviewProvider"
                                order="first"/>
         <lang.documentationProvider language="HTML"
-                                    implementationClass="de.mariushoefler.flutter_enhancement_suite.livetemplates.LiveTemplatePreviewProvider"
+                                    implementationClass="de.mariushoefler.flutter_enhancement_suite.templates.livetemplates.LiveTemplatePreviewProvider"
                                     order="first"/>
 
         <!--        File Templates-->
@@ -96,12 +128,9 @@
                    order="first"
                    language="yaml"/>
 
-<!--        <psi.referenceProvider providerClass="de.mariushoefler.flutter_enhancement_suite.actions.RefProvider"/>-->
+        <fileEditorProvider implementation="de.mariushoefler.flutter_enhancement_suite.editor.linter.LinterEditorProvider"/>
 
-
-        <!--        <referenceProviderType key="commentsReferenceProvider"
-                                       implementationClass="de.mariushoefler.flutter_enhancement_suite.actions.DocProvider"/>
-                <psi.referenceContributor implementation="de.mariushoefler.flutter_enhancement_suite.actions.UrlReferenceContributor"/>-->
+        <!--        <psi.referenceProvider providerClass="de.mariushoefler.flutter_enhancement_suite.pub.PubHomepageProvider" language="yaml"/>-->
     </extensions>
 
     <extensions defaultExtensionNs="Dart">
@@ -125,6 +154,15 @@
             <add-to-group group-id="NewGroup"
                           anchor="after"
                           relative-to-action="Flutter.NewWidget"/>
+        </action>
+        <action id="Flutter.ExtractWidgetToFile"
+                class="de.mariushoefler.flutter_enhancement_suite.actions.ExtractWidgetToFileAction"
+                text="Extract Widget to File">
+            <add-to-group group-id="RefactoringMenu"
+                          relative-to-action="RefactoringMenu1"
+                          anchor="after"/>
+            <keyboard-shortcut keymap="$default"
+                               first-keystroke="ctrl alt E"/>
         </action>
     </actions>
 </idea-plugin>

@@ -1,6 +1,7 @@
 package de.mariushoefler.flutter_enhancement_suite.utils
 
 import com.intellij.psi.PsiFile
+import com.jetbrains.lang.dart.util.PubspecYamlUtil
 import de.mariushoefler.flutter_enhancement_suite.pub.DependencyChecker
 import de.mariushoefler.flutter_enhancement_suite.pub.UnableToGetLatestVersionException
 import kotlinx.coroutines.*
@@ -59,7 +60,7 @@ class FileParser(
 }
 
 public fun PsiFile.isPubspecFile(): Boolean {
-    return fileType.defaultExtension == YML_EXTENSIONS && name.contains("pubspec")
+    return PubspecYamlUtil.isPubspecFile(this.virtualFile)
 }
 
 private fun PsiFile.readPackageLines(): List<Pair<String, Int>> {

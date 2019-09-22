@@ -1,32 +1,38 @@
 # Flutter Enhancement Suite - Snippets :scissors: 
 
-[![Pub](https://img.shields.io/jetbrains/plugin/v/12693-flutter-enhancement-suite.svg?label=Flutter%20Enhancement%20Suite)](https://plugins.jetbrains.com/plugin/12693-flutter-enhancement-suite)
+- [Dart Snippets](https://github.com/marius-h/flutter_enhancement_suite/blob/master/SNIPPETS.md#dart-code-snippets)
+- [Flutter Snippets](https://github.com/marius-h/flutter_enhancement_suite/blob/master/SNIPPETS.md#flutter-widget-snippets)
+- [Hooks Snippets](https://github.com/marius-h/flutter_enhancement_suite/blob/master/SNIPPETS.md#flutter-hooks-snippets)
 
 ## Dart Code Snippets
 
-| Snippet    | Description                                        |
-| ---------- | -------------------------------------------------- |
-| `dvar`     | Dart variable declaration using `var`              |
-| `dfinal`   | Dart variable declaration using `final`            |
-| `dconst`   | Dart variable declaration using `const`            |
-| `dinvar`   | Dart public Instance variable                      |
-| `dprinvar` | Dart private instance variable                     |
-| `dmt`      | Dart public method                                 |
-| `dprmt`    | Dart private method                                |
-| `darr`     | Dart public arrow function                         |
-| `dprarr`   | Dart private arrow function                        |
-| `doconst`  | Dart optional named parameters constructor         |
-| `dnconst`  | Dart optional named constructor                    |
-| `dlist`    | Dart `List` collection                             |
-| `dmap`     | Dart `Map` collection                              |
-| `dset`     | Dart `Set` collection                              |
-| `dgetarr`  | Dart arrow function getter                         |
-| `dimpas`   | Dart `import as`                                   |
-| `dimpshow` | Dart `import show`                                 |
-| `dimpdeff` | Dart `import deffered as`                          |
-| `dimphide` | Dart `import hide`                                 |
-| `dexphide` | Dart `export hide`                                 |
-| `dexpshow` | Dart `export show`                                 |
+| Snippet       | Description                                        |
+| --------------| -------------------------------------------------- |
+| `var`         | Dart variable declaration using `var`              |
+| `final`       | Dart variable declaration using `final`            |
+| `const`       | Dart variable declaration using `const`            |
+| `invar`       | Dart public Instance variable                      |
+| `prinvar`     | Dart private instance variable                     |
+| `mt`          | Dart public method                                 |
+| `prmt`        | Dart private method                                |
+| `arr`         | Dart public arrow function                         |
+| `prarr`       | Dart private arrow function                        |
+| `oconst`      | Dart optional named parameters constructor         |
+| `nconst`      | Dart optional named constructor                    |
+| `list`        | Dart `List` collection                             |
+| `map`         | Dart `Map` collection                              |
+| `set`         | Dart `Set` collection                              |
+| `getarr`      | Dart arrow function getter                         |
+| `impas`       | Dart `import as`                                   |
+| `impshow`     | Dart `import show`                                 |
+| `impdeff`     | Dart `import deffered as`                          |
+| `imphide`     | Dart `import hide`                                 |
+| `exphide`     | Dart `export hide`                                 |
+| `expshow`     | Dart `export show`                                 |
+| `switch case` | Dart switch statement                              |
+| `if`          | Dart if statement                                  |
+| `if else`     | Dart if/else statement                             |
+| `main`        | Dart main method                                   |
 
 ## Flutter Widget Snippets
 
@@ -69,3 +75,22 @@
 | `fstfulbuilder` | Flutter `StatefulBuilder` widget                                                           |
 | `fstreambuilder`| Flutter `StreamBuilder` widget                                                             |
 | `ftext`         | Flutter `Text` widget                                                                      |
+
+
+## Flutter Hooks Snippets
+
+| Snippet            | Description                           |
+| -------------------| --------------------------------------|
+| `hook`             | New `Hook` widget                     |
+| `uAnim`            | New `useAnimation` function           |
+| `uAnimCont`        | New `useAnimationController` function |
+| `uContext`         | New `useContext` function             |
+| `uEffect`          | New `useEffect` function              |
+| `uFuture`          | New `useFuture` function              |
+| `uListenable`      | New `useListenable` function          |
+| `uMem`             | New `useMemoized` function            |
+| `uState`           | New `useState` function               |
+| `uStream`          | New `useStream` function              |
+| `uValChanged`      | New `useValueChanged` function        |
+| `uValListenable`   | New `useValueListenable` function     |
+| `uValNotifier`     | New `useValueNotifier` function       |

@@ -1,4 +1,4 @@
-package de.mariushoefler.flutter_enhancement_suite.livetemplates
+package de.mariushoefler.flutter_enhancement_suite.templates.livetemplates
 
 import com.intellij.codeInsight.template.impl.LiveTemplateLookupElementImpl
 import com.intellij.lang.documentation.AbstractDocumentationProvider

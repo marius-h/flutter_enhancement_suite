@@ -1,4 +1,4 @@
-package de.mariushoefler.flutter_enhancement_suite.actions
+package de.mariushoefler.flutter_enhancement_suite.pub
 
 import com.intellij.openapi.paths.WebReference
 import com.intellij.psi.PsiElement
@@ -8,15 +8,13 @@ import com.intellij.util.ProcessingContext
 import de.mariushoefler.flutter_enhancement_suite.utils.isPubPackageName
 import de.mariushoefler.flutter_enhancement_suite.utils.isPubspecFile
 
-// TODO: implement ctrl+click to open package's homepage directly
-class RefProvider : PsiReferenceProvider() {
+class PubHomepageProvider : PsiReferenceProvider() {
 	override fun getReferencesByElement(element: PsiElement, context: ProcessingContext): Array<PsiReference> {
-		println("getReferencesByElement")
-		if (element.containingFile.isPubspecFile() && element.text.isPubPackageName()) {
-//			val text = element.firstChild.text
-//			println(text)
-			arrayOf(WebReference(element, element.textRangeInParent, "https://github.com/"))
-		}
-		return arrayOf()
+		println("PubHomepageProvider.getReferencesByElement: ${element.text}")
+		if (!(element.containingFile.isPubspecFile() && element.text.isPubPackageName())) return emptyArray()
+
+		println("Add reference to ${element.text}")
+
+		return arrayOf(WebReference(element, element.textRangeInParent, "https://github.com/"))
 	}
 }

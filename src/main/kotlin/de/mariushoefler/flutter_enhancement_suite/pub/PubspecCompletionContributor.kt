@@ -4,7 +4,6 @@ import com.intellij.codeInsight.completion.*
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.openapi.editor.Editor
-import com.intellij.openapi.project.ProjectLocator
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.patterns.PlatformPatterns
 import com.intellij.util.ProcessingContext
@@ -12,8 +11,6 @@ import de.mariushoefler.flutter_enhancement_suite.models.PubPackageResult
 import de.mariushoefler.flutter_enhancement_suite.utils.FlutterProjectUtils
 import de.mariushoefler.flutter_enhancement_suite.utils.PubApi
 import icons.DartIcons
-import io.flutter.pub.PubRoot
-import io.flutter.sdk.FlutterSdk
 
 class PubspecCompletionContributor : CompletionContributor() {
 
@@ -41,6 +38,13 @@ class PubspecCompletionProvider : CompletionProvider<CompletionParameters>() {
 			context: ProcessingContext,
 			result: CompletionResultSet
 	) {
+		if (file == null) {
+			file = parameters.originalFile.virtualFile
+		}
+		println(file?.nameWithoutExtension)
+
+		file?.let { if (it.nameWithoutExtension != "pubspec") return }
+
 		val userInput = result.prefixMatcher.prefix
 
 		result.addLookupAdvertisement("Packages from pub.dev")
@@ -49,9 +53,6 @@ class PubspecCompletionProvider : CompletionProvider<CompletionParameters>() {
 		if (lastSearchterm == userInput) {
 			result.addAllElements(lastResults)
 		} else if (userInput.length > 2) {
-			if (file == null) {
-				file = parameters.originalFile.virtualFile
-			}
 			lastSearchterm = userInput
 			lastResults.clear()
 			for (page in 1..2) {
@@ -82,9 +83,3 @@ class PubspecCompletionProvider : CompletionProvider<CompletionParameters>() {
 		}
 	}
 }
-
-//data class TestModel(val test: String) {
-//	class Deserializer : ResponseDeserializable<TestModel> {
-//		override fun deserialize(content: String): TestModel? = Gson().fromJson(content, TestModel::class.java)
-//	}
-//}

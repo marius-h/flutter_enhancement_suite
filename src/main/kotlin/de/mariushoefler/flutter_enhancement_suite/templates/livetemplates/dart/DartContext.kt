@@ -1,4 +1,4 @@
-package de.mariushoefler.flutter_enhancement_suite.livetemplates.dart
+package de.mariushoefler.flutter_enhancement_suite.templates.livetemplates.dart
 
 import com.intellij.codeInsight.template.TemplateContextType
 import com.intellij.psi.PsiFile

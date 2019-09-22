@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templateSet group="Dart">
 
-    <template name="dvar"
+    <template name="var"
               value="var $variableName$;"
               description="Dart 'var' variable"
               toReformat="false"
@@ -16,7 +16,7 @@
         </context>
     </template>
 
-    <template name="dfinal"
+    <template name="final"
               value="final $type$ $variableName$ = $END$;"
               description="Dart 'final' variable"
               toReformat="false"
@@ -35,7 +35,7 @@
         </context>
     </template>
 
-    <template name="dconst"
+    <template name="const"
               value="const $type$ $variableName$ = $END$;"
               description="Dart 'const' variable"
               toReformat="false"
@@ -54,7 +54,7 @@
         </context>
     </template>
 
-    <template name="dinvar"
+    <template name="invar"
               value="$type$ $variableName$;"
               description="Dart public instance variable"
               toReformat="false"
@@ -73,7 +73,7 @@
         </context>
     </template>
 
-    <template name="dprinvar"
+    <template name="prinvar"
               value="$type$ _$variableName$;"
               description="Dart private instance variable"
               toReformat="false"
@@ -92,7 +92,7 @@
         </context>
     </template>
 
-    <template name="dmt"
+    <template name="mt"
               value="$returnType$ $methodName$($param$) $async$ {&#10;  $END$&#10;}&#10;  "
               description="Dart public method"
               toReformat="false"
@@ -119,7 +119,7 @@
         </context>
     </template>
 
-    <template name="dprmt"
+    <template name="prmt"
               value="$returnType$ _$methodName$($param$) $async$ {&#10;  $END$&#10;}&#10;  "
               description="Dart private method"
               toReformat="false"
@@ -146,7 +146,7 @@
         </context>
     </template>
 
-    <template name="darr"
+    <template name="arr"
               value="$returnType$ $methodName$($param$) $async$ =&gt; $END$;&#10;  "
               description="Dart public arrow function"
               toReformat="false"
@@ -173,7 +173,7 @@
         </context>
     </template>
 
-    <template name="dprarr"
+    <template name="prarr"
               value="$returnType$ _$methodName$($param$) $async$ =&gt; $END$;&#10;  "
               description="Dart private arrow function"
               toReformat="false"
@@ -200,7 +200,7 @@
         </context>
     </template>
 
-    <template name="dnconst"
+    <template name="nconst"
               value="$CLASS$.$constName$($END$);"
               description="Dart named constructor"
               toReformat="false"
@@ -219,7 +219,7 @@
         </context>
     </template>
 
-    <template name="doconst"
+    <template name="oconst"
               value="$CLASS$({$END$});"
               description="Dart optional constructor"
               toReformat="false"
@@ -234,7 +234,7 @@
         </context>
     </template>
 
-    <template name="dlist"
+    <template name="list"
               value="List&lt;$type$&gt; $listName$"
               description="Dart 'List' collection"
               toReformat="false"
@@ -253,7 +253,7 @@
         </context>
     </template>
 
-    <template name="dmap"
+    <template name="map"
               value="Map&lt;$key$, $value$&gt; $mapName$"
               description="Dart 'Map' collection"
               toReformat="false"
@@ -276,7 +276,7 @@
         </context>
     </template>
 
-    <template name="dset"
+    <template name="set"
               value="Set&lt;$type$&gt; $setName$"
               description="Dart 'Set' collection"
               toReformat="false"
@@ -295,7 +295,7 @@
         </context>
     </template>
 
-    <template name="dgetarr"
+    <template name="getarr"
               value="$returnType$ get $name$ =&gt; $returnValue$;&#10;  "
               description="Dart getter arrow function"
               toReformat="false"
@@ -318,7 +318,7 @@
         </context>
     </template>
 
-    <template name="dimpas"
+    <template name="impas"
               value="import '$packageName$' as $alias$;"
               description="Dart 'import as'"
               toReformat="false"
@@ -337,7 +337,7 @@
         </context>
     </template>
 
-    <template name="dimpshow"
+    <template name="impshow"
               value="import '$packageName$' show $member$;"
               description="Dart 'import show'"
               toReformat="false"
@@ -351,12 +351,12 @@
                   defaultValue=""
                   alwaysStopAt="true"/>
         <context>
-            <option name="DART"
+            <option name="DART_TOPLEVEL"
                     value="true"/>
         </context>
     </template>
 
-    <template name="dimpdeff"
+    <template name="impdeff"
               value="import '$packageName$' deferred as $alias$;"
               description="Dart 'import deffered as'"
               toReformat="false"
@@ -370,12 +370,12 @@
                   defaultValue=""
                   alwaysStopAt="true"/>
         <context>
-            <option name="DART"
+            <option name="DART_TOPLEVEL"
                     value="true"/>
         </context>
     </template>
 
-    <template name="dimphide"
+    <template name="imphide"
               value="import '$packageName$' hide $excludedMember$;"
               description="Dart 'import hide'"
               toReformat="false"
@@ -389,12 +389,12 @@
                   defaultValue=""
                   alwaysStopAt="true"/>
         <context>
-            <option name="DART"
+            <option name="DART_TOPLEVEL"
                     value="true"/>
         </context>
     </template>
 
-    <template name="dexphide"
+    <template name="exphide"
               value="export '$file$' hide $excludedMember$;"
               description="Dart 'export hide'"
               toReformat="false"
@@ -408,12 +408,12 @@
                   defaultValue=""
                   alwaysStopAt="true"/>
         <context>
-            <option name="DART"
+            <option name="DART_TOPLEVEL"
                     value="true"/>
         </context>
     </template>
 
-    <template name="dexpshow"
+    <template name="expshow"
               value="export '$file$' show $member$;"
               description="Dart 'export show'"
               toReformat="false"
@@ -426,6 +426,70 @@
                   expression="&quot;member&quot;"
                   defaultValue=""
                   alwaysStopAt="true"/>
+        <context>
+            <option name="DART_TOPLEVEL"
+                    value="true"/>
+        </context>
+    </template>
+
+    <template name="switch case"
+              value="switch($var$) {&#10;  case $case$:&#10;    $action$&#10;    break;&#10;  default:&#10;}&#10;  "
+              description="Dart switch statement"
+              toReformat="false"
+              toShortenFQNames="true">
+        <variable name="var"
+                  expression=""
+                  defaultValue=""
+                  alwaysStopAt="true"/>
+        <variable name="case"
+                  expression=""
+                  defaultValue=""
+                  alwaysStopAt="true"/>
+        <variable name="action"
+                  expression=""
+                  defaultValue=""
+                  alwaysStopAt="true"/>
+        <context>
+            <option name="DART"
+                    value="true"/>
+        </context>
+    </template>
+
+    <template name="if"
+              value="if ($condition$) {&#10;  $END$&#10;}  "
+              description="Dart if statement"
+              toReformat="false"
+              toShortenFQNames="true">
+        <variable name="condition"
+                  expression=""
+                  defaultValue=""
+                  alwaysStopAt="true"/>
+        <context>
+            <option name="DART"
+                    value="true"/>
+        </context>
+    </template>
+
+    <template name="if else"
+              value="if ($condition$) {&#10;  $END$&#10;} else {&#10;  $END$&#10;}"
+              description="Dart if/else statement"
+              toReformat="false"
+              toShortenFQNames="true">
+        <variable name="condition"
+                  expression=""
+                  defaultValue=""
+                  alwaysStopAt="true"/>
+        <context>
+            <option name="DART"
+                    value="true"/>
+        </context>
+    </template>
+
+    <template name="main"
+              value="main() {&#10;  $END$&#10;}"
+              description="Dart main method"
+              toReformat="false"
+              toShortenFQNames="true">
         <context>
             <option name="DART"
                     value="true"/>
