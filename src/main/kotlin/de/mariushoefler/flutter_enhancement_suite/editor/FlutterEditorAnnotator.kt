@@ -10,6 +10,7 @@ import com.jetbrains.lang.dart.psi.DartReferenceExpression
 import de.mariushoefler.flutter_enhancement_suite.editor.icons.FontAwesomeIcons
 import de.mariushoefler.flutter_enhancement_suite.editor.icons.IonIcons
 import de.mariushoefler.flutter_enhancement_suite.editor.icons.MaterialCommunityIcons
+import de.mariushoefler.flutter_enhancement_suite.editor.icons.MdiIcons
 import javax.swing.Icon
 
 
@@ -29,6 +30,9 @@ class FlutterEditorAnnotator : Annotator {
 				}
 				text.startsWith("FontAwesome.") -> {
 					findIcon(text, "FontAwesome.", FontAwesomeIcons)
+				}
+				text.startsWith("MdiIcons.") -> {
+					findIcon(text, "MdiIcons.", MdiIcons)
 				}
 				else -> null
 			}

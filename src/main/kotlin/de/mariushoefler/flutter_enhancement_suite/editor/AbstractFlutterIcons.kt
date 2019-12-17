@@ -4,7 +4,7 @@ import com.intellij.openapi.util.IconLoader
 import java.util.*
 import javax.swing.Icon
 
-open class AbstractFlutterIcons<T>(fileName: String, private val iconClass: Class<T>) {
+abstract class AbstractFlutterIcons<T>(fileName: String, private val iconClass: Class<T>) {
 
 	private val icons: Properties = Properties()
 
@@ -20,7 +20,7 @@ open class AbstractFlutterIcons<T>(fileName: String, private val iconClass: Clas
 		return getIcon(iconName)
 	}
 
-	fun getIcon(name: String?): Icon? {
+	open fun getIcon(name: String?): Icon? {
 		if (name == null) {
 			return null
 		}

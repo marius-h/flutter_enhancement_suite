@@ -99,6 +99,12 @@ You can install plugin directly from IntelliJ IDEA or Android Studio:
 
 ## :fire:&nbsp;What's new?
 
+### 1.3.1
+<ul>
+    <li>Improved pub documentation view</li>
+    <li>Fixed Error when opening pubspec.yaml (#18)</li>
+</ul>
+
 ### 1.3
 <ul>
     <li>Added GUI for editing linting rules</li>

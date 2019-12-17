@@ -35,12 +35,11 @@ class UrlAnnotator : Annotator {
 				message = getMessage()
 				holder.currentAnnotationSession.putUserData(messageKey, message)
 			}
-			val packageNameElement = element.firstChild
-			val annotation = holder.createInfoAnnotation(packageNameElement, message)
-
-			//val webReference = WebReference(packageNameElement, packageNameElement.textRangeInParent, "https://pub.dev/packages/camera")
-			//packageNameElement.add(webReference.element)
-			annotation.textAttributes = TextAttributesKey.createTextAttributesKey("INACTIVE_HYPERLINK_ATTRIBUTES")
+			element.firstChild?.let {
+				holder.createInfoAnnotation(it, message).apply {
+					textAttributes = TextAttributesKey.createTextAttributesKey("INACTIVE_HYPERLINK_ATTRIBUTES")
+				}
+			}
 		}
 	}
 

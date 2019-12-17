@@ -9,6 +9,7 @@ import com.jetbrains.lang.dart.ide.completion.DartServerCompletionContributor
 import de.mariushoefler.flutter_enhancement_suite.editor.icons.FontAwesomeIcons
 import de.mariushoefler.flutter_enhancement_suite.editor.icons.IonIcons
 import de.mariushoefler.flutter_enhancement_suite.editor.icons.MaterialCommunityIcons
+import de.mariushoefler.flutter_enhancement_suite.editor.icons.MdiIcons
 import org.apache.commons.lang.StringUtils
 import org.dartlang.analysis.server.protocol.CompletionSuggestion
 import java.util.*
@@ -31,18 +32,21 @@ class FlutterIconCompletionContributor : DartCompletionExtension() {
 		if (element != null) {
 			val returnType = element.returnType
 			if (!StringUtils.isEmpty(returnType)) {
-				val name = element.name
-				if (name != null) {
-					when (suggestion.declaringType) {
+				element.name?.let { name ->
+					return when (suggestion.declaringType) {
 						"FontAwesome" -> {
-							return FontAwesomeIcons.getIcon(name)
+							FontAwesomeIcons.getIcon(name)
 						}
 						"Ionicons" -> {
-							return IonIcons.getIcon(name)
+							IonIcons.getIcon(name)
 						}
 						"MaterialCommunityIcons" -> {
-							return MaterialCommunityIcons.getIcon(name)
+							MaterialCommunityIcons.getIcon(name)
 						}
+						"MdiIcons" -> {
+							MdiIcons.getIcon(name)
+						}
+						else -> null
 					}
 				}
 			}

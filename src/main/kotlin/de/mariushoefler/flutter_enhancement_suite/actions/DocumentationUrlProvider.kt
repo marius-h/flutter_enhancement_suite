@@ -11,6 +11,7 @@ import com.intellij.psi.PsiManager
 import com.intellij.psi.impl.FakePsiElement
 import com.intellij.util.io.HttpRequests
 import de.mariushoefler.flutter_enhancement_suite.editor.UrlAnnotator
+import de.mariushoefler.flutter_enhancement_suite.utils.GithubApi
 import de.mariushoefler.flutter_enhancement_suite.utils.PubApi
 import de.mariushoefler.flutter_enhancement_suite.utils.isPubPackageName
 import de.mariushoefler.flutter_enhancement_suite.utils.isPubspecFile
@@ -99,12 +100,18 @@ class UrlDocumentationProvider : AbstractDocumentationProvider() {
 		}
 
 		if (!src.isNullOrEmpty()) {
-			val flavour = CommonMarkFlavourDescriptor()
-			val parsedTree = MarkdownParser(flavour).buildMarkdownTreeFromString(src)
-			val html = HtmlGenerator(src, parsedTree, flavour).generateHtml()
+			//val flavour = CommonMarkFlavourDescriptor()
+			//val parsedTree = MarkdownParser(flavour).buildMarkdownTreeFromString(src)
+			//val html = HtmlGenerator(src, parsedTree, flavour).generateHtml()
 
 			result.append("<br><h2><u>Documentation</u></h2>")
-			result.append(html.replaceFirst("<h1>$lookupString</h1>", ""))
+			//result.append(html.replaceFirst("<h1>$lookupString</h1>", ""))
+
+			pubPackage.homepage?.let {
+				result.append(GithubApi
+						.formatReadmeAsHtml(src, it)
+						.replaceFirst("<h1>$lookupString</h1>", ""))
+			}
 		}
 		result.append("</html>")
 

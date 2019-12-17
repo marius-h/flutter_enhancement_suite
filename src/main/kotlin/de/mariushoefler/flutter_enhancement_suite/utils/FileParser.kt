@@ -22,7 +22,6 @@ class FileParser(
 		get() = scope.coroutineContext
 
     suspend fun checkFile(): List<VersionDescription> {
-
         return if (file.isPubspecFile()) {
             return getVersionsFromFile()
         } else {
@@ -31,9 +30,10 @@ class FileParser(
     }
 
     private suspend fun getVersionsFromFile(): MutableList<VersionDescription> {
-		return coroutineScope {
 			val problemDescriptionList = mutableListOf<VersionDescription>()
+
 			val lines = file.readPackageLines().map { async { mapToVersionDescription(it) } }.awaitAll()
+
 			lines.forEach { versionDescription ->
 				try {
 					if (versionDescription.latestVersion != versionDescription.currentVersion) {
@@ -43,8 +43,7 @@ class FileParser(
 					//no-op
 				}
 			}
-			return@coroutineScope problemDescriptionList
-		}
+			return problemDescriptionList
 	}
 
     @Throws(UnableToGetLatestVersionException::class)
@@ -59,7 +58,7 @@ class FileParser(
     }
 }
 
-public fun PsiFile.isPubspecFile(): Boolean {
+fun PsiFile.isPubspecFile(): Boolean {
     return PubspecYamlUtil.isPubspecFile(this.virtualFile)
 }
 
