@@ -1,0 +1,17 @@
+name: Plugin compatibility
+on: [push]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Setup Java
+      uses: actions/setup-java@v1
+      with:
+        java-version: 8.x.x
+    - name: Build the plugin using Gradle
+      run: ./gradlew buildPlugin
+    - uses: thepieterdc/intellij-plugin-verifier-action@v1.0.0
+      with:
+        plugin: '/home/runner/work/flutter_enhancement_suite/flutter_enhancement_suite/build/distributions/Flutter Enhancement Suite-1.3.2.zip'
+        version: '193.5662.53'
