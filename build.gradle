@@ -52,7 +52,7 @@ intellij {
     version "$ideaVersion"
     updateSinceUntilBuild false
 
-    plugins = ["kotlin", "yaml", "Dart:$dartVersion", "io.flutter:$flutterVersion", "psiviewer:191.4212"]
+    plugins = ["Kotlin", "yaml", "Dart:$dartVersion", "io.flutter:$flutterVersion"]
 }
 
 publishPlugin {
