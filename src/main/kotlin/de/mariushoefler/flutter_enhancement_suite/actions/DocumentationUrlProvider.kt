@@ -40,6 +40,7 @@ class UrlDocumentationProvider : AbstractDocumentationProvider() {
 		val lookupString = when {
 			element is SuggestionElement -> element.name
 			element.text.isPubPackageName() -> element.firstChild.text
+			element.containingFile.isPubspecFile() -> return null
 			else -> return null
 		}
 

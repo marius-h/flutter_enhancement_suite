@@ -28,7 +28,7 @@ class NewFlutterBlocAction : AnAction(IconLoader.getIcon("/icons/bloc_icon16.png
 				SimpleClassNameInputValidator()
 		)
 
-		if (name?.isBlank() != false) {
+		if (name?.isBlank() != false || event.getData(LangDataKeys.PSI_ELEMENT) !is PsiDirectory) {
 			return
 		}
 

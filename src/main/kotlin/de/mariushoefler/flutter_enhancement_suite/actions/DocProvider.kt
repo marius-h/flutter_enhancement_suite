@@ -1,20 +1,17 @@
 package de.mariushoefler.flutter_enhancement_suite.actions
 
 import com.intellij.openapi.paths.GlobalPathReferenceProvider
-import com.intellij.openapi.paths.PathReferenceManager
 import com.intellij.openapi.util.TextRange
 import com.intellij.openapi.util.UserDataCache
 import com.intellij.openapi.util.text.StringUtil
 import com.intellij.openapi.vcs.IssueNavigationConfiguration
 import com.intellij.patterns.PsiElementPattern
 import com.intellij.psi.*
-import com.intellij.psi.impl.source.resolve.reference.ArbitraryPlaceUrlReferenceProvider
 import com.intellij.psi.util.CachedValue
 import com.intellij.psi.util.CachedValueProvider
 import com.intellij.psi.util.CachedValuesManager
 import com.intellij.util.ProcessingContext
 import com.intellij.util.SmartList
-import org.jetbrains.kotlin.idea.completion.returnExpressionItems
 import java.util.concurrent.atomic.AtomicReference
 
 class DocProvider : PsiReferenceProvider() {
@@ -29,8 +26,8 @@ class DocProvider : PsiReferenceProvider() {
 
 			override fun compute(element: PsiElement, p: Any): CachedValue<Array<PsiReference>> {
 				return CachedValuesManager.getManager(element.project).createCachedValue({
-					val navigationConfiguration = IssueNavigationConfiguration.getInstance(element.project) ?:
-					return@createCachedValue CachedValueProvider.Result.create<Array<PsiReference>>(PsiReference.EMPTY_ARRAY)
+					val navigationConfiguration = IssueNavigationConfiguration.getInstance(element.project)
+							?: return@createCachedValue CachedValueProvider.Result.create<Array<PsiReference>>(PsiReference.EMPTY_ARRAY)
 
 					var refs: MutableList<PsiReference>? = null
 					var provider: GlobalPathReferenceProvider? = myReferenceProvider.get()

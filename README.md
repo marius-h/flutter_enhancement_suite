@@ -99,6 +99,13 @@ You can install plugin directly from IntelliJ IDEA or Android Studio:
 
 ## :fire:&nbsp;What's new?
 
+### 1.3.2
+<ul>
+    <li>Fixed Error getting Flutter SDK information when auto-completing a package (#44)</li>
+    <li>Fixed Error when generating a new bloc (#28,#33)</li>
+    <li>Fixed Incompatibility with Kubernetes plugin (#30)</li>
+</ul>
+
 ### 1.3.1
 <ul>
     <li>Improved pub documentation view</li>

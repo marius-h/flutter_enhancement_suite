@@ -1,5 +1,6 @@
 package de.mariushoefler.flutter_enhancement_suite.utils
 
+import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.ProjectLocator
 import com.intellij.openapi.vfs.VfsUtil
@@ -18,7 +19,7 @@ import java.io.IOException
 object FlutterProjectUtils {
 
 	fun readProjectName(project: Project): String? {
-		val pubspec = VfsUtil.findFileByIoFile(File("${project.basePath}/pubspec.yaml"), false) ?: return null
+		val pubspec = VfsUtil.findFileByIoFile(File("${project.basePath}/pubspec.yaml"), true) ?: return null
 		val properties = readPubspecFileToMap(pubspec)
 		return properties?.get("name") as String
 	}
@@ -55,11 +56,16 @@ object FlutterProjectUtils {
 	 * @since v1.2
 	 */
 	fun runPackagesGet(file: VirtualFile?) {
-		val project = ProjectLocator.getInstance().guessProjectForFile(file)
-		val sdk = project?.let { FlutterSdk.getFlutterSdk(it) }
+		PubRoot.forDirectory(file?.parent)?.let { pubRoot ->
+			ProjectLocator.getInstance().guessProjectForFile(file)?.let { project ->
+				FileDocumentManager.getInstance().saveAllDocuments()
+				val module = pubRoot.getModule(project)
+				if (module != null) {
+					FlutterSdk.getFlutterSdk(project)?.flutterPackagesGet(pubRoot)?.startInModuleConsole(module, { pubRoot.refresh() }, null)
+				}
 
-		PubRoot.forDirectory(file?.parent)?.let {
-			sdk?.startPackagesGet(it, project)
+				//startPackagesGet(pubRoot, project)
+			}
 		}
 	}
 }
