@@ -16,9 +16,8 @@ import java.nio.charset.StandardCharsets
 
 object PubApi {
 
-	// https://pub.dartlang.org/api/
 	init {
-		FuelManager.instance.basePath = "https://pub.dartlang.org/api/"
+		FuelManager.instance.basePath = "https://pub.dev/api/"
 	}
 
 	var lastPackages = mapOf<String, PubPackage>()
@@ -63,6 +62,94 @@ object PubApi {
 		}
 
 		return result
+	}
+
+	fun getPackageDoc(packageName: String, short: Boolean = false): String? {
+		val pubPackage = lastPackages[packageName]
+				?: getPackage(packageName)
+				?: return null
+
+		val result = StringBuilder()
+		result.append("<html>")
+		result.append("<h1>$packageName</h1>")
+
+		pubPackage.getAuthorName().let { authors ->
+			if (authors.isNotEmpty()) {
+				result.append("<small><i>by $authors</i></small><br><br>")
+			}
+		}
+
+		result.append("<p>${pubPackage.description}</p><br>")
+
+		if (!short && pubPackage.homepage != null) {
+			generateFullDoc(pubPackage.homepage, result)
+		}
+
+		result.append("</html>")
+
+		return result.toString()
+	}
+
+	private fun generateFullDoc(homepage: String, result: StringBuilder) {
+		var src: String? = null
+		if (homepage.startsWith("https://github.com")) {
+
+			println("pubPackage.homepage = $homepage")
+
+			var readmeUrl = "https://raw.githubusercontent.com/${homepage
+					.removePrefix("https://github.com/")
+					.replace("bloc/", "")
+					.replace("blob/", "")
+					.replace("/pubspec.yaml", "")
+					.replace("tree/", "")}"
+			if (!readmeUrl.contains("/master")) {
+				readmeUrl += "/master"
+			}
+
+			var filePath = "$readmeUrl/README.md"
+			for (i in 1..2) {
+				val response = filePath.httpGet().responseString().third
+				if (response.component2() == null) {
+					src = response.get()
+					break
+				} else {
+					filePath = "$readmeUrl/readme.md"
+				}
+			}
+
+			if (src != null && src.startsWith("./")) {
+				// README.md is referenced in a sub-folder
+				readmeUrl += src.replaceFirst(".", "")
+				src = readmeUrl.httpGet().responseString().third.get()
+			}
+		}
+
+		result.append("<a href=\"${homepage}\">Visit package's homepage</a><br><br>")
+
+		if (homepage.startsWith("https://github.com")) {
+			val examplePath: String = if (homepage.contains("/tree/master")) {
+				""
+			} else {
+				"/tree/master"
+			}
+			result.append("<a href=\"${homepage}$examplePath/example\">Show an example of how to use the package</a><br><br>")
+		}
+
+		if (!src.isNullOrEmpty()) {
+			var html = ""
+
+			src.lines().forEachIndexed { index, line ->
+				if (index == 0) {
+					html = line.replace(Regex("^.*#.*"), "")
+				} else {
+					html += line.replace(Regex("^.*\\(.*\\.svg.*|^.*img.shields.io.*"), "") + "\n"
+				}
+			}
+
+			result.append("<br><h2><u>Documentation</u></h2>")
+
+			result.append(GithubApi.formatReadmeAsHtml(html, homepage))
+		}
 	}
 }
 

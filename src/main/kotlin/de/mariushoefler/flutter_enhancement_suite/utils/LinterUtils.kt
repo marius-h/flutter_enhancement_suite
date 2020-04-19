@@ -7,6 +7,7 @@ import com.intellij.openapi.ui.popup.util.PopupUtil
 import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiManager
 import com.intellij.psi.impl.source.tree.LeafPsiElement
 import com.intellij.psi.util.parentsOfType
 import org.jetbrains.kotlin.idea.refactoring.toPsiFile
@@ -30,7 +31,11 @@ object LinterUtils {
 			loadAnalysisOptionsFile(project)
 		}
 		activeRules.clear()
-		analysisOptFile?.toPsiFile(project)?.firstChild?.firstChild?.children?.forEach { yamlMaps ->
+
+		val psiFile = analysisOptFile?.let {
+			PsiManager.getInstance(project).findFile(it)
+		}
+		psiFile?.firstChild?.firstChild?.children?.forEach { yamlMaps ->
 			if (yamlMaps.text.startsWith("linter")) {
 				rulesPsi = yamlMaps.lastChild.firstChild
 				rulesPsi?.lastChild?.children?.forEach {

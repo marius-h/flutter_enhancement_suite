@@ -88,14 +88,12 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!--        Dart Code Snippets-->
-        <defaultLiveTemplatesProvider implementation="de.mariushoefler.flutter_enhancement_suite.templates.livetemplates.dart.DartTemplateProvider"/>
-        <liveTemplateContext implementation="de.mariushoefler.flutter_enhancement_suite.templates.livetemplates.dart.DartContext"/>
-        <codeInsight.template.postfixTemplateProvider implementationClass="de.mariushoefler.flutter_enhancement_suite.templates.postfixtemplates.FlutterPostfixTemplateProvider"
-                                                      language="Dart"/>
+        <defaultLiveTemplatesProvider implementation="de.mariushoefler.flutter_enhancement_suite.templates.livetemplates.DartTemplateProvider"/>
 
         <!--        Flutter Widget Snippets-->
-        <defaultLiveTemplatesProvider implementation="de.mariushoefler.flutter_enhancement_suite.templates.livetemplates.flutter.FlutterTemplateProvider"/>
-        <liveTemplateContext implementation="de.mariushoefler.flutter_enhancement_suite.templates.livetemplates.flutter.FlutterContext"/>
+        <defaultLiveTemplatesProvider implementation="de.mariushoefler.flutter_enhancement_suite.templates.livetemplates.FlutterTemplateProvider"/>
+        <codeInsight.template.postfixTemplateProvider implementationClass="de.mariushoefler.flutter_enhancement_suite.templates.postfixtemplates.FlutterPostfixTemplateProvider"
+                                                      language="Dart"/>
 
         <!--        Pub package version checker-->
         <inspectionToolProvider implementation="de.mariushoefler.flutter_enhancement_suite.pub.PackagesInspectionProvider"/>
@@ -121,21 +119,24 @@
 
         <errorHandler implementation="de.mariushoefler.flutter_enhancement_suite.PluginBugReportSubmitter"/>
 
-        <!--        <externalAnnotator implementationClass="de.mariushoefler.flutter_enhancement_suite.editor.FlutterDocumentationAnnotator" language="yaml"/>-->
-        <documentationProvider implementation="de.mariushoefler.flutter_enhancement_suite.actions.UrlDocumentationProvider"
-                               order="first"/>
+        <lang.documentationProvider language="yaml"
+                                    implementationClass="de.mariushoefler.flutter_enhancement_suite.actions.PubDocumentationProvider"
+                                    order="first"/>
+
         <annotator implementationClass="de.mariushoefler.flutter_enhancement_suite.editor.UrlAnnotator"
                    order="first"
                    language="yaml"/>
 
         <fileEditorProvider implementation="de.mariushoefler.flutter_enhancement_suite.editor.linter.LinterEditorProvider"/>
-
-        <!--        <psi.referenceProvider providerClass="de.mariushoefler.flutter_enhancement_suite.pub.PubHomepageProvider" language="yaml"/>-->
     </extensions>
 
     <extensions defaultExtensionNs="Dart">
         <completionExtension implementation="de.mariushoefler.flutter_enhancement_suite.editor.FlutterIconCompletionContributor"
                              order="last"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="org.jetbrains.plugins.yaml">
+        <extension order="last"/>
     </extensions>
 
     <actions>

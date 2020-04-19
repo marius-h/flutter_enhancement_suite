@@ -10,10 +10,10 @@ import com.intellij.psi.tree.IElementType
 import de.mariushoefler.flutter_enhancement_suite.utils.FlutterProjectUtils
 import org.jetbrains.kotlin.resolve.jvm.KotlinJavaPsiFacade
 
-class DependencyQuickFix(psiElement: PsiElement, private val latestVersion: String) : LocalQuickFixOnPsiElement(psiElement) {
+class DependencyQuickFix(psiElement: PsiElement, private val latestVersion: String, private val forcePubGet: Boolean) : LocalQuickFixOnPsiElement(psiElement) {
 	override fun getFamilyName(): String = "Update package"
 
-	override fun getText(): String = "Update package"
+	override fun getText(): String = "Update package" + if (!forcePubGet) " without running pub get" else ""
 
 	override fun invoke(project: Project, file: PsiFile, startElement: PsiElement, endElement: PsiElement) {
 		val factory = JavaPsiFacade.getInstance(project).elementFactory
@@ -25,6 +25,6 @@ class DependencyQuickFix(psiElement: PsiElement, private val latestVersion: Stri
 
 		startElement.replace(psiExpression)
 
-		FlutterProjectUtils.runPackagesGet(file.virtualFile)
+		if (forcePubGet) FlutterProjectUtils.runPackagesGet(file.virtualFile)
 	}
 }

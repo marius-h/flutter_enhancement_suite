@@ -6,6 +6,7 @@ import com.intellij.openapi.fileEditor.FileEditorProvider
 import com.intellij.openapi.project.DumbAware
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.psi.PsiManager
 import org.jetbrains.kotlin.idea.refactoring.toPsiFile
 import org.jetbrains.yaml.psi.YAMLFile
 
@@ -20,7 +21,7 @@ class LinterEditorProvider : FileEditorProvider, DumbAware {
 	}
 
 	override fun accept(project: Project, file: VirtualFile): Boolean {
-		val psiFile = file.toPsiFile(project)
+		val psiFile = PsiManager.getInstance(project).findFile(file)
 		return psiFile is YAMLFile && psiFile.name.contains("analysis_options")
 	}
 

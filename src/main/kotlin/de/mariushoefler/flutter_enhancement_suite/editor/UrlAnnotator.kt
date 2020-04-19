@@ -37,7 +37,7 @@ class UrlAnnotator : Annotator {
 			}
 			element.firstChild?.let {
 				holder.createInfoAnnotation(it, message).apply {
-					textAttributes = TextAttributesKey.createTextAttributesKey("INACTIVE_HYPERLINK_ATTRIBUTES")
+					//textAttributes = TextAttributesKey.createTextAttributesKey("INACTIVE_HYPERLINK_ATTRIBUTES")
 				}
 			}
 		}

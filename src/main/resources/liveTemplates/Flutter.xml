@@ -25,6 +25,26 @@
         </context>
     </template>
 
+    <!--    Subject-->
+    <template name="fsubj"
+              value="final _$NAME$Subject = BehaviorSubject&lt;$TYPE$&gt;();&#10;Stream&lt;$TYPE$&gt; get $NAME$ =&gt; _$NAME$Subject.stream;"
+              description="New BehaviorSubject with Stream"
+              toReformat="false"
+              toShortenFQNames="true">
+        <variable name="NAME"
+                  expression="&quot;NAME&quot;"
+                  defaultValue=""
+                  alwaysStopAt="true"/>
+        <variable name="TYPE"
+                  expression="&quot;TYPE&quot;"
+                  defaultValue=""
+                  alwaysStopAt="true"/>
+        <context>
+            <option name="DART_TOPLEVEL"
+                    value="true"/>
+        </context>
+    </template>
+
     <!--    HookWidget-->
     <template name="hook"
               value="class $NAME$ extends HookWidget {&#10;  const $NAME$({Key key}) : super(key: key);&#10;  &#10;  @override&#10;  Widget build(BuildContext context) {&#10;    $END$&#10;  }&#10;}"

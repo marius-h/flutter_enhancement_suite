@@ -50,10 +50,12 @@ private fun ProblemsHolder.showProblem(
 		counter: Int,
 		latestVersion: String
 ) {
-	val psiElement = file.findElementAt(counter)!!
-	registerProblem(
-			psiElement,
-			"There's a new version available: $latestVersion",
-			DependencyQuickFix(psiElement, latestVersion)
-	)
+	file.findElementAt(counter)?.let { psiElement ->
+		registerProblem(
+				psiElement,
+				"There's a new version available: $latestVersion",
+				DependencyQuickFix(psiElement, latestVersion, true),
+				DependencyQuickFix(psiElement, latestVersion, false)
+		)
+	}
 }

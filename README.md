@@ -101,6 +101,19 @@ You can install plugin directly from IntelliJ IDEA or Android Studio:
 
 ### 1.3.2
 <ul>
+    <li>Added option to update a package without running <em>pub get</em> (#21)</li>
+    <li>Added icon preview support for <em>material_design_icons</em> (#23)</li>
+    <li>Added BehaviorSubject snippet (#24)</li>
+    <li>Improved widget-to-file extractor</li>
+    <li>Improved performance of documentation provider for pub packages</li>
+    <li>Fixed UI freezing when opening pubspec.yaml (#20)</li>
+    <li>Fixed error when using the FlutterBlocGenerator plugin in Android Studio (#22)</li>
+    <li>Fixed ConcurrentModificationException (#25)</li>
+    <li>Fixed UnableToGetLatestVersionException (#26)</li>
+</ul>
+
+### 1.3.2
+<ul>
     <li>Fixed Error getting Flutter SDK information when auto-completing a package (#44)</li>
     <li>Fixed Error when generating a new bloc (#28,#33)</li>
     <li>Fixed Incompatibility with Kubernetes plugin (#30)</li>
@@ -109,7 +122,7 @@ You can install plugin directly from IntelliJ IDEA or Android Studio:
 ### 1.3.1
 <ul>
     <li>Improved pub documentation view</li>
-    <li>Fixed Error when opening pubspec.yaml (#18)</li>
+    <li>Fixed error when opening pubspec.yaml (#18)</li>
 </ul>
 
 ### 1.3
