@@ -99,6 +99,13 @@ You can install plugin directly from IntelliJ IDEA or Android Studio:
 
 ## :fire:&nbsp;What's new?
 
+### 1.3.3
+<ul>
+    <li>Fixed Error getting Flutter SDK information when auto-completing a package (#44)</li>
+    <li>Fixed Error when generating a new bloc (#28,#33)</li>
+    <li>Fixed Incompatibility with Kubernetes plugin (#30)</li>
+</ul>
+
 ### 1.3.2
 <ul>
     <li>Added option to update a package without running <em>pub get</em> (#21)</li>
@@ -110,13 +117,6 @@ You can install plugin directly from IntelliJ IDEA or Android Studio:
     <li>Fixed error when using the FlutterBlocGenerator plugin in Android Studio (#22)</li>
     <li>Fixed ConcurrentModificationException (#25)</li>
     <li>Fixed UnableToGetLatestVersionException (#26)</li>
-</ul>
-
-### 1.3.2
-<ul>
-    <li>Fixed Error getting Flutter SDK information when auto-completing a package (#44)</li>
-    <li>Fixed Error when generating a new bloc (#28,#33)</li>
-    <li>Fixed Incompatibility with Kubernetes plugin (#30)</li>
 </ul>
 
 ### 1.3.1

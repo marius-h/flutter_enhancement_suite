@@ -23,11 +23,14 @@ class PubDocumentationProvider : AbstractDocumentationProvider() {
 
 	override fun generateDoc(element: PsiElement, originalElement: PsiElement?): String? {
 		println("element = $element")
+		if (originalElement != null && !originalElement.containingFile.isPubspecFile()) {
+			return null
+		}
 		if (element is SuggestionElement) {
 			return PubApi.getPackageDoc(element.name, true)
 		} else {
 			element.parent?.text?.let {
-				if (it.isPubPackageName() && element.containingFile.isPubspecFile()) {
+				if (it.isPubPackageName()&& element.containingFile.isPubspecFile()) {
 					return PubApi.getPackageDoc(element.text)
 				}
 			}
