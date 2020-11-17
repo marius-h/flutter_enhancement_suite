@@ -3,12 +3,10 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
 part '${NAME}_event.dart';
-
 part '${NAME}_state.dart';
 
 class ${CLASS_NAME}Bloc extends Bloc<${CLASS_NAME}Event, ${CLASS_NAME}State> {
-  @override
-  ${CLASS_NAME}State get initialState => Initial${CLASS_NAME}State();
+  ${CLASS_NAME}Bloc() : super(Initial${CLASS_NAME}State());
 
   @override
   Stream<${CLASS_NAME}State> mapEventToState(${CLASS_NAME}Event event) async* {
