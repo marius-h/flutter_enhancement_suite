@@ -1,6 +1,5 @@
 package de.mariushoefler.flutterenhancementsuite.pub
 
-import com.intellij.codeInsight.daemon.GroupNames
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
@@ -14,7 +13,7 @@ class PubPackagesInspection : LocalInspectionTool() {
 
     override fun getDisplayName() = "Pub Packages latest versions"
 
-    override fun getGroupDisplayName(): String = GroupNames.DEPENDENCY_GROUP_NAME
+    override fun getGroupDisplayName(): String = "group.names.modularization.issues"
 
     override fun getShortName() = "PubVersions"
 

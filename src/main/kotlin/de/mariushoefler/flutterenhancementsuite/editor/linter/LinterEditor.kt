@@ -8,7 +8,6 @@ import com.intellij.openapi.fileEditor.FileEditorState
 import com.intellij.openapi.fileEditor.FileEditorStateLevel
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.UserDataHolderBase
-import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.util.ui.UIUtil
 import java.beans.PropertyChangeListener
 import javax.swing.JComponent
@@ -18,7 +17,7 @@ import javax.swing.JComponent
  *
  * @since v1.3
  */
-class LinterEditor(val project: Project, file: VirtualFile) : FileEditorImpl() {
+class LinterEditor(val project: Project) : FileEditorImpl() {
     private lateinit var myPanel: LinterViewPanel
 
     init {

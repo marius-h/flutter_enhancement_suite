@@ -1,5 +1,8 @@
 # :fire:&nbsp;What's new?
 
+## [1.4.0]
+- New project structure
+
 ## [1.3.3]
 - Fixed Error getting Flutter SDK information when auto-completing a package (#44)
 - Fixed Error when generating a new bloc (#28,#33)

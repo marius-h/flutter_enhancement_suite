@@ -7,12 +7,11 @@ import com.intellij.openapi.actionSystem.LangDataKeys
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.ui.InputValidatorEx
 import com.intellij.openapi.ui.Messages
-import com.intellij.openapi.util.IconLoader
 import com.intellij.psi.PsiDirectory
 import de.mariushoefler.flutterenhancementsuite.models.Bloc
 import de.mariushoefler.flutterenhancementsuite.utils.FlutterProjectUtils
 
-class NewFlutterBlocAction : AnAction(IconLoader.getIcon("/icons/bloc_icon16.png")) {
+class NewFlutterBlocAction : AnAction() {
 
     override fun actionPerformed(event: AnActionEvent) {
         val project = event.project

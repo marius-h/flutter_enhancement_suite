@@ -25,10 +25,10 @@ class PluginBugReportSubmitter : ErrorReportSubmitter() {
     }
 
     override fun submit(
-        events: Array<out IdeaLoggingEvent>,
+        events: Array<IdeaLoggingEvent>,
         info: String?,
         parent: Component,
-        consumer: Consumer<SubmittedReportInfo>
+        consumer: Consumer<in SubmittedReportInfo>
     ): Boolean {
         val stackTrace: String? = null
         val errorMessage: String? = null
@@ -148,7 +148,7 @@ class PluginBugReportSubmitter : ErrorReportSubmitter() {
         builder.append("\n")
     }
 
-    private fun fail(consumer: Consumer<SubmittedReportInfo>) {
+    private fun fail(consumer: Consumer<in SubmittedReportInfo>) {
         consumer.consume(
             SubmittedReportInfo(
                 null,
