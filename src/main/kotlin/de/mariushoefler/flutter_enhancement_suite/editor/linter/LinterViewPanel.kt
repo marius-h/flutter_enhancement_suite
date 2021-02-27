@@ -1,25 +1,18 @@
-package de.mariushoefler.flutter_enhancement_suite.editor.linter;
+package de.mariushoefler.flutter_enhancement_suite.editor.linter
 
 import com.intellij.ide.BrowserUtil
-import com.intellij.ide.browsers.BrowserStarter
 import com.intellij.openapi.Disposable
-import com.intellij.openapi.actionSystem.ActionManager
-import com.intellij.openapi.actionSystem.ActionToolbar
-import com.intellij.openapi.actionSystem.DefaultActionGroup
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Disposer
-import com.intellij.ui.components.JBLoadingPanel
 import de.mariushoefler.flutter_enhancement_suite.models.LinterRule
 import de.mariushoefler.flutter_enhancement_suite.utils.LinterUtils
-import java.awt.BorderLayout
-import java.awt.Component
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
 import java.util.*
-import javax.swing.*
-import javax.swing.border.EmptyBorder
+import javax.swing.JButton
+import javax.swing.JPanel
+import javax.swing.JTable
 import javax.swing.table.AbstractTableModel
-import kotlin.concurrent.thread
 
 /**
  * UI for editing rules in "analysis_options.yaml"

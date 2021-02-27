@@ -3,17 +3,13 @@ package de.mariushoefler.flutter_enhancement_suite.editor
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
 import com.intellij.openapi.actionSystem.IdeActions
-import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.keymap.KeymapManager
 import com.intellij.openapi.keymap.KeymapUtil
-import com.intellij.openapi.paths.WebReference
 import com.intellij.openapi.util.Key
 import com.intellij.psi.PsiElement
-import com.intellij.psi.impl.source.resolve.reference.impl.providers.URLReference
 import com.intellij.util.containers.ContainerUtil
 import de.mariushoefler.flutter_enhancement_suite.utils.isPubPackageName
 import de.mariushoefler.flutter_enhancement_suite.utils.isPubspecFile
-import org.jetbrains.kotlin.idea.debugger.readAction
 
 /**
  * Shows a tooltip for pub packages to press `Ctrl+Q` to open up the documentation

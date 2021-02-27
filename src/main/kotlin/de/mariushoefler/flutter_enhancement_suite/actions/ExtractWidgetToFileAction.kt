@@ -4,7 +4,6 @@ import com.intellij.CommonBundle
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.PlatformDataKeys
 import com.intellij.openapi.application.runUndoTransparentWriteAction
-import com.intellij.openapi.editor.Caret
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.project.DumbAwareAction
@@ -45,10 +44,10 @@ class ExtractWidgetToFileAction : DumbAwareAction() {
 
 	override fun actionPerformed(event: AnActionEvent) {
 		val dataContext = event.dataContext
-		val project = dataContext.getData<Project>(PlatformDataKeys.PROJECT)
+		val project = dataContext.getData(PlatformDataKeys.PROJECT)
 		val file = dataContext.getData(PlatformDataKeys.VIRTUAL_FILE)
 		val editor = dataContext.getData(PlatformDataKeys.EDITOR)
-		val caret = dataContext.getData<Caret>(PlatformDataKeys.CARET)
+		val caret = dataContext.getData(PlatformDataKeys.CARET)
 
 		if (project != null && file != null && editor != null && caret != null) {
 			val offset = caret.selectionStart
@@ -140,7 +139,7 @@ internal class ExtractWidgetDialog(project: Project,
 
 	override fun createCenterPanel(): JComponent? = null
 
-	override fun createNorthPanel(): JComponent? {
+	override fun createNorthPanel(): JComponent {
 		val panel = JPanel(GridBagLayout())
 		val gbConstraints = GridBagConstraints()
 

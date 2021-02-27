@@ -2,7 +2,7 @@ package de.mariushoefler.flutter_enhancement_suite.editor.linter
 
 import de.mariushoefler.flutter_enhancement_suite.models.LinterRule
 
-val rules = arrayListOf<LinterRule>(
+val rules = arrayListOf(
 		LinterRule("always_declare_return_types", "Declare method return types."),
 		LinterRule("always_put_control_body_on_new_line", "Separate the control structure expression from its statement."),
 		LinterRule("always_put_required_named_parameters_first", "Put @required named parameters first."),

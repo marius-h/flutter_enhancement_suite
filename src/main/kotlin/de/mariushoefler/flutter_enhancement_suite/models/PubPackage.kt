@@ -25,8 +25,6 @@ data class PubPackage(val name: String,
 		return ""
 	}
 
-	fun isFlutterCompatible() = dependencies["flutter"] != null
-
 	fun generateDependencyString() = "$name: ^$version"
 
 	class Deserializer : ResponseDeserializable<PubPackage> {

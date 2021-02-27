@@ -2,6 +2,7 @@ package de.mariushoefler.flutter_enhancement_suite
 
 import com.intellij.ide.DataManager
 import com.intellij.ide.plugins.PluginManager
+import com.intellij.ide.plugins.PluginManagerCore
 import com.intellij.ide.scratch.ScratchRootType
 import com.intellij.lang.Language
 import com.intellij.openapi.actionSystem.CommonDataKeys.PROJECT
@@ -14,7 +15,6 @@ import com.intellij.openapi.fileEditor.OpenFileDescriptor
 import com.intellij.openapi.project.Project
 import com.intellij.util.Consumer
 import io.flutter.FlutterUtils
-import io.flutter.run.daemon.DaemonApi.COMPLETION_EXCEPTION_PREFIX
 import io.flutter.sdk.FlutterSdk
 import java.awt.Component
 import java.io.ByteArrayOutputStream
@@ -38,14 +38,6 @@ class PluginBugReportSubmitter : ErrorReportSubmitter() {
 
 		val stackTrace: String? = null
 		val errorMessage: String? = null
-
-		for (event in events) {
-			val stackTraceText = event.throwableText
-			if (stackTraceText.startsWith(COMPLETION_EXCEPTION_PREFIX)) {
-
-			}
-		}
-
 
 		val dataContext = DataManager.getInstance().getDataContext(parent)
 		val project = PROJECT.getData(dataContext)
@@ -81,34 +73,34 @@ class PluginBugReportSubmitter : ErrorReportSubmitter() {
 
 		builder.append("Please file this bug report at ")
 		builder.append("https://github.com/marius-h/flutter_enhancement_suite/issues/new")
-		builder.append(".\n");
-		builder.append("\n");
-		builder.append("---\n");
-		builder.append("\n");
+		builder.append(".\n")
+		builder.append("\n")
+		builder.append("---\n")
+		builder.append("\n")
 
-		builder.append("## What happened\n");
-		builder.append("\n");
+		builder.append("## What happened\n")
+		builder.append("\n")
 		if (info != null) {
-			builder.append(info.trim()).append("\n");
+			builder.append(info.trim()).append("\n")
 		} else {
-			builder.append("(please describe what you were doing when this exception occurred)\n");
+			builder.append("(please describe what you were doing when this exception occurred)\n")
 		}
-		builder.append("\n");
+		builder.append("\n")
 
-		builder.append("## Version information\n");
-		builder.append("\n");
+		builder.append("## Version information\n")
+		builder.append("\n")
 
 		// IntelliJ version
 		val applicationInfo = ApplicationInfo.getInstance()
 		builder.append(applicationInfo.versionName).append(" `").append(applicationInfo.fullVersion).append("`")
 
 		val pid = FlutterUtils.getPluginId()
-		val flutterPlugin = PluginManager.getPlugin(pid)
+		val flutterPlugin = PluginManagerCore.getPlugin(pid)
 		if (flutterPlugin != null) {
 			builder.append(" • Flutter plugin `").append(pid.idString).append(' ').append(flutterPlugin.version).append("`")
 		}
 
-		val dartPlugin = PluginManager.getPlugin(PluginId.getId("Dart"))
+		val dartPlugin = PluginManagerCore.getPlugin(PluginId.getId("Dart"))
 		if (dartPlugin != null) {
 			builder.append(" • Dart plugin `").append(dartPlugin.version).append("`")
 		}
@@ -165,9 +157,9 @@ class PluginBugReportSubmitter : ErrorReportSubmitter() {
 			}
 			return String(readFully(process.inputStream), StandardCharsets.UTF_8)
 		} catch (e: IOException) {
-			return null;
+			return null
 		} catch (e: InterruptedException) {
-			return null;
+			return null
 		}
 	}
 

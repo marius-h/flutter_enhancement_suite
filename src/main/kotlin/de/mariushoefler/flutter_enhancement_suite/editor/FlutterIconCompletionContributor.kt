@@ -2,8 +2,6 @@ package de.mariushoefler.flutter_enhancement_suite.editor
 
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.openapi.project.Project
-import com.intellij.util.ui.EmptyIcon
-import com.intellij.util.ui.JBUI
 import com.jetbrains.lang.dart.ide.completion.DartCompletionExtension
 import com.jetbrains.lang.dart.ide.completion.DartServerCompletionContributor
 import de.mariushoefler.flutter_enhancement_suite.editor.icons.FontAwesomeIcons
@@ -12,7 +10,6 @@ import de.mariushoefler.flutter_enhancement_suite.editor.icons.MaterialCommunity
 import de.mariushoefler.flutter_enhancement_suite.editor.icons.MdiIcons
 import org.apache.commons.lang.StringUtils
 import org.dartlang.analysis.server.protocol.CompletionSuggestion
-import java.util.*
 import javax.swing.Icon
 
 

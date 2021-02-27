@@ -5,6 +5,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.ProjectLocator
 import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.openapi.vfs.VirtualFile
+import com.jetbrains.lang.dart.sdk.DartSdk
 import io.flutter.pub.PubRoot
 import io.flutter.sdk.FlutterSdk
 import org.yaml.snakeyaml.DumperOptions
@@ -61,7 +62,8 @@ object FlutterProjectUtils {
 				FileDocumentManager.getInstance().saveAllDocuments()
 				val module = pubRoot.getModule(project)
 				if (module != null) {
-					FlutterSdk.getFlutterSdk(project)?.flutterPackagesGet(pubRoot)?.startInModuleConsole(module, { pubRoot.refresh() }, null)
+					FlutterSdk.getFlutterSdk(project)?.flutterPackagesGet(pubRoot)?.startProcess(project)
+					//FlutterSdk.getFlutterSdk(project)?.flutterPackagesGet(pubRoot)?.startInModuleConsole(module, { pubRoot.refresh() }, null)
 				}
 
 				//startPackagesGet(pubRoot, project)

@@ -8,7 +8,6 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.tree.IElementType
 import de.mariushoefler.flutter_enhancement_suite.utils.FlutterProjectUtils
-import org.jetbrains.kotlin.resolve.jvm.KotlinJavaPsiFacade
 
 class DependencyQuickFix(psiElement: PsiElement, private val latestVersion: String, private val forcePubGet: Boolean) : LocalQuickFixOnPsiElement(psiElement) {
 	override fun getFamilyName(): String = "Update package"
@@ -22,7 +21,6 @@ class DependencyQuickFix(psiElement: PsiElement, private val latestVersion: Stri
 				IElementType("text", Language.findLanguageByID("yaml")),
 				null
 		)
-
 		startElement.replace(psiExpression)
 
 		if (forcePubGet) FlutterProjectUtils.runPackagesGet(file.virtualFile)

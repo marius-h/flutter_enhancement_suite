@@ -87,7 +87,7 @@ class FlutterDocumentationAnnotator : ExternalAnnotator<Array<FlutterDocumentati
 		return infos.toArray(array)
 	}
 
-	override fun doAnnotate(infos: Array<MyInfo>): Array<MyInfo>? {
+	override fun doAnnotate(infos: Array<MyInfo>): Array<MyInfo> {
 		val fetchResults = arrayOfNulls<MyFetchResult>(infos.size)
 		for (i in fetchResults.indices) {
 			fetchResults[i] = checkUrl(infos[i].myUrl)

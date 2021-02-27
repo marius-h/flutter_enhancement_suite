@@ -13,7 +13,7 @@ import de.mariushoefler.flutter_enhancement_suite.utils.isPubPackageName
 import de.mariushoefler.flutter_enhancement_suite.utils.isPubspecFile
 
 class PubDocumentationProvider : AbstractDocumentationProvider() {
-	override fun getQuickNavigateInfo(element: PsiElement?, originalElement: PsiElement?): String? {
+	override fun getQuickNavigateInfo(element: PsiElement?, originalElement: PsiElement?): String {
 		return "Quick Info"
 	}
 

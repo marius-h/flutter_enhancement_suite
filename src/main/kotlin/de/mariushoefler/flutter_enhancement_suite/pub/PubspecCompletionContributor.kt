@@ -22,7 +22,7 @@ class PubspecCompletionContributor : CompletionContributor() {
 		)
 	}
 
-	override fun handleEmptyLookup(parameters: CompletionParameters, editor: Editor?): String? {
+	override fun handleEmptyLookup(parameters: CompletionParameters, editor: Editor?): String {
 		return "No packages found"
 	}
 }

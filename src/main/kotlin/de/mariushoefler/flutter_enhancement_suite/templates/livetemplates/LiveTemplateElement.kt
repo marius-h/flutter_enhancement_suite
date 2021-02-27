@@ -24,5 +24,5 @@ class LiveTemplateElement(private val psiManager: PsiManager, val element: LiveT
 		return psiManager
 	}
 
-	override fun getName(): String? = element.lookupString
+	override fun getName(): String = element.lookupString
 }

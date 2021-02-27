@@ -1,8 +1,8 @@
 package de.mariushoefler.flutter_enhancement_suite.utils
 
+import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.httpGet
-import com.github.kittinunf.result.Result
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.intellij.openapi.application.ex.ApplicationUtil.runWithCheckCanceled
@@ -32,8 +32,8 @@ object PubApi {
 		return try {
 			runWithCheckCanceled {
 				val response = HttpRequests
-						.request("https://pub.dartlang.org/api/search?q=${URLEncoder.encode(query, StandardCharsets.UTF_8.toString())}&page=$page")
-						.readString(ProgressManager.getInstance().progressIndicator)
+					.request("https://pub.dartlang.org/api/search?q=${URLEncoder.encode(query, StandardCharsets.UTF_8.toString())}&page=$page")
+					.readString(ProgressManager.getInstance().progressIndicator)
 				Gson().fromJson(response, PubPackageSearch::class.java)
 			}
 		} catch (e: IOException) {
@@ -49,13 +49,12 @@ object PubApi {
 		var result: PubPackage? = null
 
 		"packages/${URLEncoder.encode(name, StandardCharsets.UTF_8.toString())}"
-				.httpGet()
-				.responseObject(PubPackage.Deserializer()) { _, _, res ->
-					when (res) {
-						is Result.Failure -> println("Error")
-						is Result.Success -> result = res.get()
-					}
-				}.join()
+			.httpGet()
+			.responseObject(PubPackage.Deserializer()) { _, _, res ->
+				res.component1()?.let {
+					result = res.get()
+				}
+			}.join()
 
 		if (!lastPackages.containsKey(name)) {
 			lastPackages.map { result to name }
@@ -66,8 +65,8 @@ object PubApi {
 
 	fun getPackageDoc(packageName: String, short: Boolean = false): String? {
 		val pubPackage = lastPackages[packageName]
-				?: getPackage(packageName)
-				?: return null
+			?: getPackage(packageName)
+			?: return null
 
 		val result = StringBuilder()
 		result.append("<html>")
@@ -96,12 +95,14 @@ object PubApi {
 
 			println("pubPackage.homepage = $homepage")
 
-			var readmeUrl = "https://raw.githubusercontent.com/${homepage
+			var readmeUrl = "https://raw.githubusercontent.com/${
+				homepage
 					.removePrefix("https://github.com/")
 					.replace("bloc/", "")
 					.replace("blob/", "")
 					.replace("/pubspec.yaml", "")
-					.replace("tree/", "")}"
+					.replace("tree/", "")
+			}"
 			if (!readmeUrl.contains("/master")) {
 				readmeUrl += "/master"
 			}

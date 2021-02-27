@@ -14,11 +14,3 @@ fun Project.createImportStatement(libraryName: String): PsiElement {
 	return DartElementGenerator.createDummyFile(this, "import '$libraryName';").firstChild
 }
 
-fun Array<PsiReference>.hasFileOrPointerReferences(): Boolean {
-	for (reference in this) {
-		if (reference is PsiFileReference
-				|| reference is JsonSchemaIdReference
-				|| reference is JsonPointerReferenceProvider) return true
-	}
-	return false
-}

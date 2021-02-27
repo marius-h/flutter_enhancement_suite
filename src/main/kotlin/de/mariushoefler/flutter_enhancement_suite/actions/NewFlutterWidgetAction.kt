@@ -16,19 +16,18 @@ import com.jetbrains.lang.dart.sdk.DartSdk
 import de.mariushoefler.flutter_enhancement_suite.utils.toSnakeCase
 import icons.FlutterIcons
 
-
 class NewFlutterWidgetAction : CreateFileFromTemplateAction("Flutter Widget", "Create a new Flutter widget", FlutterIcons.Flutter) {
 	override fun createFileFromTemplate(name: String?, template: FileTemplate?, dir: PsiDirectory?): PsiFile {
 		return super.createFileFromTemplate(name?.toSnakeCase(), template, dir)
 	}
 
-	override fun buildDialog(project: Project?, directory: PsiDirectory?, builder: CreateFileFromTemplateDialog.Builder?) {
+	override fun buildDialog(project: Project, directory: PsiDirectory, builder: CreateFileFromTemplateDialog.Builder) {
 		builder
-				?.setTitle("New Flutter Widget")
-				?.addKind("Stateless widget", FlutterIcons.Flutter, "stateless_widget")
-				?.addKind("Stateful widget", FlutterIcons.Flutter, "stateful_widget")
-				?.addKind("Stateful widget with AnimationController", FlutterIcons.Flutter, "animated_widget")
-				?.addKind("Inherited widget", FlutterIcons.Flutter, "inherited_widget")
+			.setTitle("New Flutter Widget")
+			?.addKind("Stateless widget", FlutterIcons.Flutter, "stateless_widget")
+			?.addKind("Stateful widget", FlutterIcons.Flutter, "stateful_widget")
+			?.addKind("Stateful widget with AnimationController", FlutterIcons.Flutter, "animated_widget")
+			?.addKind("Inherited widget", FlutterIcons.Flutter, "inherited_widget")
 	}
 
 	override fun isAvailable(dataContext: DataContext?): Boolean {

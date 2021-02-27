@@ -37,7 +37,7 @@ class LinterEditor(val project: Project, file: VirtualFile) : UserDataHolderBase
 		return myPanel.myContainer
 	}
 
-	override fun getPreferredFocusedComponent(): JComponent? {
+	override fun getPreferredFocusedComponent(): JComponent {
 		return myPanel.getPreferredFocusedComponent()
 	}
 
@@ -75,7 +75,5 @@ class LinterEditor(val project: Project, file: VirtualFile) : UserDataHolderBase
 		return "LinterEditor ${System.identityHashCode(this)}"
 	}
 
-	object PreviewFeature {
-
-	}
+	object PreviewFeature
 }
