@@ -20,11 +20,11 @@ import javax.swing.table.AbstractTableModel
  * @since v1.3
  */
 class LinterViewPanel(val project: Project, parentDisposable: Disposable) : Disposable, MouseListener {
+	private var tableModel: MyTableModel
 
 	lateinit var myContainer: JPanel
 	lateinit var myTable: JTable
 	lateinit var issueButton: JButton
-	var tableModel: MyTableModel
 
 	init {
 		println("LinterViewPanel.init")

@@ -1,6 +1,5 @@
 package de.mariushoefler.flutter_enhancement_suite.utils
 
-import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.httpGet
 import com.google.gson.Gson
@@ -20,7 +19,7 @@ object PubApi {
 		FuelManager.instance.basePath = "https://pub.dev/api/"
 	}
 
-	var lastPackages = mapOf<String, PubPackage>()
+	private var lastPackages = mapOf<String, PubPackage>()
 
 	fun searchPackage(query: String, page: Int): PubPackageSearch? {
 //		+--- Uncomment to test bug report dialog

@@ -74,6 +74,4 @@ class LinterEditor(val project: Project, file: VirtualFile) : UserDataHolderBase
 	override fun toString(): String {
 		return "LinterEditor ${System.identityHashCode(this)}"
 	}
-
-	object PreviewFeature
 }

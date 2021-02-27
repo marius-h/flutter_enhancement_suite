@@ -5,7 +5,6 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.ProjectLocator
 import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.openapi.vfs.VirtualFile
-import com.jetbrains.lang.dart.sdk.DartSdk
 import io.flutter.pub.PubRoot
 import io.flutter.sdk.FlutterSdk
 import org.yaml.snakeyaml.DumperOptions

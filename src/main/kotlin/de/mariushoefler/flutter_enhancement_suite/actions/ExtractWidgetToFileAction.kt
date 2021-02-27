@@ -80,8 +80,6 @@ class ExtractWidgetToFileAction : DumbAwareAction() {
 		val file = dataContext.getData(PlatformDataKeys.VIRTUAL_FILE)
 		return !(file == null || !FlutterUtils.isDartFile(file))
 	}
-
-	override fun startInTransaction() = true
 }
 
 internal class ExtractWidgetDialog(project: Project,

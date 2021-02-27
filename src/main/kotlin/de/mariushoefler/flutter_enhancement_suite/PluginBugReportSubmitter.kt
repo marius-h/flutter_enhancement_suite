@@ -1,7 +1,6 @@
 package de.mariushoefler.flutter_enhancement_suite
 
 import com.intellij.ide.DataManager
-import com.intellij.ide.plugins.PluginManager
 import com.intellij.ide.plugins.PluginManagerCore
 import com.intellij.ide.scratch.ScratchRootType
 import com.intellij.lang.Language

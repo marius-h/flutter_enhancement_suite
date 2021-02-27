@@ -29,8 +29,8 @@ class PubspecCompletionContributor : CompletionContributor() {
 
 class PubspecCompletionProvider : CompletionProvider<CompletionParameters>() {
 
-	var lastResults = arrayListOf<LookupElement>()
-	var lastSearchterm = ""
+	private var lastResults = arrayListOf<LookupElement>()
+	private var lastSearchterm = ""
 	var file: VirtualFile? = null
 
 	override fun addCompletions(

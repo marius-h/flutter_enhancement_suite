@@ -20,10 +20,10 @@ import java.io.File
  * @since v1.3
  */
 object LinterUtils {
+	private var analysisOptFile: VirtualFile? = null
+	private var rulesPsi: PsiElement? = null
 
 	var activeRules = mutableMapOf<String, PsiElement>()
-	var analysisOptFile: VirtualFile? = null
-	var rulesPsi: PsiElement? = null
 
 	fun getActiveRules(project: Project) {
 		if (analysisOptFile == null) {

@@ -22,10 +22,4 @@ class FlutterPostfixTemplateProvider : PostfixTemplateProvider {
 
 	override fun preExpand(file: PsiFile, editor: Editor) {
 	}
-
-	companion object {
-		@get:TestOnly
-		@Volatile
-		var previouslySuggestedExpressions = emptyList<String>()
-	}
 }
