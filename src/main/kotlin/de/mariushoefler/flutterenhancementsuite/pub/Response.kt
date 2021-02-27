@@ -1,9 +1,9 @@
 package de.mariushoefler.flutterenhancementsuite.pub
 
 data class Response(
-	val latest: Latest
+    val latest: Latest
 )
 
 data class Latest(
-	val version: String
+    val version: String
 )

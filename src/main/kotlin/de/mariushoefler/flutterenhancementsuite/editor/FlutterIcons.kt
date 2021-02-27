@@ -6,23 +6,23 @@ import javax.swing.Icon
 
 open class FlutterIcons<T>(fileName: String, private val iconClass: Class<T>) {
 
-	private val icons: Properties = Properties()
+    private val icons: Properties = Properties()
 
-	init {
-		icons.load(this::class.java.classLoader.getResourceAsStream("/flutter/${fileName}_icons.properties"))
-	}
+    init {
+        icons.load(this::class.java.classLoader.getResourceAsStream("/flutter/${fileName}_icons.properties"))
+    }
 
-	fun getIconByCode(code: String): Icon? {
-		val iconName = icons.getProperty("$code.codepoint")
-		return getIcon(iconName)
-	}
+    fun getIconByCode(code: String): Icon? {
+        val iconName = icons.getProperty("$code.codepoint")
+        return getIcon(iconName)
+    }
 
-	fun getIcon(name: String?): Icon? {
-		name?.let {
-			icons.getProperty(it)?.let { path ->
-				return IconLoader.findIcon(path, iconClass)
-			}
-		}
-		return null
-	}
+    open fun getIcon(name: String?): Icon? {
+        name?.let {
+            icons.getProperty(it)?.let { path ->
+                return IconLoader.findIcon(path, iconClass)
+            }
+        }
+        return null
+    }
 }

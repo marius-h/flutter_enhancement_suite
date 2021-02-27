@@ -18,59 +18,50 @@ import javax.swing.JComponent
  *
  * @since v1.3
  */
-class LinterEditor(val project: Project, file: VirtualFile) : UserDataHolderBase(), FileEditor {
+class LinterEditor(val project: Project, file: VirtualFile) : FileEditorImpl() {
+    private lateinit var myPanel: LinterViewPanel
 
-	companion object {
-		const val NAME = "Linter Rules Editor"
-	}
+    init {
+        UIUtil.invokeAndWaitIfNeeded<Unit> {
+            myPanel = LinterViewPanel(project, this)
+        }
+    }
 
-	init {
-		UIUtil.invokeAndWaitIfNeeded<Unit> {
-			myPanel = LinterViewPanel(project, this)
-		}
-	}
+    override fun getName() = "Linter Rules Editor"
 
-	private lateinit var myPanel: LinterViewPanel
+    override fun getComponent() = myPanel.myContainer
 
-	override fun getComponent(): JComponent {
-		return myPanel.myContainer
-	}
+    override fun getPreferredFocusedComponent(): JComponent {
+        return myPanel.getPreferredFocusedComponent()
+    }
 
-	override fun getPreferredFocusedComponent(): JComponent {
-		return myPanel.getPreferredFocusedComponent()
-	}
+    override fun toString(): String {
+        return "LinterEditor ${System.identityHashCode(this)}"
+    }
+}
 
-	override fun getName(): String {
-		return NAME
-	}
+abstract class FileEditorImpl : UserDataHolderBase(), FileEditor {
+    override fun getState(level: FileEditorStateLevel): FileEditorState {
+        return FileEditorState.INSTANCE
+    }
 
-	override fun getState(level: FileEditorStateLevel): FileEditorState {
-		return FileEditorState.INSTANCE
-	}
+    override fun setState(state: FileEditorState) {}
 
-	override fun setState(state: FileEditorState) {}
+    override fun isModified() = false
 
-	override fun isModified() = false
+    override fun isValid() = true
 
-	override fun isValid() = true
+    override fun getBackgroundHighlighter(): BackgroundEditorHighlighter? = null
 
-	override fun selectNotify() {}
+    override fun getCurrentLocation(): FileEditorLocation? = null
 
-	override fun deselectNotify() {}
+    override fun getStructureViewBuilder(): StructureViewBuilder? = null
 
-	override fun addPropertyChangeListener(listener: PropertyChangeListener) {}
+    override fun addPropertyChangeListener(listener: PropertyChangeListener) {
+    }
 
-	override fun removePropertyChangeListener(listener: PropertyChangeListener) {}
+    override fun removePropertyChangeListener(listener: PropertyChangeListener) {
+    }
 
-	override fun getBackgroundHighlighter(): BackgroundEditorHighlighter? = null
-
-	override fun getCurrentLocation(): FileEditorLocation? = null
-
-	override fun getStructureViewBuilder(): StructureViewBuilder? = null
-
-	override fun dispose() {}
-
-	override fun toString(): String {
-		return "LinterEditor ${System.identityHashCode(this)}"
-	}
+    override fun dispose() {}
 }

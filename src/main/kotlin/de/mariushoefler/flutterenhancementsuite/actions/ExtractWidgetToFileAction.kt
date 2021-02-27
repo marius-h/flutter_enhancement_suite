@@ -47,219 +47,216 @@ const val SMALL_PADDING = 4
  */
 class ExtractWidgetToFileAction : DumbAwareAction() {
 
-	override fun actionPerformed(event: AnActionEvent) {
-		val dataContext = event.dataContext
-		val project = dataContext.getData(PlatformDataKeys.PROJECT)
-		val file = dataContext.getData(PlatformDataKeys.VIRTUAL_FILE)
-		val editor = dataContext.getData(PlatformDataKeys.EDITOR)
-		val caret = dataContext.getData(PlatformDataKeys.CARET)
+    override fun actionPerformed(event: AnActionEvent) {
+        val dataContext = event.dataContext
+        val project = dataContext.getData(PlatformDataKeys.PROJECT)
+        val file = dataContext.getData(PlatformDataKeys.VIRTUAL_FILE)
+        val editor = dataContext.getData(PlatformDataKeys.EDITOR)
+        val caret = dataContext.getData(PlatformDataKeys.CARET)
 
-		if (project != null && file != null && editor != null && caret != null) {
-			createExtractDialog(caret, project, file, editor)
-		}
-	}
+        ifLet(project, file, editor, caret) { (project, file, editor, caret) ->
+            createExtractDialog(caret as Caret, project as Project, file as VirtualFile, editor as Editor)
+        }
+    }
 
-	private fun createExtractDialog(
-		caret: Caret,
-		project: Project,
-		file: VirtualFile,
-		editor: Editor
-	) {
-		val offset = caret.selectionStart
-		val length = caret.selectionEnd - offset
-		val refactoring = ExtractWidgetRefactoring(project, file, offset, length)
+    private inline fun <T : Any> ifLet(vararg elements: T?, closure: (List<T>) -> Unit) {
+        if (elements.all { it != null }) {
+            closure(elements.filterNotNull())
+        }
+    }
 
-		// Validate the initial status.
-		val initialStatus = refactoring.checkInitialConditions() ?: return
-		if (initialStatus.hasError()) {
-			initialStatus.message?.let { message ->
-				CommonRefactoringUtil.showErrorHint(project, editor, message, CommonBundle.getErrorTitle(), null)
-			}
-			return
-		}
+    private fun createExtractDialog(
+        caret: Caret,
+        project: Project,
+        file: VirtualFile,
+        editor: Editor
+    ) {
+        val offset = caret.selectionStart
+        val length = caret.selectionEnd - offset
+        val refactoring = ExtractWidgetRefactoring(project, file, offset, length)
 
-		ExtractWidgetDialog(project, file, editor, refactoring).show()
-	}
+        // Validate the initial status.
+        val initialStatus = refactoring.checkInitialConditions() ?: return
+        if (initialStatus.hasError()) {
+            initialStatus.message?.let { message ->
+                CommonRefactoringUtil.showErrorHint(project, editor, message, CommonBundle.getErrorTitle(), null)
+            }
+            return
+        }
 
-	override fun update(e: AnActionEvent) {
-		e.presentation.isVisible = isVisibleFor(e)
-		super.update(e)
-	}
+        ExtractWidgetDialog(project, file, editor, refactoring).show()
+    }
 
-	private fun isVisibleFor(e: AnActionEvent): Boolean {
-		val dataContext = e.dataContext
-		val file = dataContext.getData(PlatformDataKeys.VIRTUAL_FILE)
-		return !(file == null || !FlutterUtils.isDartFile(file))
-	}
+    override fun update(e: AnActionEvent) {
+        e.presentation.isVisible = isVisibleFor(e)
+        super.update(e)
+    }
+
+    private fun isVisibleFor(e: AnActionEvent): Boolean {
+        val dataContext = e.dataContext
+        val file = dataContext.getData(PlatformDataKeys.VIRTUAL_FILE)
+        return !(file == null || !FlutterUtils.isDartFile(file))
+    }
 }
 
 internal class ExtractWidgetDialog(
-	project: Project,
-	val file: VirtualFile,
-	var editor: Editor?,
-	myRefactoring: ExtractWidgetRefactoring
+    project: Project,
+    val file: VirtualFile,
+    var editor: Editor?,
+    myRefactoring: ExtractWidgetRefactoring
 ) : ServerRefactoringDialog<ExtractWidgetRefactoring>(project, editor, myRefactoring) {
 
-	private val myNameField = JTextField()
-	private val myTreeChangeListener = WidgetTreeChangeListener()
+    private val myNameField = JTextField()
+    private val myTreeChangeListener = WidgetTreeChangeListener()
 
-	init {
-		title = "Extract Widget to New File"
-		init()
+    init {
+        title = "Extract Widget to New File"
+        init()
 
-		myNameField.text = getFilenameSuggestion()
-		myNameField.selectAll()
-		myNameField.document.addDocumentListener(object : DocumentAdapter() {
-			override fun textChanged(e: DocumentEvent) {
-				updateRefactoringOptions()
-			}
-		})
+        myNameField.text = getFilenameSuggestion()
+        myNameField.selectAll()
+        myNameField.document.addDocumentListener(object : DocumentAdapter() {
+            override fun textChanged(e: DocumentEvent) {
+                updateRefactoringOptions()
+            }
+        })
 
-		updateRefactoringOptions()
-	}
+        updateRefactoringOptions()
+    }
 
-	/**
-	 * Suggests a name according to the widget which is being extracted
-	 *
-	 * @since v1.3.2
-	 */
-	private fun getFilenameSuggestion(): String {
-		editor?.caretModel?.currentCaret?.offset?.let { offset ->
-			val psiElement = PsiManager.getInstance(project).findFile(file)?.findElementAt(offset) ?: return@let
+    /**
+     * Suggests a name according to the widget which is being extracted
+     *
+     * @since v1.3.2
+     */
+    private fun getFilenameSuggestion(): String {
+        editor?.caretModel?.currentCaret?.offset?.let { offset ->
+            val psiElement = PsiManager.getInstance(project).findFile(file)?.findElementAt(offset) ?: return@let
 
-			val classElement = PsiTreeUtil.getParentOfType(psiElement, DartClassDefinition::class.java) ?: return@let
+            val classElement = PsiTreeUtil.getParentOfType(psiElement, DartClassDefinition::class.java) ?: return@let
 
-			val widgetName = psiElement.text.capitalize().split(".")[0]
+            val widgetName = psiElement.text.capitalize().split(".")[0]
 
-			return classElement.name + widgetName
-		}
+            return classElement.name + widgetName
+        }
 
-		return "NewWidgetFile"
-	}
+        return "NewWidgetFile"
+    }
 
-	private fun updateRefactoringOptions() {
-		myRefactoring.setName(myNameField.text)
-		myRefactoring.sendOptions()
-	}
+    private fun updateRefactoringOptions() {
+        myRefactoring.setName(myNameField.text)
+        myRefactoring.sendOptions()
+    }
 
-	override fun doAction() {
-		PsiManager.getInstance(project).addPsiTreeChangeListener(myTreeChangeListener)
-		super.doAction()
-		FileDocumentManager.getInstance().saveAllDocuments()
-	}
+    override fun doAction() {
+        PsiManager.getInstance(project).addPsiTreeChangeListener(myTreeChangeListener)
+        super.doAction()
+        FileDocumentManager.getInstance().saveAllDocuments()
+    }
 
-	override fun createCenterPanel(): JComponent? = null
+    override fun createCenterPanel(): JComponent? = null
 
-	override fun createNorthPanel(): JComponent {
-		val panel = JPanel(GridBagLayout())
-		val gbConstraints = GridBagConstraints()
+    override fun createNorthPanel(): JComponent {
+        val panel = JPanel(GridBagLayout())
+        val gbConstraints = GridBagConstraints()
 
-		gbConstraints.insets = JBUI.insetsBottom(SMALL_PADDING)
-		gbConstraints.gridx = 0
-		gbConstraints.gridy = 0
-		gbConstraints.gridwidth = 1
-		gbConstraints.weightx = 0.0
-		gbConstraints.weighty = 0.0
-		gbConstraints.fill = GridBagConstraints.NONE
-		gbConstraints.anchor = GridBagConstraints.WEST
-		val nameLabel = JLabel("Widget name:")
-		panel.add(nameLabel, gbConstraints)
+        gbConstraints.insets = JBUI.insetsBottom(SMALL_PADDING)
+        gbConstraints.gridx = 0
+        gbConstraints.gridy = 0
+        gbConstraints.gridwidth = 1
+        gbConstraints.weightx = 0.0
+        gbConstraints.weighty = 0.0
+        gbConstraints.fill = GridBagConstraints.NONE
+        gbConstraints.anchor = GridBagConstraints.WEST
+        val nameLabel = JLabel("Widget name:")
+        panel.add(nameLabel, gbConstraints)
 
-		gbConstraints.insets = JBUI.insets(0, SMALL_PADDING, SMALL_PADDING, 0)
-		gbConstraints.gridx = 1
-		gbConstraints.gridy = 0
-		gbConstraints.gridwidth = GridBagConstraints.REMAINDER
-		gbConstraints.weightx = 1.0
-		gbConstraints.weighty = 0.0
-		gbConstraints.fill = GridBagConstraints.BOTH
-		gbConstraints.anchor = GridBagConstraints.WEST
-		panel.add(myNameField, gbConstraints)
-		myNameField.preferredSize = Dimension(NAME_FIELD_WIDTH, myNameField.preferredSize.height)
+        gbConstraints.insets = JBUI.insets(0, SMALL_PADDING, SMALL_PADDING, 0)
+        gbConstraints.gridx = 1
+        gbConstraints.gridy = 0
+        gbConstraints.gridwidth = GridBagConstraints.REMAINDER
+        gbConstraints.weightx = 1.0
+        gbConstraints.weighty = 0.0
+        gbConstraints.fill = GridBagConstraints.BOTH
+        gbConstraints.anchor = GridBagConstraints.WEST
+        panel.add(myNameField, gbConstraints)
+        myNameField.preferredSize = Dimension(NAME_FIELD_WIDTH, myNameField.preferredSize.height)
 
-		return panel
-	}
+        return panel
+    }
 
-	override fun getPreferredFocusedComponent() = myNameField
+    override fun getPreferredFocusedComponent() = myNameField
 
-	inner class WidgetTreeChangeListener : PsiTreeChangeListener {
-		override fun beforeChildAddition(event: PsiTreeChangeEvent) {
-		}
+    inner class WidgetTreeChangeListener : PsiTreeChangeListenerImpl() {
+        override fun childAdded(event: PsiTreeChangeEvent) {
+            event.file?.let { eventFile ->
+                if (eventFile.virtualFile.path == file.path && event.child.text.startsWith("class")) {
+                    file.refresh(true, true) {
+                        val originalFile = PsiManager.getInstance(project).findFile(file)
+                        val fileName = myNameField.text.toSnakeCase() + ".dart"
+                        val pubspecFile = PubspecYamlUtil.findPubspecYamlFile(project, file)
 
-		override fun beforeChildRemoval(event: PsiTreeChangeEvent) {
-		}
+                        if (originalFile != null && pubspecFile != null) {
+                            extractWidget(originalFile, fileName, pubspecFile, event)
+                        } else {
+                            PopupUtil.showBalloonForActiveComponent(
+                                "Unable to find the pubspec.yaml file in your project",
+                                MessageType.ERROR
+                            )
+                        }
+                        PsiManager.getInstance(project).removePsiTreeChangeListener(myTreeChangeListener)
+                    }
+                }
+            }
+        }
 
-		override fun beforeChildReplacement(event: PsiTreeChangeEvent) {
-		}
+        override fun childRemoved(event: PsiTreeChangeEvent) {}
 
-		override fun beforeChildMovement(event: PsiTreeChangeEvent) {
-		}
+        override fun childReplaced(event: PsiTreeChangeEvent) {}
 
-		override fun beforeChildrenChange(event: PsiTreeChangeEvent) {
-		}
+        override fun childrenChanged(event: PsiTreeChangeEvent) {}
 
-		override fun beforePropertyChange(event: PsiTreeChangeEvent) {
-		}
+        private fun extractWidget(
+            originalFile: PsiFile,
+            fileName: String,
+            pubspecFile: VirtualFile,
+            event: PsiTreeChangeEvent
+        ) {
+            runUndoTransparentWriteAction {
+                val newFile = originalFile.containingDirectory?.findFile(fileName)
+                    ?: originalFile.containingDirectory?.createFile(fileName)
 
-		override fun childAdded(event: PsiTreeChangeEvent) {
-			event.file?.let { eventFile ->
-				if (eventFile.virtualFile.path == file.path && event.child.text.startsWith("class")) {
-					file.refresh(true, true) {
-						val originalFile = PsiManager.getInstance(project).findFile(file)
-						val fileName = myNameField.text.toSnakeCase() + ".dart"
-						val pubspecFile = PubspecYamlUtil.findPubspecYamlFile(project, file)
+                newFile?.let {
+                    val projectName = PubspecYamlUtil.getDartProjectName(pubspecFile)
+                    val pathToNewFile = projectName + it.virtualFile.path.split("lib")[1]
+                    val importStatementOrig = project.createImportStatement("package:$pathToNewFile")
+                    val importStatement = project.createImportStatement("package:flutter/material.dart")
 
-						if (originalFile != null && pubspecFile != null) {
-							extractWidget(originalFile, fileName, pubspecFile, event)
-						} else {
-							PopupUtil.showBalloonForActiveComponent(
-								"Unable to find the pubspec.yaml file in your project",
-								MessageType.ERROR
-							)
-						}
-						PsiManager.getInstance(project).removePsiTreeChangeListener(myTreeChangeListener)
-					}
-				}
-			}
-		}
+                    originalFile.addAfter(importStatementOrig, originalFile.firstChild)
+                    it.add(importStatement)
+                    it.add(event.child)
+                    event.child.delete()
+                    DartStyleAction.runDartfmt(project, mutableListOf(it.virtualFile, file))
+                }
+            }
+        }
+    }
+}
 
-		private fun extractWidget(
-			originalFile: PsiFile,
-			fileName: String,
-			pubspecFile: VirtualFile,
-			event: PsiTreeChangeEvent
-		) {
-			runUndoTransparentWriteAction {
-				val newFile = originalFile.containingDirectory?.findFile(fileName)
-					?: originalFile.containingDirectory?.createFile(fileName)
+abstract class PsiTreeChangeListenerImpl : PsiTreeChangeListener {
+    override fun beforeChildAddition(event: PsiTreeChangeEvent) {}
 
-				newFile?.let {
-					val projectName = PubspecYamlUtil.getDartProjectName(pubspecFile)
-					val pathToNewFile = projectName + it.virtualFile.path.split("lib")[1]
-					val importStatementOrig = project.createImportStatement("package:$pathToNewFile")
-					val importStatement = project.createImportStatement("package:flutter/material.dart")
+    override fun beforeChildRemoval(event: PsiTreeChangeEvent) {}
 
-					originalFile.addAfter(importStatementOrig, originalFile.firstChild)
-					it.add(importStatement)
-					it.add(event.child)
-					event.child.delete()
-					DartStyleAction.runDartfmt(project, mutableListOf(it.virtualFile, file))
-				}
-			}
-		}
+    override fun beforeChildReplacement(event: PsiTreeChangeEvent) {}
 
-		override fun childRemoved(event: PsiTreeChangeEvent) {
-		}
+    override fun beforeChildMovement(event: PsiTreeChangeEvent) {}
 
-		override fun childReplaced(event: PsiTreeChangeEvent) {
-		}
+    override fun beforeChildrenChange(event: PsiTreeChangeEvent) {}
 
-		override fun childrenChanged(event: PsiTreeChangeEvent) {
-		}
+    override fun beforePropertyChange(event: PsiTreeChangeEvent) {}
 
-		override fun childMoved(event: PsiTreeChangeEvent) {
-		}
+    override fun childMoved(event: PsiTreeChangeEvent) {}
 
-		override fun propertyChanged(event: PsiTreeChangeEvent) {
-		}
-	}
+    override fun propertyChanged(event: PsiTreeChangeEvent) {}
 }

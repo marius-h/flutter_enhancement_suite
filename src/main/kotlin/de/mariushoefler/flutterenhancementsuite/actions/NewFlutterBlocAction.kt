@@ -14,56 +14,56 @@ import de.mariushoefler.flutterenhancementsuite.utils.FlutterProjectUtils
 
 class NewFlutterBlocAction : AnAction(IconLoader.getIcon("/icons/bloc_icon16.png")) {
 
-	override fun actionPerformed(event: AnActionEvent) {
-		val project = event.project
-			?: throw IllegalStateException("Cannot find project")
-		val projectName = FlutterProjectUtils.readProjectName(project)
-			?: throw IllegalStateException("Cannot find Flutter project name")
+    override fun actionPerformed(event: AnActionEvent) {
+        val project = event.project
+            ?: throw IllegalStateException("Cannot find project")
+        val projectName = FlutterProjectUtils.readProjectName(project)
+            ?: throw IllegalStateException("Cannot find Flutter project name")
 
-		val name = Messages.showInputDialog(
-			"Enter a name for the bloc",
-			"New Flutter Bloc",
-			null,
-			null,
-			SimpleClassNameInputValidator()
-		)
+        val name = Messages.showInputDialog(
+            "Enter a name for the bloc",
+            "New Flutter Bloc",
+            null,
+            null,
+            SimpleClassNameInputValidator()
+        )
 
-		if (name?.isBlank() != false || event.getData(LangDataKeys.PSI_ELEMENT) !is PsiDirectory) {
-			return
-		}
+        if (name?.isBlank() != false || event.getData(LangDataKeys.PSI_ELEMENT) !is PsiDirectory) {
+            return
+        }
 
-		val bloc = Bloc.build(name, projectName)
+        val bloc = Bloc.build(name, projectName)
 
-		val directory = event.getData(LangDataKeys.PSI_ELEMENT) as PsiDirectory
-		if (directory.findSubdirectory(bloc.name) != null) {
-			Messages.showErrorDialog("A bloc with the same name already exists", "Flutter Bloc")
-			return
-		}
+        val directory = event.getData(LangDataKeys.PSI_ELEMENT) as PsiDirectory
+        if (directory.findSubdirectory(bloc.name) != null) {
+            Messages.showErrorDialog("A bloc with the same name already exists", "Flutter Bloc")
+            return
+        }
 
-		WriteCommandAction.runWriteCommandAction(event.project) {
-			val blocDirectory = directory.createSubdirectory(bloc.name)
-			TemplateBuilder.build(bloc, project, blocDirectory)
-		}
-	}
+        WriteCommandAction.runWriteCommandAction(event.project) {
+            val blocDirectory = directory.createSubdirectory(bloc.name)
+            TemplateBuilder.build(bloc, project, blocDirectory)
+        }
+    }
 
-	class SimpleClassNameInputValidator : InputValidatorEx {
+    class SimpleClassNameInputValidator : InputValidatorEx {
 
-		override fun checkInput(inputString: String): Boolean {
-			return getErrorText(inputString) == null
-		}
+        override fun checkInput(inputString: String): Boolean {
+            return getErrorText(inputString) == null
+        }
 
-		override fun canClose(inputString: String?) = true
+        override fun canClose(inputString: String?) = true
 
-		override fun getErrorText(inputString: String): String? {
-			var errorText: String? = null
-			if (!inputString.matches(Regex("[A-Z][a-zA-Z]+"))) {
-				errorText = "Name must be in CamelCase"
-			}
-			if (inputString.contains("bloc", true)) {
-				errorText =
-					"Do not use the word \"bloc\" in the name as it will be automatically added to the name afterwards"
-			}
-			return errorText
-		}
-	}
+        override fun getErrorText(inputString: String): String? {
+            var errorText: String? = null
+            if (!inputString.matches(Regex("[A-Z][a-zA-Z]+"))) {
+                errorText = "Name must be in CamelCase"
+            }
+            if (inputString.contains("bloc", true)) {
+                errorText =
+                    "Do not use the word \"bloc\" in the name as it will be automatically added to the name afterwards"
+            }
+            return errorText
+        }
+    }
 }

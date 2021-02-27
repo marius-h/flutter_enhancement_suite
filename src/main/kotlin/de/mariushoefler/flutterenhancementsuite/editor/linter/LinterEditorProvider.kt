@@ -15,25 +15,25 @@ import org.jetbrains.yaml.psi.YAMLFile
  * @since v1.3
  */
 class LinterEditorProvider : FileEditorProvider, DumbAware {
-	companion object {
-		const val ID = "linter-rules-editor"
-	}
+    companion object {
+        const val ID = "linter-rules-editor"
+    }
 
-	override fun accept(project: Project, file: VirtualFile): Boolean {
-		val psiFile = PsiManager.getInstance(project).findFile(file)
-		return psiFile is YAMLFile && psiFile.name.contains("analysis_options")
-	}
+    override fun accept(project: Project, file: VirtualFile): Boolean {
+        val psiFile = PsiManager.getInstance(project).findFile(file)
+        return psiFile is YAMLFile && psiFile.name.contains("analysis_options")
+    }
 
-	override fun createEditor(project: Project, file: VirtualFile): FileEditor {
-		return LinterEditor(project, file)
-	}
+    override fun createEditor(project: Project, file: VirtualFile): FileEditor {
+        return LinterEditor(project, file)
+    }
 
-	override fun disposeEditor(editor: FileEditor) {
-		println("DISPOSE EDITOR")
-		super.disposeEditor(editor)
-	}
+    override fun disposeEditor(editor: FileEditor) {
+        println("DISPOSE EDITOR")
+        super.disposeEditor(editor)
+    }
 
-	override fun getEditorTypeId() = ID
+    override fun getEditorTypeId() = ID
 
-	override fun getPolicy() = FileEditorPolicy.PLACE_AFTER_DEFAULT_EDITOR
+    override fun getPolicy() = FileEditorPolicy.PLACE_AFTER_DEFAULT_EDITOR
 }

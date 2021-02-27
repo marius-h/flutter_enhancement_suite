@@ -8,19 +8,19 @@ import javax.swing.Icon
 
 class FlutterIconRenderer(private val myIcon: Icon, element: PsiElement) : GutterIconRenderer(), DumbAware {
 
-	private val myId: String = element.text
+    private val myId: String = element.text
 
-	override fun getTooltipText() = myId
+    override fun getTooltipText() = myId
 
-	override fun getIcon() = myIcon
+    override fun getIcon() = myIcon
 
-	override fun equals(other: Any?): Boolean {
-		if (this === other) return true
-		if (other == null || javaClass != other.javaClass) return false
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || javaClass != other.javaClass) return false
 
-		val renderer: FlutterIconRenderer = other as FlutterIconRenderer
-		return Objects.equals(myId, renderer.myId)
-	}
+        val renderer: FlutterIconRenderer = other as FlutterIconRenderer
+        return Objects.equals(myId, renderer.myId)
+    }
 
-	override fun hashCode() = myId.hashCode()
+    override fun hashCode() = myId.hashCode()
 }

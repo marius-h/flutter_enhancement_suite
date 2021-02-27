@@ -9,22 +9,22 @@ import com.intellij.psi.PsiManager
 import com.intellij.psi.impl.FakePsiElement
 
 class LiveTemplateElement(
-	private val psiManager: PsiManager,
-	val element: LiveTemplateLookupElement
+    private val psiManager: PsiManager,
+    val element: LiveTemplateLookupElement
 ) : FakePsiElement() {
-	override fun getParent(): PsiElement? = null
+    override fun getParent(): PsiElement? = null
 
-	override fun isValid() = true
+    override fun isValid() = true
 
-	override fun getContainingFile(): PsiFile {
-		return PsiFileFactory
-			.getInstance(project)
-			.createFileFromText("hoge.txt", FileTypes.PLAIN_TEXT, "")
-	}
+    override fun getContainingFile(): PsiFile {
+        return PsiFileFactory
+            .getInstance(project)
+            .createFileFromText("hoge.txt", FileTypes.PLAIN_TEXT, "")
+    }
 
-	override fun getManager(): PsiManager {
-		return psiManager
-	}
+    override fun getManager(): PsiManager {
+        return psiManager
+    }
 
-	override fun getName(): String = element.lookupString
+    override fun getName(): String = element.lookupString
 }

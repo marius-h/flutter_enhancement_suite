@@ -19,37 +19,37 @@ import de.mariushoefler.flutterenhancementsuite.utils.isPubspecFile
  */
 class UrlAnnotator : Annotator {
 
-	companion object {
-		private val messageKey = Key.create<String>("hyperlink.message")
-	}
+    companion object {
+        private val messageKey = Key.create<String>("hyperlink.message")
+    }
 
-	override fun annotate(element: PsiElement, holder: AnnotationHolder) {
-		if (holder.isBatchMode || !element.containingFile.isPubspecFile()) return
+    override fun annotate(element: PsiElement, holder: AnnotationHolder) {
+        if (holder.isBatchMode || !element.containingFile.isPubspecFile()) return
 
-		if (element.text.isPubPackageName()) {
-			var message = holder.currentAnnotationSession.getUserData(messageKey)
-			if (message == null) {
-				message = getMessage()
-				holder.currentAnnotationSession.putUserData(messageKey, message)
-			}
-			element.firstChild?.let {
-				holder.newAnnotation(HighlightSeverity.INFORMATION, message).range(it).create()
-			}
-		}
-	}
+        if (element.text.isPubPackageName()) {
+            var message = holder.currentAnnotationSession.getUserData(messageKey)
+            if (message == null) {
+                message = getMessage()
+                holder.currentAnnotationSession.putUserData(messageKey, message)
+            }
+            element.firstChild?.let {
+                holder.newAnnotation(HighlightSeverity.INFORMATION, message).range(it).create()
+            }
+        }
+    }
 
-	private fun getMessage(): String {
-		var message = "Open documentation"
-		val shortcuts = KeymapManager.getInstance().activeKeymap.getShortcuts(IdeActions.ACTION_QUICK_JAVADOC)
-		var shortcutText = ""
-		val keyboardShortcut = ContainerUtil.find(shortcuts) { shortcut -> shortcut.isKeyboard }
-		if (keyboardShortcut != null) {
-			if (shortcutText.isNotEmpty()) shortcutText += ", "
-			shortcutText += KeymapUtil.getShortcutText(keyboardShortcut)
-		}
-		if (shortcutText.isNotEmpty()) {
-			message += " ($shortcutText)"
-		}
-		return message
-	}
+    private fun getMessage(): String {
+        var message = "Open documentation"
+        val shortcuts = KeymapManager.getInstance().activeKeymap.getShortcuts(IdeActions.ACTION_QUICK_JAVADOC)
+        var shortcutText = ""
+        val keyboardShortcut = ContainerUtil.find(shortcuts) { shortcut -> shortcut.isKeyboard }
+        if (keyboardShortcut != null) {
+            if (shortcutText.isNotEmpty()) shortcutText += ", "
+            shortcutText += KeymapUtil.getShortcutText(keyboardShortcut)
+        }
+        if (shortcutText.isNotEmpty()) {
+            message += " ($shortcutText)"
+        }
+        return message
+    }
 }

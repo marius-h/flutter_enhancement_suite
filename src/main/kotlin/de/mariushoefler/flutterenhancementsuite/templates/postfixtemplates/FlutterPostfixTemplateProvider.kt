@@ -6,17 +6,17 @@ import com.intellij.openapi.editor.Editor
 import com.intellij.psi.PsiFile
 
 class FlutterPostfixTemplateProvider : PostfixTemplateProvider {
-	override fun getTemplates() = setOf<PostfixTemplate>()
+    override fun getTemplates() = setOf<PostfixTemplate>()
 
-	override fun isTerminalSymbol(currentChar: Char): Boolean {
-		return currentChar == '.' || currentChar == '!'
-	}
+    override fun isTerminalSymbol(currentChar: Char): Boolean {
+        return currentChar == '.' || currentChar == '!'
+    }
 
-	override fun afterExpand(file: PsiFile, editor: Editor) {
-	}
+    override fun afterExpand(file: PsiFile, editor: Editor) {
+    }
 
-	override fun preCheck(copyFile: PsiFile, realEditor: Editor, currentOffset: Int) = copyFile
+    override fun preCheck(copyFile: PsiFile, realEditor: Editor, currentOffset: Int) = copyFile
 
-	override fun preExpand(file: PsiFile, editor: Editor) {
-	}
+    override fun preExpand(file: PsiFile, editor: Editor) {
+    }
 }

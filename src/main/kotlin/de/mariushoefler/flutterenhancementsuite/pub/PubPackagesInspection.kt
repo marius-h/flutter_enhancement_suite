@@ -10,52 +10,52 @@ import kotlinx.coroutines.runBlocking
 
 class PubPackagesInspection : LocalInspectionTool() {
 
-	private val dependencyChecker = DependencyChecker()
+    private val dependencyChecker = DependencyChecker()
 
-	override fun getDisplayName() = "Pub Packages latest versions"
+    override fun getDisplayName() = "Pub Packages latest versions"
 
-	override fun getGroupDisplayName(): String = GroupNames.DEPENDENCY_GROUP_NAME
+    override fun getGroupDisplayName(): String = GroupNames.DEPENDENCY_GROUP_NAME
 
-	override fun getShortName() = "PubVersions"
+    override fun getShortName() = "PubVersions"
 
-	override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
-		return YamlElementVisitor(holder, isOnTheFly, dependencyChecker)
-	}
+    override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
+        return YamlElementVisitor(holder, isOnTheFly, dependencyChecker)
+    }
 
-	override fun isEnabledByDefault() = true
+    override fun isEnabledByDefault() = true
 }
 
 class YamlElementVisitor(
-	private val holder: ProblemsHolder,
-	private val isOnTheFly: Boolean,
-	private val dependencyChecker: DependencyChecker
+    private val holder: ProblemsHolder,
+    private val isOnTheFly: Boolean,
+    private val dependencyChecker: DependencyChecker
 ) : PsiElementVisitor() {
 
-	override fun visitFile(file: PsiFile) {
-		if (!isOnTheFly) return
+    override fun visitFile(file: PsiFile) {
+        if (!isOnTheFly) return
 
-		runBlocking {
-			val fileParser = FileParser(file, dependencyChecker)
-			val problemDescriptions = fileParser.checkFile()
+        runBlocking {
+            val fileParser = FileParser(file, dependencyChecker)
+            val problemDescriptions = fileParser.checkFile()
 
-			problemDescriptions.forEach {
-				holder.showProblem(file, it.counter, it.latestVersion)
-			}
-		}
-	}
+            problemDescriptions.forEach {
+                holder.showProblem(file, it.counter, it.latestVersion)
+            }
+        }
+    }
 }
 
 private fun ProblemsHolder.showProblem(
-	file: PsiFile,
-	counter: Int,
-	latestVersion: String
+    file: PsiFile,
+    counter: Int,
+    latestVersion: String
 ) {
-	file.findElementAt(counter)?.let { psiElement ->
-		registerProblem(
-			psiElement,
-			"There's a new version available: $latestVersion",
-			DependencyQuickFix(psiElement, latestVersion, true),
-			DependencyQuickFix(psiElement, latestVersion, false)
-		)
-	}
+    file.findElementAt(counter)?.let { psiElement ->
+        registerProblem(
+            psiElement,
+            "There's a new version available: $latestVersion",
+            DependencyQuickFix(psiElement, latestVersion, true),
+            DependencyQuickFix(psiElement, latestVersion, false)
+        )
+    }
 }
