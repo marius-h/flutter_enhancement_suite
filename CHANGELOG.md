@@ -1,6 +1,7 @@
 # :fire:&nbsp;What's new?
 
-## [1.4.0]
+## [Unreleased]
+### Changed
 - New project structure
 
 ## [1.3.3]
