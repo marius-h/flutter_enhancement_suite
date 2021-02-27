@@ -43,7 +43,8 @@ object FlutterProjectUtils {
                     this.addImplicitResolver(Tag("tag:yaml.org,2002:value"), VALUE, "=")
                     this.addImplicitResolver(Tag.MERGE, MERGE, "<")
                 }
-            })
+            }
+        )
 
         return yaml.load<Map<String, Any>>(yamlContents)
     }
