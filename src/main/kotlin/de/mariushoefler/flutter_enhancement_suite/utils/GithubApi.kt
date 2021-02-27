@@ -8,10 +8,10 @@ object GithubApi {
 	fun formatReadmeAsHtml(text: String, repoUrl: String): String {
 		var context: String
 		repoUrl.replace(Regex("https?://github.com/"), "")
-				.split("/")
-				.let {
-					context = "${it[0]}/${it[1]}"
-				}
+			.split("/")
+			.let {
+				context = "${it[0]}/${it[1]}"
+			}
 
 		val jsonObj = JSONObject()
 		jsonObj.put("text", text)
@@ -21,11 +21,11 @@ object GithubApi {
 		var message = ""
 
 		"https://api.github.com/markdown"
-				.httpPost()
-				.set("Content-Type", "text/plain")
-				.body(jsonObj.toString())
-				.responseString { _, _, result -> message = result.get() }
-				.join()
+			.httpPost()
+			.set("Content-Type", "text/plain")
+			.body(jsonObj.toString())
+			.responseString { _, _, result -> message = result.get() }
+			.join()
 
 		return message
 	}

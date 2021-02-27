@@ -14,6 +14,11 @@ import javax.swing.JPanel
 import javax.swing.JTable
 import javax.swing.table.AbstractTableModel
 
+const val ENABLED_COL_MAX_WIDTH = 32
+const val NAME_COL_MIN_WIDTH = 360
+const val DESCRIPTION_COL_MIN_WIDTH = 700
+
+
 /**
  * UI for editing rules in "analysis_options.yaml"
  *
@@ -45,9 +50,9 @@ class LinterViewPanel(val project: Project, parentDisposable: Disposable) : Disp
 		}
 
 		myTable.model = tableModel
-		myTable.columnModel.getColumn(0).maxWidth = 32
-		myTable.columnModel.getColumn(1).minWidth = 360
-		myTable.columnModel.getColumn(2).minWidth = 700
+		myTable.columnModel.getColumn(0).maxWidth = ENABLED_COL_MAX_WIDTH
+		myTable.columnModel.getColumn(1).minWidth = NAME_COL_MIN_WIDTH
+		myTable.columnModel.getColumn(2).minWidth = DESCRIPTION_COL_MIN_WIDTH
 		myTable.autoResizeMode = JTable.AUTO_RESIZE_OFF
 	}
 

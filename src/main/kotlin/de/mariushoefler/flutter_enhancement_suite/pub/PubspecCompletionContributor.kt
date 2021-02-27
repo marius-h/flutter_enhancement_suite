@@ -16,9 +16,9 @@ class PubspecCompletionContributor : CompletionContributor() {
 
 	init {
 		extend(
-				CompletionType.BASIC,
-				PlatformPatterns.psiElement(),
-				PubspecCompletionProvider()
+			CompletionType.BASIC,
+			PlatformPatterns.psiElement(),
+			PubspecCompletionProvider()
 		)
 	}
 
@@ -34,9 +34,9 @@ class PubspecCompletionProvider : CompletionProvider<CompletionParameters>() {
 	var file: VirtualFile? = null
 
 	override fun addCompletions(
-			parameters: CompletionParameters,
-			context: ProcessingContext,
-			result: CompletionResultSet
+		parameters: CompletionParameters,
+		context: ProcessingContext,
+		result: CompletionResultSet
 	) {
 		if (file == null) {
 			file = parameters.originalFile.virtualFile
@@ -55,12 +55,16 @@ class PubspecCompletionProvider : CompletionProvider<CompletionParameters>() {
 		} else if (userInput.length > 2) {
 			lastSearchterm = userInput
 			lastResults.clear()
-			for (page in 1..2) {
-				val results = PubApi.searchPackage(userInput, page)?.packages ?: return
-				results.forEach {
-					if (it.name.contains(userInput, true)) {
-						createItem(it, result)
-					}
+			updateResults(userInput, result)
+		}
+	}
+
+	private fun updateResults(userInput: String, result: CompletionResultSet) {
+		for (page in 1..2) {
+			val results = PubApi.searchPackage(userInput, page)?.packages ?: return
+			results.forEach {
+				if (it.name.contains(userInput, true)) {
+					createItem(it, result)
 				}
 			}
 		}
@@ -72,12 +76,12 @@ class PubspecCompletionProvider : CompletionProvider<CompletionParameters>() {
 		if (pubPackage != null) {
 			println("Package '$packageName' added to list")
 			val item = LookupElementBuilder
-					.create(pubPackage.generateDependencyString())
-					.withPresentableText("package: ${pubPackage.name}")
-					.withLookupString(pubPackage.name)
-					.withTypeText(pubPackage.getAuthorName(), true)
-					.withIcon(DartIcons.Dart_16)
-					.withInsertHandler { _, _ -> FlutterProjectUtils.runPackagesGet(file) }
+				.create(pubPackage.generateDependencyString())
+				.withPresentableText("package: ${pubPackage.name}")
+				.withLookupString(pubPackage.name)
+				.withTypeText(pubPackage.getAuthorName(), true)
+				.withIcon(DartIcons.Dart_16)
+				.withInsertHandler { _, _ -> FlutterProjectUtils.runPackagesGet(file) }
 			lastResults.add(item)
 			result.addElement(item)
 		}

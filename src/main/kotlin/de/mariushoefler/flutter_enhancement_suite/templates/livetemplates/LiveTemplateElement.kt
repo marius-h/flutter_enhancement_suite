@@ -9,15 +9,18 @@ import com.intellij.psi.PsiManager
 import com.intellij.psi.impl.FakePsiElement
 
 
-class LiveTemplateElement(private val psiManager: PsiManager, val element: LiveTemplateLookupElement) : FakePsiElement() {
+class LiveTemplateElement(
+	private val psiManager: PsiManager,
+	val element: LiveTemplateLookupElement
+) : FakePsiElement() {
 	override fun getParent(): PsiElement? = null
 
 	override fun isValid() = true
 
 	override fun getContainingFile(): PsiFile {
 		return PsiFileFactory
-				.getInstance(project)
-				.createFileFromText("hoge.txt", FileTypes.PLAIN_TEXT, "")
+			.getInstance(project)
+			.createFileFromText("hoge.txt", FileTypes.PLAIN_TEXT, "")
 	}
 
 	override fun getManager(): PsiManager {

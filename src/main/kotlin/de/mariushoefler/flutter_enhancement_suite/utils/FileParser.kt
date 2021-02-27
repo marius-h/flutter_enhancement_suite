@@ -11,8 +11,8 @@ import kotlin.coroutines.CoroutineContext
 const val REGEX_DEPENDENCY = ".*(?!version|sdk)\\b\\S+:.+(\\.[0-9]+\\.[0-9]+(.*)|any)"
 
 class FileParser(
-		private val file: PsiFile,
-		private val dependencyChecker: DependencyChecker
+	private val file: PsiFile,
+	private val dependencyChecker: DependencyChecker
 ) : CoroutineScope {
 
 	private val parentJob = SupervisorJob()
@@ -99,7 +99,7 @@ private fun getCurrentVersion(dependency: String): String {
 
 
 data class VersionDescription(
-		val counter: Int,
-		val currentVersion: String,
-		val latestVersion: String
+	val counter: Int,
+	val currentVersion: String,
+	val latestVersion: String
 )

@@ -6,3 +6,6 @@ formatting:
     continuationdentSize: 8
   ParameterListWrapping:
     indentSize: 8
+empty-blocks:
+  EmptyFunctionBlock:
+    active: false

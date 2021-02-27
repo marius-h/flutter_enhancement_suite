@@ -16,7 +16,8 @@ import com.jetbrains.lang.dart.sdk.DartSdk
 import de.mariushoefler.flutter_enhancement_suite.utils.toSnakeCase
 import icons.FlutterIcons
 
-class NewFlutterWidgetAction : CreateFileFromTemplateAction("Flutter Widget", "Create a new Flutter widget", FlutterIcons.Flutter) {
+class NewFlutterWidgetAction :
+	CreateFileFromTemplateAction("Flutter Widget", "Create a new Flutter widget", FlutterIcons.Flutter) {
 	override fun createFileFromTemplate(name: String?, template: FileTemplate?, dir: PsiDirectory?): PsiFile {
 		return super.createFileFromTemplate(name?.toSnakeCase(), template, dir)
 	}

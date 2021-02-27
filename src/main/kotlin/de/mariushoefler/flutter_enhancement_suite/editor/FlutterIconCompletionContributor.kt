@@ -19,9 +19,9 @@ class FlutterIconCompletionContributor : DartCompletionExtension() {
 		val icon = findIcon(suggestion) ?: return null
 
 		return DartServerCompletionContributor
-				.createLookupElement(project, suggestion)
-				.withTypeText("", icon, false)
-				.withTypeIconRightAligned(true)
+			.createLookupElement(project, suggestion)
+			.withTypeText("", icon, false)
+			.withTypeIconRightAligned(true)
 	}
 
 	private fun findIcon(suggestion: CompletionSuggestion): Icon? {

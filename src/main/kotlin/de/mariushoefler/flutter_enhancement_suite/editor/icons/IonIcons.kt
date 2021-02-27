@@ -1,5 +1,5 @@
 package de.mariushoefler.flutter_enhancement_suite.editor.icons
 
-import de.mariushoefler.flutter_enhancement_suite.editor.AbstractFlutterIcons
+import de.mariushoefler.flutter_enhancement_suite.editor.FlutterIcons
 
-object IonIcons : AbstractFlutterIcons<IonIcons>("ion", IonIcons::class.java)
+object IonIcons : FlutterIcons<IonIcons>("ion", IonIcons::class.java)

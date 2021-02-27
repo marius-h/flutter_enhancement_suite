@@ -13,12 +13,13 @@ class LiveTemplatePreviewProvider : AbstractDocumentationProvider() {
 		val REPLACES_DISP = listOf("<", ">", "&", "'", "\"")
 	}
 
-	override fun getDocumentationElementForLookupItem(psiManager: PsiManager, obj: Any?, element: PsiElement?): PsiElement? {
-		if (obj !is LiveTemplateLookupElementImpl) {
-			return null
-		}
-
-		return LiveTemplateElement(psiManager, obj)
+	override fun getDocumentationElementForLookupItem(
+		psiManager: PsiManager,
+		obj: Any?,
+		element: PsiElement?
+	): PsiElement? {
+		return if (obj !is LiveTemplateLookupElementImpl) null
+		else LiveTemplateElement(psiManager, obj)
 	}
 
 	override fun generateDoc(element: PsiElement?, originalElement: PsiElement?): String? {

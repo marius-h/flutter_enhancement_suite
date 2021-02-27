@@ -2,6 +2,7 @@ package de.mariushoefler.flutter_enhancement_suite.editor
 
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
+import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.psi.PsiElement
 import com.jetbrains.lang.dart.psi.DartArrayAccessExpression
 import com.jetbrains.lang.dart.psi.DartCallExpression
@@ -13,6 +14,7 @@ import de.mariushoefler.flutter_enhancement_suite.editor.icons.MaterialCommunity
 import de.mariushoefler.flutter_enhancement_suite.editor.icons.MdiIcons
 import javax.swing.Icon
 
+const val HEX_RADIX = 16
 
 class FlutterEditorAnnotator : Annotator {
 	override fun annotate(element: PsiElement, holder: AnnotationHolder) {
@@ -21,22 +23,7 @@ class FlutterEditorAnnotator : Annotator {
 		val text = element.text
 
 		if (element is DartReferenceExpression || element is DartArrayAccessExpression) {
-			val icon: Icon? = when {
-				text.startsWith("Ionicons.") -> {
-					findIcon(text, "Ionicons.", IonIcons)
-				}
-				text.startsWith("MaterialCommunityIcons.") -> {
-					findIcon(text, "MaterialCommunityIcons.", MaterialCommunityIcons)
-				}
-				text.startsWith("FontAwesome.") -> {
-					findIcon(text, "FontAwesome.", FontAwesomeIcons)
-				}
-				text.startsWith("MdiIcons.") -> {
-					findIcon(text, "MdiIcons.", MdiIcons)
-				}
-				else -> null
-			}
-
+			val icon: Icon? = getIconForPrefix(text)
 			if (icon != null) attachIcon(element, holder, icon)
 		} else {
 			val constIconDataText = when (element) {
@@ -47,49 +34,41 @@ class FlutterEditorAnnotator : Annotator {
 
 			if (text.startsWith(constIconDataText)) {
 				val value = parseNumberFromCallParam(text, constIconDataText).toString()
-
-				var icon: Icon? = null
-
-//				element.containingFile.name
-
-				when {
-					element.containingFile.name.contains("ionicons") -> {
-						icon = IonIcons.getIconByCode(value)
-					}
-					element.containingFile.name.contains("font_awesome") -> {
-						icon = FontAwesomeIcons.getIconByCode(value)
-					}
-					element.containingFile.name.contains("material_community_icons") -> {
-						icon = MaterialCommunityIcons.getIconByCode(value)
-					}
-				}
-
+				val icon: Icon? = getIconForFilename(element, value)
 				if (icon != null) {
 					attachIcon(element, holder, icon)
 				}
-				//				if (value != null) {
-
-
-////					val hex = java.lang.Long.toHexString(value.toLong())
-//					val hex: String = value.toString()
-//
-//					var icon = MaterialCommunityIcons.getIconByCode(hex)
-//					if (icon != null) {
-//						attachIcon(element, holder, icon)
-//					} else {
-//						icon = FontAwesomeIcons.getIconByCode(hex)
-//						if (icon != null) {
-//							attachIcon(element, holder, icon)
-//						} else {
-//							icon = IonIcons.getIconByCode(hex)
-//							if (icon != null) {
-//								attachIcon(element, holder, icon)
-//							}
-//						}
-//					}
-//				}
 			}
 		}
+	}
+
+	private fun getIconForFilename(element: PsiElement, value: String) = when {
+		element.containingFile.name.contains("ionicons") -> {
+			IonIcons.getIconByCode(value)
+		}
+		element.containingFile.name.contains("font_awesome") -> {
+			FontAwesomeIcons.getIconByCode(value)
+		}
+		element.containingFile.name.contains("material_community_icons") -> {
+			MaterialCommunityIcons.getIconByCode(value)
+		}
+		else -> null
+	}
+
+	private fun getIconForPrefix(text: String) = when {
+		text.startsWith("Ionicons.") -> {
+			findIcon(text, "Ionicons.", IonIcons)
+		}
+		text.startsWith("MaterialCommunityIcons.") -> {
+			findIcon(text, "MaterialCommunityIcons.", MaterialCommunityIcons)
+		}
+		text.startsWith("FontAwesome.") -> {
+			findIcon(text, "FontAwesome.", FontAwesomeIcons)
+		}
+		text.startsWith("MdiIcons.") -> {
+			findIcon(text, "MdiIcons.", MdiIcons)
+		}
+		else -> null
 	}
 
 	private fun parseNumberFromCallParam(callText: String, prefix: String): Int? {
@@ -101,7 +80,7 @@ class FlutterEditorAnnotator : Annotator {
 			}
 			try {
 				return if (value.startsWith("0x"))
-					Integer.parseUnsignedInt(value.substring(2), 16)
+					Integer.parseUnsignedInt(value.substring(2), HEX_RADIX)
 				else
 					Integer.parseUnsignedInt(value)
 			} catch (ignored: NumberFormatException) {
@@ -112,17 +91,16 @@ class FlutterEditorAnnotator : Annotator {
 		return null
 	}
 
-	private fun <T> findIcon(text: String, prefix: String, iconPack: AbstractFlutterIcons<T>): Icon? {
+	private fun <T> findIcon(text: String, prefix: String, iconPack: FlutterIcons<T>): Icon? {
 		val key = text.substring(prefix.length)
 
 		return iconPack.getIcon(key)
 	}
 
 	private fun attachIcon(element: PsiElement, holder: AnnotationHolder, icon: Icon) {
-		try {
-			val annotation = holder.createInfoAnnotation(element, null)
-			annotation.gutterIconRenderer = FlutterIconRenderer(icon, element)
-		} catch (e: Exception) {
-		}
+		holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+			.range(element)
+			.gutterIconRenderer(FlutterIconRenderer(icon, element))
+			.create()
 	}
 }

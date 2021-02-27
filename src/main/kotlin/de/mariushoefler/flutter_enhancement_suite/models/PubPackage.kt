@@ -3,13 +3,15 @@ package de.mariushoefler.flutter_enhancement_suite.models
 import com.github.kittinunf.fuel.core.ResponseDeserializable
 import com.google.gson.Gson
 
-data class PubPackage(val name: String,
-					  private val version: String,
-					  private val dependencies: Map<String, Any>,
-					  private val author: String?,
-					  private val authors: ArrayList<String>?,
-					  val description: String?,
-					  val homepage: String?) {
+data class PubPackage(
+	val name: String,
+	private val version: String,
+	private val dependencies: Map<String, Any>,
+	private val author: String?,
+	private val authors: ArrayList<String>?,
+	val description: String?,
+	val homepage: String?
+) {
 
 	fun getAuthorName(): String {
 		if (author != null) {

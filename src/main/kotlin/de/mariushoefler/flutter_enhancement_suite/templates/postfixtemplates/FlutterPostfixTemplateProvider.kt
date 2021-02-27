@@ -4,10 +4,7 @@ import com.intellij.codeInsight.template.postfix.templates.PostfixTemplate
 import com.intellij.codeInsight.template.postfix.templates.PostfixTemplateProvider
 import com.intellij.openapi.editor.Editor
 import com.intellij.psi.PsiFile
-import org.jetbrains.annotations.TestOnly
 
-
-// TODO: Add postfix templates [https://github.com/JetBrains/kotlin/blob/master/idea/src/org/jetbrains/kotlin/idea/codeInsight/postfix/KtPostfixTemplateProvider.kt]
 class FlutterPostfixTemplateProvider : PostfixTemplateProvider {
 	override fun getTemplates() = setOf<PostfixTemplate>()
 

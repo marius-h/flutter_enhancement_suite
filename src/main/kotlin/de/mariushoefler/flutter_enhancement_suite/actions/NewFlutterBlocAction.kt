@@ -1,5 +1,6 @@
 package de.mariushoefler.flutter_enhancement_suite.actions
 
+import TemplateBuilder
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.LangDataKeys
@@ -10,22 +11,21 @@ import com.intellij.openapi.util.IconLoader
 import com.intellij.psi.PsiDirectory
 import de.mariushoefler.flutter_enhancement_suite.models.Bloc
 import de.mariushoefler.flutter_enhancement_suite.utils.FlutterProjectUtils
-import de.mariushoefler.flutter_enhancement_suite.utils.TemplateBuilder
 
 class NewFlutterBlocAction : AnAction(IconLoader.getIcon("/icons/bloc_icon16.png")) {
 
 	override fun actionPerformed(event: AnActionEvent) {
 		val project = event.project
-				?: throw IllegalStateException("Cannot find project")
+			?: throw IllegalStateException("Cannot find project")
 		val projectName = FlutterProjectUtils.readProjectName(project)
-				?: throw IllegalStateException("Cannot find Flutter project name")
+			?: throw IllegalStateException("Cannot find Flutter project name")
 
 		val name = Messages.showInputDialog(
-				"Enter a name for the bloc",
-				"New Flutter Bloc",
-				null,
-				null,
-				SimpleClassNameInputValidator()
+			"Enter a name for the bloc",
+			"New Flutter Bloc",
+			null,
+			null,
+			SimpleClassNameInputValidator()
 		)
 
 		if (name?.isBlank() != false || event.getData(LangDataKeys.PSI_ELEMENT) !is PsiDirectory) {

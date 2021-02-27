@@ -26,9 +26,9 @@ class PubPackagesInspection : LocalInspectionTool() {
 }
 
 class YamlElementVisitor(
-		private val holder: ProblemsHolder,
-		private val isOnTheFly: Boolean,
-		private val dependencyChecker: DependencyChecker
+	private val holder: ProblemsHolder,
+	private val isOnTheFly: Boolean,
+	private val dependencyChecker: DependencyChecker
 ) : PsiElementVisitor() {
 
 	override fun visitFile(file: PsiFile) {
@@ -46,16 +46,16 @@ class YamlElementVisitor(
 }
 
 private fun ProblemsHolder.showProblem(
-		file: PsiFile,
-		counter: Int,
-		latestVersion: String
+	file: PsiFile,
+	counter: Int,
+	latestVersion: String
 ) {
 	file.findElementAt(counter)?.let { psiElement ->
 		registerProblem(
-				psiElement,
-				"There's a new version available: $latestVersion",
-				DependencyQuickFix(psiElement, latestVersion, true),
-				DependencyQuickFix(psiElement, latestVersion, false)
+			psiElement,
+			"There's a new version available: $latestVersion",
+			DependencyQuickFix(psiElement, latestVersion, true),
+			DependencyQuickFix(psiElement, latestVersion, false)
 		)
 	}
 }

@@ -41,13 +41,7 @@ object FlutterProjectUtils {
 			}
 		})
 
-		return try {
-			@Suppress("UNCHECKED_CAST")
-			yaml.load<Any>(yamlContents) as Map<String, Any>
-		} catch (e: Exception) {
-			null
-		}
-
+		return yaml.load<Map<String, Any>>(yamlContents)
 	}
 
 	/**
@@ -64,8 +58,6 @@ object FlutterProjectUtils {
 					FlutterSdk.getFlutterSdk(project)?.flutterPackagesGet(pubRoot)?.startProcess(project)
 					//FlutterSdk.getFlutterSdk(project)?.flutterPackagesGet(pubRoot)?.startInModuleConsole(module, { pubRoot.refresh() }, null)
 				}
-
-				//startPackagesGet(pubRoot, project)
 			}
 		}
 	}

@@ -11,6 +11,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.MessageType
 import com.intellij.openapi.ui.popup.util.PopupUtil
 import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiManager
 import com.intellij.psi.PsiTreeChangeEvent
 import com.intellij.psi.PsiTreeChangeListener
@@ -82,10 +83,12 @@ class ExtractWidgetToFileAction : DumbAwareAction() {
 	}
 }
 
-internal class ExtractWidgetDialog(project: Project,
-								   val file: VirtualFile,
-								   var editor: Editor?,
-								   myRefactoring: ExtractWidgetRefactoring) : ServerRefactoringDialog<ExtractWidgetRefactoring>(project, editor, myRefactoring) {
+internal class ExtractWidgetDialog(
+	project: Project,
+	val file: VirtualFile,
+	var editor: Editor?,
+	myRefactoring: ExtractWidgetRefactoring
+) : ServerRefactoringDialog<ExtractWidgetRefactoring>(project, editor, myRefactoring) {
 
 	private val myNameField = JTextField()
 	private val myTreeChangeListener = WidgetTreeChangeListener()
@@ -168,7 +171,25 @@ internal class ExtractWidgetDialog(project: Project,
 
 	override fun getPreferredFocusedComponent() = myNameField
 
-	inner class WidgetTreeChangeListener : AbstractPsiTreeChangeListener() {
+	inner class WidgetTreeChangeListener : PsiTreeChangeListener {
+		override fun beforeChildAddition(event: PsiTreeChangeEvent) {
+
+		}
+
+		override fun beforeChildRemoval(event: PsiTreeChangeEvent) {
+		}
+
+		override fun beforeChildReplacement(event: PsiTreeChangeEvent) {
+		}
+
+		override fun beforeChildMovement(event: PsiTreeChangeEvent) {
+		}
+
+		override fun beforeChildrenChange(event: PsiTreeChangeEvent) {
+		}
+
+		override fun beforePropertyChange(event: PsiTreeChangeEvent) {
+		}
 
 		override fun childAdded(event: PsiTreeChangeEvent) {
 			event.file?.let { eventFile ->
@@ -179,25 +200,12 @@ internal class ExtractWidgetDialog(project: Project,
 						val pubspecFile = PubspecYamlUtil.findPubspecYamlFile(project, file)
 
 						if (originalFile != null && pubspecFile != null) {
-							runUndoTransparentWriteAction {
-								val newFile = originalFile.containingDirectory?.findFile(fileName)
-										?: originalFile.containingDirectory?.createFile(fileName)
-
-								newFile?.let {
-									val projectName = PubspecYamlUtil.getDartProjectName(pubspecFile)
-									val pathToNewFile = projectName + it.virtualFile.path.split("lib")[1]
-									val importStatementOrig = project.createImportStatement("package:$pathToNewFile")
-									val importStatement = project.createImportStatement("package:flutter/material.dart")
-
-									originalFile.addAfter(importStatementOrig, originalFile.firstChild)
-									it.add(importStatement)
-									it.add(event.child)
-									event.child.delete()
-									DartStyleAction.runDartfmt(project, mutableListOf(it.virtualFile, file))
-								}
-							}
+							extractWidget(originalFile, fileName, pubspecFile, event)
 						} else {
-							PopupUtil.showBalloonForActiveComponent("Unable to find the pubspec.yaml file in your project", MessageType.ERROR)
+							PopupUtil.showBalloonForActiveComponent(
+								"Unable to find the pubspec.yaml file in your project",
+								MessageType.ERROR
+							)
 						}
 						PsiManager.getInstance(project).removePsiTreeChangeListener(myTreeChangeListener)
 					}
@@ -205,36 +213,44 @@ internal class ExtractWidgetDialog(project: Project,
 			}
 		}
 
-		override fun beforeChildRemoval(event: PsiTreeChangeEvent) {
+		private fun extractWidget(
+			originalFile: PsiFile,
+			fileName: String,
+			pubspecFile: VirtualFile,
+			event: PsiTreeChangeEvent
+		) {
+			runUndoTransparentWriteAction {
+				val newFile = originalFile.containingDirectory?.findFile(fileName)
+					?: originalFile.containingDirectory?.createFile(fileName)
 
+				newFile?.let {
+					val projectName = PubspecYamlUtil.getDartProjectName(pubspecFile)
+					val pathToNewFile = projectName + it.virtualFile.path.split("lib")[1]
+					val importStatementOrig = project.createImportStatement("package:$pathToNewFile")
+					val importStatement = project.createImportStatement("package:flutter/material.dart")
+
+					originalFile.addAfter(importStatementOrig, originalFile.firstChild)
+					it.add(importStatement)
+					it.add(event.child)
+					event.child.delete()
+					DartStyleAction.runDartfmt(project, mutableListOf(it.virtualFile, file))
+				}
+			}
 		}
 
-	}
+		override fun childRemoved(event: PsiTreeChangeEvent) {
+		}
 
-	abstract inner class AbstractPsiTreeChangeListener : PsiTreeChangeListener {
-		override fun beforePropertyChange(event: PsiTreeChangeEvent) {}
+		override fun childReplaced(event: PsiTreeChangeEvent) {
+		}
 
-		override fun childReplaced(event: PsiTreeChangeEvent) {}
+		override fun childrenChanged(event: PsiTreeChangeEvent) {
+		}
 
-		override fun childrenChanged(event: PsiTreeChangeEvent) {}
+		override fun childMoved(event: PsiTreeChangeEvent) {
+		}
 
-		override fun beforeChildAddition(event: PsiTreeChangeEvent) {}
-
-		override fun beforeChildReplacement(event: PsiTreeChangeEvent) {}
-
-		override fun propertyChanged(event: PsiTreeChangeEvent) {}
-
-		override fun beforeChildrenChange(event: PsiTreeChangeEvent) {}
-
-		override fun childMoved(event: PsiTreeChangeEvent) {}
-
-		override fun childRemoved(event: PsiTreeChangeEvent) {}
-
-		override fun beforeChildMovement(event: PsiTreeChangeEvent) {}
-
-		override fun childAdded(event: PsiTreeChangeEvent) {}
-
-		override fun beforeChildRemoval(event: PsiTreeChangeEvent) {}
+		override fun propertyChanged(event: PsiTreeChangeEvent) {
+		}
 	}
 }
-

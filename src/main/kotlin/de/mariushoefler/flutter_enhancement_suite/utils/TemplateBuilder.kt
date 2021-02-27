@@ -1,5 +1,3 @@
-package de.mariushoefler.flutter_enhancement_suite.utils
-
 import com.intellij.ide.fileTemplates.FileTemplateManager
 import com.intellij.ide.fileTemplates.FileTemplateUtil
 import com.intellij.openapi.project.Project

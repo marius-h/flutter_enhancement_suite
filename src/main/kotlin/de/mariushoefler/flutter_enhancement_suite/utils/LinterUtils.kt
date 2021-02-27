@@ -34,16 +34,7 @@ object LinterUtils {
 		val psiFile = analysisOptFile?.let {
 			PsiManager.getInstance(project).findFile(it)
 		}
-		psiFile?.firstChild?.firstChild?.children?.forEach { yamlMaps ->
-			if (yamlMaps.text.startsWith("linter")) {
-				rulesPsi = yamlMaps.lastChild.firstChild
-				rulesPsi?.lastChild?.children?.forEach {
-					if (it is YAMLSequenceItem) {
-						it.value?.text?.let { rule -> activeRules[rule] = it }
-					}
-				}
-			}
-		}
+		psiFile?.firstChild?.firstChild?.children?.forEach(mapRulesFromYaml())
 	}
 
 	/**
@@ -73,7 +64,10 @@ object LinterUtils {
 							add(item)
 							item.firstChild
 						}
-						PopupUtil.showBalloonForActiveComponent("Rule \"$name\" was added successfully", MessageType.INFO)
+						PopupUtil.showBalloonForActiveComponent(
+							"Rule \"$name\" was added successfully",
+							MessageType.INFO
+						)
 					}
 				}
 			}
@@ -117,6 +111,22 @@ object LinterUtils {
 			return true
 		}
 		return false
+	}
+
+
+	private fun mapRulesFromYaml() = { yamlMaps: PsiElement ->
+		if (yamlMaps.text.startsWith("linter")) {
+			rulesPsi = yamlMaps.lastChild.firstChild
+			findYamlSequences()
+		}
+	}
+
+	private fun findYamlSequences() {
+		rulesPsi?.lastChild?.children?.forEach {
+			if (it is YAMLSequenceItem) {
+				it.value?.text?.let { rule -> activeRules[rule] = it }
+			}
+		}
 	}
 
 	private fun loadAnalysisOptionsFile(project: Project): VirtualFile? {

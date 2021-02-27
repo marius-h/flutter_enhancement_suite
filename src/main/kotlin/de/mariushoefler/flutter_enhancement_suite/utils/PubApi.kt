@@ -22,24 +22,31 @@ object PubApi {
 	private var lastPackages = mapOf<String, PubPackage>()
 
 	fun searchPackage(query: String, page: Int): PubPackageSearch? {
-//		+--- Uncomment to test bug report dialog
-//		|
-//		V
-//		val test = listOf(1,2,3)
-//		println(test[4])
+		// +--- Uncomment to test bug report dialog
+		// |
+		// V
+		// val test = listOf(1,2,3)
+		// println(test[4])
 
 		return try {
 			runWithCheckCanceled {
 				val response = HttpRequests
-					.request("https://pub.dartlang.org/api/search?q=${URLEncoder.encode(query, StandardCharsets.UTF_8.toString())}&page=$page")
+					.request(
+						"https://pub.dartlang.org/api/search?q=${
+							URLEncoder.encode(
+								query,
+								StandardCharsets.UTF_8.toString()
+							)
+						}&page=$page"
+					)
 					.readString(ProgressManager.getInstance().progressIndicator)
 				Gson().fromJson(response, PubPackageSearch::class.java)
 			}
 		} catch (e: IOException) {
-			//context.project.showBalloon("Could not reach pub", NotificationType.WARNING)
+			// context.project.showBalloon("Could not reach pub", NotificationType.WARNING)
 			null
 		} catch (e: JsonSyntaxException) {
-			//context.project.showBalloon("Bad answer from pub", NotificationType.WARNING)
+			// context.project.showBalloon("Bad answer from pub", NotificationType.WARNING)
 			null
 		}
 	}
@@ -153,4 +160,5 @@ object PubApi {
 	}
 }
 
-fun <T> runWithCheckCanceled(callable: () -> T): T = runWithCheckCanceled(callable, ProgressManager.getInstance().progressIndicator)
+fun <T> runWithCheckCanceled(callable: () -> T): T =
+	runWithCheckCanceled(callable, ProgressManager.getInstance().progressIndicator)

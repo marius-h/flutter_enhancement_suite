@@ -30,7 +30,7 @@ class PubDocumentationProvider : AbstractDocumentationProvider() {
 			return PubApi.getPackageDoc(element.name, true)
 		} else {
 			element.parent?.text?.let {
-				if (it.isPubPackageName()&& element.containingFile.isPubspecFile()) {
+				if (it.isPubPackageName() && element.containingFile.isPubspecFile()) {
 					return PubApi.getPackageDoc(element.text)
 				}
 			}
@@ -38,18 +38,30 @@ class PubDocumentationProvider : AbstractDocumentationProvider() {
 		return null
 	}
 
-	override fun getDocumentationElementForLookupItem(psiManager: PsiManager, `object`: Any?, element: PsiElement): PsiElement? {
+	override fun getDocumentationElementForLookupItem(
+		psiManager: PsiManager,
+		`object`: Any?,
+		element: PsiElement
+	): PsiElement? {
 		if (`object` is String && element.containingFile.isPubspecFile()) {
 			return SuggestionElement(psiManager, `object`)
 		}
 		return null
 	}
 
-	override fun getDocumentationElementForLink(psiManager: PsiManager?, link: String?, context: PsiElement?): PsiElement? {
+	override fun getDocumentationElementForLink(
+		psiManager: PsiManager?,
+		link: String?,
+		context: PsiElement?
+	): PsiElement? {
 		return null
 	}
 
-	override fun getCustomDocumentationElement(editor: Editor, file: PsiFile, contextElement: PsiElement?): PsiElement? {
+	override fun getCustomDocumentationElement(
+		editor: Editor,
+		file: PsiFile,
+		contextElement: PsiElement?
+	): PsiElement? {
 		return contextElement
 	}
 
@@ -60,8 +72,8 @@ class PubDocumentationProvider : AbstractDocumentationProvider() {
 
 		override fun getContainingFile(): PsiFile {
 			return PsiFileFactory
-					.getInstance(project)
-					.createFileFromText("hoge.txt", FileTypes.PLAIN_TEXT, "")
+				.getInstance(project)
+				.createFileFromText("hoge.txt", FileTypes.PLAIN_TEXT, "")
 		}
 
 		override fun getManager() = psiManager
