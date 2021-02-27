@@ -1,5 +1,5 @@
 <idea-plugin>
-    <id>de.mariushoefler.flutter_enhancement_suite</id>
+    <id>de.mariushoefler.flutterenhancementsuite</id>
     <name>Flutter Enhancement Suite</name>
     <vendor email="mariushofler2000@gmail.com">Marius Höfler</vendor>
 
@@ -15,46 +15,46 @@
 
         <!--        Flutter Widget Snippets-->
         <defaultLiveTemplates file="/liveTemplates/Flutter.xml"/>
-        <codeInsight.template.postfixTemplateProvider implementationClass="de.mariushoefler.flutter_enhancement_suite.templates.postfixtemplates.FlutterPostfixTemplateProvider"
+        <codeInsight.template.postfixTemplateProvider implementationClass="de.mariushoefler.flutterenhancementsuite.templates.postfixtemplates.FlutterPostfixTemplateProvider"
                                                       language="Dart"/>
 
         <!--        Pub package version checker-->
-        <inspectionToolProvider implementation="de.mariushoefler.flutter_enhancement_suite.pub.PackagesInspectionProvider"/>
+        <inspectionToolProvider implementation="de.mariushoefler.flutterenhancementsuite.pub.PackagesInspectionProvider"/>
 
         <!--        Pub package auto-complete-->
         <completion.contributor language="yaml"
-                                implementationClass="de.mariushoefler.flutter_enhancement_suite.pub.PubspecCompletionContributor"/>
+                                implementationClass="de.mariushoefler.flutterenhancementsuite.pub.PubspecCompletionContributor"/>
 
         <!--        Gutter Icon Provider-->
         <annotator language="Dart"
-                   implementationClass="de.mariushoefler.flutter_enhancement_suite.editor.FlutterEditorAnnotator"/>
+                   implementationClass="de.mariushoefler.flutterenhancementsuite.editor.FlutterEditorAnnotator"/>
 
         <!--        Snippet Preview-->
-        <documentationProvider implementation="de.mariushoefler.flutter_enhancement_suite.templates.livetemplates.LiveTemplatePreviewProvider"
+        <documentationProvider implementation="de.mariushoefler.flutterenhancementsuite.templates.livetemplates.LiveTemplatePreviewProvider"
                                order="first"/>
         <lang.documentationProvider language="HTML"
-                                    implementationClass="de.mariushoefler.flutter_enhancement_suite.templates.livetemplates.LiveTemplatePreviewProvider"
+                                    implementationClass="de.mariushoefler.flutterenhancementsuite.templates.livetemplates.LiveTemplatePreviewProvider"
                                     order="first"/>
 
         <!--        File Templates-->
         <internalFileTemplate name="stateful_widget"/>
         <internalFileTemplate name="stateless_widget"/>
 
-        <errorHandler implementation="de.mariushoefler.flutter_enhancement_suite.PluginBugReportSubmitter"/>
+        <errorHandler implementation="de.mariushoefler.flutterenhancementsuite.PluginBugReportSubmitter"/>
 
         <lang.documentationProvider language="yaml"
-                                    implementationClass="de.mariushoefler.flutter_enhancement_suite.actions.PubDocumentationProvider"
+                                    implementationClass="de.mariushoefler.flutterenhancementsuite.actions.PubDocumentationProvider"
                                     order="first"/>
 
-        <annotator implementationClass="de.mariushoefler.flutter_enhancement_suite.editor.UrlAnnotator"
+        <annotator implementationClass="de.mariushoefler.flutterenhancementsuite.editor.UrlAnnotator"
                    order="first"
                    language="yaml"/>
 
-        <fileEditorProvider implementation="de.mariushoefler.flutter_enhancement_suite.editor.linter.LinterEditorProvider"/>
+        <fileEditorProvider implementation="de.mariushoefler.flutterenhancementsuite.editor.linter.LinterEditorProvider"/>
     </extensions>
 
     <extensions defaultExtensionNs="Dart">
-        <completionExtension implementation="de.mariushoefler.flutter_enhancement_suite.editor.FlutterIconCompletionContributor"
+        <completionExtension implementation="de.mariushoefler.flutterenhancementsuite.editor.FlutterIconCompletionContributor"
                              order="last"/>
     </extensions>
 
@@ -64,7 +64,7 @@
 
     <actions>
         <action id="Flutter.NewWidget"
-                class="de.mariushoefler.flutter_enhancement_suite.actions.NewFlutterWidgetAction"
+                class="de.mariushoefler.flutterenhancementsuite.actions.NewFlutterWidgetAction"
                 text="Flutter Widget"
                 description="Create a new Flutter widget">
             <add-to-group group-id="NewGroup"
@@ -72,7 +72,7 @@
                           relative-to-action="NewFromTemplate"/>
         </action>
         <action id="Flutter.NewBloc"
-                class="de.mariushoefler.flutter_enhancement_suite.actions.NewFlutterBlocAction"
+                class="de.mariushoefler.flutterenhancementsuite.actions.NewFlutterBlocAction"
                 text="Flutter Bloc"
                 description="Create a new Flutter bloc">
             <add-to-group group-id="NewGroup"
@@ -80,7 +80,7 @@
                           relative-to-action="Flutter.NewWidget"/>
         </action>
         <action id="Flutter.ExtractWidgetToFile"
-                class="de.mariushoefler.flutter_enhancement_suite.actions.ExtractWidgetToFileAction"
+                class="de.mariushoefler.flutterenhancementsuite.actions.ExtractWidgetToFileAction"
                 text="Extract Widget to File">
             <add-to-group group-id="RefactoringMenu"
                           relative-to-action="RefactoringMenu"

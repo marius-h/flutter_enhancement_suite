@@ -1,1 +1,1 @@
-rootProject.name = "flutter_enhancement_suite"
+rootProject.name = "flutterenhancementsuite"

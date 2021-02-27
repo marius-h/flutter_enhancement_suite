@@ -5,7 +5,7 @@ formatting:
   Indentation:
     continuationdentSize: 8
   ParameterListWrapping:
-    indentSize: 8
+    active: false
 empty-blocks:
   EmptyFunctionBlock:
     active: false

@@ -4,7 +4,7 @@ import 'dart:io';
 import 'icon_packs.dart';
 
 final String root =
-    'd:/Dokumente/Coding/flutter_enhancement_suite/src/main/resources/flutter';
+    'd:/Dokumente/Coding/flutterenhancementsuite/src/main/resources/flutter';
 
 void main() async {
   for (IconPack iconPack in iconPacks) {
