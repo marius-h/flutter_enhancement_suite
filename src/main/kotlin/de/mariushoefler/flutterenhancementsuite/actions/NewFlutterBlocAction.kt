@@ -1,4 +1,4 @@
-package de.mariushoefler.flutter_enhancement_suite.actions
+package de.mariushoefler.flutterenhancementsuite.actions
 
 import TemplateBuilder
 import com.intellij.openapi.actionSystem.AnAction
@@ -9,8 +9,8 @@ import com.intellij.openapi.ui.InputValidatorEx
 import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.util.IconLoader
 import com.intellij.psi.PsiDirectory
-import de.mariushoefler.flutter_enhancement_suite.models.Bloc
-import de.mariushoefler.flutter_enhancement_suite.utils.FlutterProjectUtils
+import de.mariushoefler.flutterenhancementsuite.models.Bloc
+import de.mariushoefler.flutterenhancementsuite.utils.FlutterProjectUtils
 
 class NewFlutterBlocAction : AnAction(IconLoader.getIcon("/icons/bloc_icon16.png")) {
 

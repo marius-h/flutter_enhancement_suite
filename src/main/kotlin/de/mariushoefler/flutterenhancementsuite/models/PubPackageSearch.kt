@@ -1,4 +1,4 @@
-package de.mariushoefler.flutter_enhancement_suite.models
+package de.mariushoefler.flutterenhancementsuite.models
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,6 +1,6 @@
-package de.mariushoefler.flutter_enhancement_suite.editor.icons
+package de.mariushoefler.flutterenhancementsuite.editor.icons
 
-import de.mariushoefler.flutter_enhancement_suite.editor.FlutterIcons
+import de.mariushoefler.flutterenhancementsuite.editor.FlutterIcons
 
 object MaterialCommunityIcons : FlutterIcons<MaterialCommunityIcons>
 	("material_community", MaterialCommunityIcons::class.java)

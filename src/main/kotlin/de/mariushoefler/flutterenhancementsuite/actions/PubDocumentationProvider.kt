@@ -1,4 +1,4 @@
-package de.mariushoefler.flutter_enhancement_suite.actions
+package de.mariushoefler.flutterenhancementsuite.actions
 
 import com.intellij.lang.documentation.AbstractDocumentationProvider
 import com.intellij.openapi.editor.Editor
@@ -8,9 +8,9 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiFileFactory
 import com.intellij.psi.PsiManager
 import com.intellij.psi.impl.FakePsiElement
-import de.mariushoefler.flutter_enhancement_suite.utils.PubApi
-import de.mariushoefler.flutter_enhancement_suite.utils.isPubPackageName
-import de.mariushoefler.flutter_enhancement_suite.utils.isPubspecFile
+import de.mariushoefler.flutterenhancementsuite.utils.PubApi
+import de.mariushoefler.flutterenhancementsuite.utils.isPubPackageName
+import de.mariushoefler.flutterenhancementsuite.utils.isPubspecFile
 
 class PubDocumentationProvider : AbstractDocumentationProvider() {
 	override fun getQuickNavigateInfo(element: PsiElement?, originalElement: PsiElement?): String {
@@ -23,18 +23,18 @@ class PubDocumentationProvider : AbstractDocumentationProvider() {
 
 	override fun generateDoc(element: PsiElement, originalElement: PsiElement?): String? {
 		println("element = $element")
-		if (originalElement == null || originalElement.containingFile.isPubspecFile()) {
-			return if (element is SuggestionElement) {
-				PubApi.getPackageDoc(element.name, true)
-			} else {
-				element.parent?.text?.let {
-					if (it.isPubPackageName() && element.containingFile.isPubspecFile()) {
-						return@let PubApi.getPackageDoc(element.text)
-					} else null
-				}
+		if (originalElement != null && !originalElement.containingFile.isPubspecFile()) {
+			return null
+		}
+		return if (element is SuggestionElement) {
+			PubApi.getPackageDoc(element.name, true)
+		} else {
+			element.parent?.text?.let {
+				if (it.isPubPackageName() && element.containingFile.isPubspecFile()) {
+					PubApi.getPackageDoc(element.text)
+				} else null
 			}
 		}
-		return null
 	}
 
 	override fun getDocumentationElementForLookupItem(

@@ -1,4 +1,4 @@
-package de.mariushoefler.flutter_enhancement_suite.editor.linter
+package de.mariushoefler.flutterenhancementsuite.editor.linter
 
 import com.intellij.codeHighlighting.BackgroundEditorHighlighter
 import com.intellij.ide.structureView.StructureViewBuilder
@@ -21,7 +21,6 @@ import javax.swing.JComponent
 class LinterEditor(val project: Project, file: VirtualFile) : UserDataHolderBase(), FileEditor {
 
 	companion object {
-		//public val ICON = FlutterIcons.Text
 		const val NAME = "Linter Rules Editor"
 	}
 

@@ -1,6 +1,6 @@
-package de.mariushoefler.flutter_enhancement_suite.editor.linter
+package de.mariushoefler.flutterenhancementsuite.editor.linter
 
-import de.mariushoefler.flutter_enhancement_suite.models.LinterRule
+import de.mariushoefler.flutterenhancementsuite.models.LinterRule
 
 val rules = arrayListOf(
 	LinterRule(

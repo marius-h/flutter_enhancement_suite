@@ -1,11 +1,10 @@
-package de.mariushoefler.flutter_enhancement_suite.actions
+package de.mariushoefler.flutterenhancementsuite.actions
 
 import com.intellij.ide.actions.CreateFileFromTemplateAction
 import com.intellij.ide.actions.CreateFileFromTemplateDialog
 import com.intellij.ide.fileTemplates.FileTemplate
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.actionSystem.LangDataKeys
-import com.intellij.openapi.module.Module
 import com.intellij.openapi.module.ModuleTypeWithWebFeatures
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiDirectory
@@ -13,7 +12,7 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.search.FileTypeIndex
 import com.jetbrains.lang.dart.DartFileType
 import com.jetbrains.lang.dart.sdk.DartSdk
-import de.mariushoefler.flutter_enhancement_suite.utils.toSnakeCase
+import de.mariushoefler.flutterenhancementsuite.utils.toSnakeCase
 import icons.FlutterIcons
 
 class NewFlutterWidgetAction :
@@ -32,14 +31,13 @@ class NewFlutterWidgetAction :
 	}
 
 	override fun isAvailable(dataContext: DataContext?): Boolean {
-		if (dataContext != null) {
-			val module: Module? = LangDataKeys.MODULE.getData(dataContext)
-
-			if (module != null) {
-				return super.isAvailable(dataContext)
-						&& FileTypeIndex.containsFileOfType(DartFileType.INSTANCE, module.moduleContentScope)
-						|| (DartSdk.getDartSdk(module.project) != null
-						&& ModuleTypeWithWebFeatures.isAvailable(module))
+		dataContext?.let {
+			LangDataKeys.MODULE.getData(dataContext)?.let { module ->
+				if (super.isAvailable(dataContext)) {
+					val cond2 =
+						(DartSdk.getDartSdk(module.project) != null && ModuleTypeWithWebFeatures.isAvailable(module))
+					return FileTypeIndex.containsFileOfType(DartFileType.INSTANCE, module.moduleContentScope) || cond2
+				}
 			}
 		}
 		return super.isAvailable(dataContext)

@@ -1,4 +1,4 @@
-package de.mariushoefler.flutter_enhancement_suite.editor.linter
+package de.mariushoefler.flutterenhancementsuite.editor.linter
 
 import com.intellij.openapi.fileEditor.FileEditor
 import com.intellij.openapi.fileEditor.FileEditorPolicy

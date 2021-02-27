@@ -1,15 +1,16 @@
-package de.mariushoefler.flutter_enhancement_suite.editor
+package de.mariushoefler.flutterenhancementsuite.editor
 
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
+import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.openapi.actionSystem.IdeActions
 import com.intellij.openapi.keymap.KeymapManager
 import com.intellij.openapi.keymap.KeymapUtil
 import com.intellij.openapi.util.Key
 import com.intellij.psi.PsiElement
 import com.intellij.util.containers.ContainerUtil
-import de.mariushoefler.flutter_enhancement_suite.utils.isPubPackageName
-import de.mariushoefler.flutter_enhancement_suite.utils.isPubspecFile
+import de.mariushoefler.flutterenhancementsuite.utils.isPubPackageName
+import de.mariushoefler.flutterenhancementsuite.utils.isPubspecFile
 
 /**
  * Shows a tooltip for pub packages to press `Ctrl+Q` to open up the documentation
@@ -32,9 +33,7 @@ class UrlAnnotator : Annotator {
 				holder.currentAnnotationSession.putUserData(messageKey, message)
 			}
 			element.firstChild?.let {
-				holder.createInfoAnnotation(it, message).apply {
-					//textAttributes = TextAttributesKey.createTextAttributesKey("INACTIVE_HYPERLINK_ATTRIBUTES")
-				}
+				holder.newAnnotation(HighlightSeverity.INFORMATION, message).range(it).create()
 			}
 		}
 	}

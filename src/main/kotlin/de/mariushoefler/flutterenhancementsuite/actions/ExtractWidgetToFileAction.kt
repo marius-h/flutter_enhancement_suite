@@ -1,9 +1,10 @@
-package de.mariushoefler.flutter_enhancement_suite.actions
+package de.mariushoefler.flutterenhancementsuite.actions
 
 import com.intellij.CommonBundle
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.PlatformDataKeys
 import com.intellij.openapi.application.runUndoTransparentWriteAction
+import com.intellij.openapi.editor.Caret
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.project.DumbAwareAction
@@ -23,8 +24,8 @@ import com.jetbrains.lang.dart.ide.actions.DartStyleAction
 import com.jetbrains.lang.dart.ide.refactoring.ServerRefactoringDialog
 import com.jetbrains.lang.dart.psi.DartClassDefinition
 import com.jetbrains.lang.dart.util.PubspecYamlUtil
-import de.mariushoefler.flutter_enhancement_suite.utils.createImportStatement
-import de.mariushoefler.flutter_enhancement_suite.utils.toSnakeCase
+import de.mariushoefler.flutterenhancementsuite.utils.createImportStatement
+import de.mariushoefler.flutterenhancementsuite.utils.toSnakeCase
 import io.flutter.FlutterUtils
 import io.flutter.refactoring.ExtractWidgetRefactoring
 import java.awt.Dimension
@@ -54,23 +55,30 @@ class ExtractWidgetToFileAction : DumbAwareAction() {
 		val caret = dataContext.getData(PlatformDataKeys.CARET)
 
 		if (project != null && file != null && editor != null && caret != null) {
-			val offset = caret.selectionStart
-			val length = caret.selectionEnd - offset
-			val refactoring = ExtractWidgetRefactoring(project, file, offset, length)
-
-
-			// Validate the initial status.
-			val initialStatus = refactoring.checkInitialConditions() ?: return
-			if (initialStatus.hasError()) {
-				val message = initialStatus.message
-				if (message != null) {
-					CommonRefactoringUtil.showErrorHint(project, editor, message, CommonBundle.getErrorTitle(), null)
-				}
-				return
-			}
-
-			ExtractWidgetDialog(project, file, editor, refactoring).show()
+			createExtractDialog(caret, project, file, editor)
 		}
+	}
+
+	private fun createExtractDialog(
+		caret: Caret,
+		project: Project,
+		file: VirtualFile,
+		editor: Editor
+	) {
+		val offset = caret.selectionStart
+		val length = caret.selectionEnd - offset
+		val refactoring = ExtractWidgetRefactoring(project, file, offset, length)
+
+		// Validate the initial status.
+		val initialStatus = refactoring.checkInitialConditions() ?: return
+		if (initialStatus.hasError()) {
+			initialStatus.message?.let { message ->
+				CommonRefactoringUtil.showErrorHint(project, editor, message, CommonBundle.getErrorTitle(), null)
+			}
+			return
+		}
+
+		ExtractWidgetDialog(project, file, editor, refactoring).show()
 	}
 
 	override fun update(e: AnActionEvent) {
@@ -80,7 +88,6 @@ class ExtractWidgetToFileAction : DumbAwareAction() {
 
 	private fun isVisibleFor(e: AnActionEvent): Boolean {
 		val dataContext = e.dataContext
-		//val project = dataContext.getData<Project>(PlatformDataKeys.PROJECT)
 		val file = dataContext.getData(PlatformDataKeys.VIRTUAL_FILE)
 		return !(file == null || !FlutterUtils.isDartFile(file))
 	}
@@ -176,7 +183,6 @@ internal class ExtractWidgetDialog(
 
 	inner class WidgetTreeChangeListener : PsiTreeChangeListener {
 		override fun beforeChildAddition(event: PsiTreeChangeEvent) {
-
 		}
 
 		override fun beforeChildRemoval(event: PsiTreeChangeEvent) {

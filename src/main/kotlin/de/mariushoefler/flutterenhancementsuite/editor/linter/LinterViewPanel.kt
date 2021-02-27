@@ -1,11 +1,11 @@
-package de.mariushoefler.flutter_enhancement_suite.editor.linter
+package de.mariushoefler.flutterenhancementsuite.editor.linter
 
 import com.intellij.ide.BrowserUtil
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Disposer
-import de.mariushoefler.flutter_enhancement_suite.models.LinterRule
-import de.mariushoefler.flutter_enhancement_suite.utils.LinterUtils
+import de.mariushoefler.flutterenhancementsuite.models.LinterRule
+import de.mariushoefler.flutterenhancementsuite.utils.LinterUtils
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
 import javax.swing.JButton
@@ -16,7 +16,6 @@ import javax.swing.table.AbstractTableModel
 const val ENABLED_COL_MAX_WIDTH = 32
 const val NAME_COL_MIN_WIDTH = 360
 const val DESCRIPTION_COL_MIN_WIDTH = 700
-
 
 /**
  * UI for editing rules in "analysis_options.yaml"

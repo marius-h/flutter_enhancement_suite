@@ -1,4 +1,4 @@
-package de.mariushoefler.flutter_enhancement_suite.editor
+package de.mariushoefler.flutterenhancementsuite.editor
 
 import com.intellij.openapi.editor.markup.GutterIconRenderer
 import com.intellij.openapi.project.DumbAware

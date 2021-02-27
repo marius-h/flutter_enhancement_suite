@@ -1,4 +1,4 @@
-package de.mariushoefler.flutter_enhancement_suite.models
+package de.mariushoefler.flutterenhancementsuite.models
 
 data class LinterRule(val name: String, val description: String) {
 

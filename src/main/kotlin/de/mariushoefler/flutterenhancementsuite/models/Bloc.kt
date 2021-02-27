@@ -1,6 +1,6 @@
-package de.mariushoefler.flutter_enhancement_suite.models
+package de.mariushoefler.flutterenhancementsuite.models
 
-import de.mariushoefler.flutter_enhancement_suite.utils.toSnakeCase
+import de.mariushoefler.flutterenhancementsuite.utils.toSnakeCase
 
 data class Bloc(
 	val name: String,

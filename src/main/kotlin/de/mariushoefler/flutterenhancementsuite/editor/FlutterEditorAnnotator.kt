@@ -1,4 +1,4 @@
-package de.mariushoefler.flutter_enhancement_suite.editor
+package de.mariushoefler.flutterenhancementsuite.editor
 
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
@@ -8,10 +8,10 @@ import com.jetbrains.lang.dart.psi.DartArrayAccessExpression
 import com.jetbrains.lang.dart.psi.DartCallExpression
 import com.jetbrains.lang.dart.psi.DartNewExpression
 import com.jetbrains.lang.dart.psi.DartReferenceExpression
-import de.mariushoefler.flutter_enhancement_suite.editor.icons.FontAwesomeIcons
-import de.mariushoefler.flutter_enhancement_suite.editor.icons.IonIcons
-import de.mariushoefler.flutter_enhancement_suite.editor.icons.MaterialCommunityIcons
-import de.mariushoefler.flutter_enhancement_suite.editor.icons.MdiIcons
+import de.mariushoefler.flutterenhancementsuite.editor.icons.FontAwesomeIcons
+import de.mariushoefler.flutterenhancementsuite.editor.icons.IonIcons
+import de.mariushoefler.flutterenhancementsuite.editor.icons.MaterialCommunityIcons
+import de.mariushoefler.flutterenhancementsuite.editor.icons.MdiIcons
 import javax.swing.Icon
 
 const val HEX_RADIX = 16
@@ -79,13 +79,13 @@ class FlutterEditorAnnotator : Annotator {
 				value = value.substring(0, index)
 			}
 			try {
-				return if (value.startsWith("0x"))
+				return if (value.startsWith("0x")) {
 					Integer.parseUnsignedInt(value.substring(2), HEX_RADIX)
-				else
+				} else {
 					Integer.parseUnsignedInt(value)
+				}
 			} catch (ignored: NumberFormatException) {
 			}
-
 		}
 
 		return null
