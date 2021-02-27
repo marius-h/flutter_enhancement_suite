@@ -2,7 +2,9 @@
 
 # Flutter Enhancement Suite
 
-[![Pub](https://img.shields.io/jetbrains/plugin/v/12693-flutter-enhancement-suite.svg?label=Flutter%20Enhancement%20Suite)](https://plugins.jetbrains.com/plugin/12693-flutter-enhancement-suite)
+[![Build](https://github.com/marius-h/flutter_enhancement_suite/actions/workflows/build.yml/badge.svg)](https://github.com/marius-h/flutter_enhancement_suite/actions/workflows/build.yml)
+[![Version](https://img.shields.io/jetbrains/plugin/v/12693-flutter-enhancement-suite.svg)](https://plugins.jetbrains.com/plugin/12693-flutter-enhancement-suite)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/12693-flutter-enhancement-suite.svg)](https://plugins.jetbrains.com/plugin/12693-flutter-enhancement-suite)
 
 <!-- Plugin description -->
 The essential plugin for making working with Flutter easier than ever!
