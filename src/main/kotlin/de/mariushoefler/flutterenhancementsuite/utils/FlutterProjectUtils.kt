@@ -31,15 +31,19 @@ object FlutterProjectUtils {
     }
 
     private fun loadPubspecInfo(yamlContents: String): Map<String, Any>? {
-        val yaml = Yaml(SafeConstructor(), Representer(), DumperOptions(), object : Resolver() {
-            override fun addImplicitResolvers() {
-                this.addImplicitResolver(Tag.BOOL, BOOL, "yYnNtTfFoO")
-                this.addImplicitResolver(Tag.NULL, NULL, "~nN\u0000")
-                this.addImplicitResolver(Tag.NULL, EMPTY, null)
-                this.addImplicitResolver(Tag("tag:yaml.org,2002:value"), VALUE, "=")
-                this.addImplicitResolver(Tag.MERGE, MERGE, "<")
-            }
-        })
+        val yaml = Yaml(
+            SafeConstructor(),
+            Representer(),
+            DumperOptions(),
+            object : Resolver() {
+                override fun addImplicitResolvers() {
+                    this.addImplicitResolver(Tag.BOOL, BOOL, "yYnNtTfFoO")
+                    this.addImplicitResolver(Tag.NULL, NULL, "~nN\u0000")
+                    this.addImplicitResolver(Tag.NULL, EMPTY, null)
+                    this.addImplicitResolver(Tag("tag:yaml.org,2002:value"), VALUE, "=")
+                    this.addImplicitResolver(Tag.MERGE, MERGE, "<")
+                }
+            })
 
         return yaml.load<Map<String, Any>>(yamlContents)
     }

@@ -3,7 +3,7 @@
 
 formatting:
   Indentation:
-    continuationdentSize: 8
+    continuationdentSize: 4
   ParameterListWrapping:
     active: false
 empty-blocks:

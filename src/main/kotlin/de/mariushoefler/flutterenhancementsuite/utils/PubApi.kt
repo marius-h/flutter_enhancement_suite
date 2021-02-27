@@ -30,15 +30,9 @@ object PubApi {
 
         return try {
             runWithCheckCanceled {
+                val q = URLEncoder.encode(query, StandardCharsets.UTF_8.toString())
                 val response = HttpRequests
-                    .request(
-                        "https://pub.dartlang.org/api/search?q=${
-                            URLEncoder.encode(
-                                query,
-                                StandardCharsets.UTF_8.toString()
-                            )
-                        }&page=$page"
-                    )
+                    .request("https://pub.dartlang.org/api/search?q=$q&page=$page")
                     .readString(ProgressManager.getInstance().progressIndicator)
                 Gson().fromJson(response, PubPackageSearch::class.java)
             }
@@ -101,14 +95,13 @@ object PubApi {
 
             println("pubPackage.homepage = $homepage")
 
-            var readmeUrl = "https://raw.githubusercontent.com/${
-                homepage
-                    .removePrefix("https://github.com/")
-                    .replace("bloc/", "")
-                    .replace("blob/", "")
-                    .replace("/pubspec.yaml", "")
-                    .replace("tree/", "")
-            }"
+            val h = homepage
+                .removePrefix("https://github.com/")
+                .replace("bloc/", "")
+                .replace("blob/", "")
+                .replace("/pubspec.yaml", "")
+                .replace("tree/", "")
+            var readmeUrl = "https://raw.githubusercontent.com/$h"
             if (!readmeUrl.contains("/master")) {
                 readmeUrl += "/master"
             }
@@ -139,8 +132,10 @@ object PubApi {
             } else {
                 "/tree/master"
             }
-            result.append("<a href=\"${homepage}$examplePath/example\">" +
-                    "Show an example of how to use the package</a><br><br>")
+            result.append(
+                "<a href=\"${homepage}$examplePath/example\">" +
+                    "Show an example of how to use the package</a><br><br>"
+            )
         }
 
         if (!src.isNullOrEmpty()) {
