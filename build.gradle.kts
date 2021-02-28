@@ -31,7 +31,7 @@ repositories {
 dependencies {
     implementation("com.github.kittinunf.fuel:fuel:2.3.1")
     implementation("com.github.kittinunf.fuel:fuel-gson:2.3.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2-native-mt")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.2.2")
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.15.0")
 }
