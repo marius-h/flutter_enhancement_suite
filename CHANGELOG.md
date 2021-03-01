@@ -1,8 +1,8 @@
 # :fire:&nbsp;What's new?
 
 ## [Unreleased]
-### Changed
-- New project structure
+### Fixed
+- Fix 'Update package' hint at wrong location when followed by comment (#60)
 
 ## [1.3.3]
 - Fixed Error getting Flutter SDK information when auto-completing a package (#44)
