@@ -74,7 +74,6 @@
         <action id="Flutter.NewBloc"
                 class="de.mariushoefler.flutterenhancementsuite.actions.NewFlutterBlocAction"
                 text="Flutter Bloc"
-                icon="PluginIcons.BlocIcon"
                 description="Create a new Flutter bloc">
             <add-to-group group-id="NewGroup"
                           anchor="after"

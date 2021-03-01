@@ -60,9 +60,8 @@ object FlutterProjectUtils {
                 FileDocumentManager.getInstance().saveAllDocuments()
                 val module = pubRoot.getModule(project)
                 if (module != null) {
-                    FlutterSdk.getFlutterSdk(project)?.flutterPackagesGet(pubRoot)?.startProcess(project)
-                    // FlutterSdk.getFlutterSdk(project)?.flutterPackagesGet(pubRoot)?
-                    // .startInModuleConsole(module, { pubRoot.refresh() }, null)
+                    FlutterSdk.getFlutterSdk(project)?.flutterPackagesGet(pubRoot)
+                        ?.startInModuleConsole(module, { pubRoot.refresh() }, null)
                 }
             }
         }

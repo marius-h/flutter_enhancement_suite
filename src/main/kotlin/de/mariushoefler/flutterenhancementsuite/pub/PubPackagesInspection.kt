@@ -50,6 +50,7 @@ private fun ProblemsHolder.showProblem(
     latestVersion: String
 ) {
     file.findElementAt(counter)?.let { psiElement ->
+        println(psiElement)
         registerProblem(
             psiElement,
             "There's a new version available: $latestVersion",
