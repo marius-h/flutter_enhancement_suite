@@ -5,7 +5,7 @@
 # - run IntelliJ Plugin Verifier,
 # - create a draft release.
 #
-# Workflow is triggered on push and pull_request events.
+# Workflow is triggered on pull_request events.
 #
 # Docs:
 # - GitHub Actions: https://help.github.com/en/actions
@@ -14,7 +14,9 @@
 ## JBIJPPTPL
 
 name: Build
-on: [push, pull_request]
+on:
+  pull_request:
+    types: [labeled, unlabeled, opened, reopened, ready_for_review, edited, synchronize]
 jobs:
 
   # Run Gradle Wrapper Validation Action to verify the wrapper's checksum
