@@ -2,6 +2,8 @@ package de.mariushoefler.flutterenhancementsuite.pub
 
 import com.google.gson.Gson
 import com.intellij.util.containers.getIfSingle
+import de.mariushoefler.flutterenhancementsuite.exceptions.GetLatestPackageVersionException
+import de.mariushoefler.flutterenhancementsuite.utils.getPubPackageName
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -12,7 +14,7 @@ class DependencyChecker {
     private val dependencyList = mutableListOf<Dependency>()
 
     fun getLatestVersion(dependency: String): String {
-        val packageName = dependency.trim().split(':')[0]
+        val packageName = dependency.getPubPackageName()
         val url = URL(PUB_API_URL + packageName)
 
         val cachedDependency = dependencyList.find { it.packageName == packageName }
@@ -32,7 +34,7 @@ class DependencyChecker {
                 return latestVersion
             }
 
-            throw UnableToGetLatestVersionException(dependency)
+            throw GetLatestPackageVersionException(dependency)
         }
     }
 
@@ -40,9 +42,6 @@ class DependencyChecker {
         return Gson().fromJson(responseString, Response::class.java)
     }
 }
-
-class UnableToGetLatestVersionException(dependency: String) :
-    Exception("Cannot get the latest version number for dependency: $dependency")
 
 data class Dependency(
     val packageName: String,
