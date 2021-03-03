@@ -1,10 +1,14 @@
 # :fire:&nbsp;What's new?
 
 ## [Unreleased]
+### Added
+- Display CHANGELOG.md while selecting version of package in pubspec.yaml (#27)
+
 ### Fixed
 - Fix 'Update package' hint at wrong location when followed by comment (#60)
 - Fix Dart Live Templates enabled in comments (#51)
 - Fix document locked by PSI write operations (#64)
+- Fix displaying README.md of package in pubspec.yaml requires disabling JSON schemes in IDE
 
 ### Removed
 - Remove Java dependency needed to install plugin
