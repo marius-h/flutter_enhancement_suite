@@ -1,6 +1,7 @@
 # :fire:&nbsp;What's new?
 
 ## [Unreleased]
+## [1.4.0]
 ### Added
 - Display CHANGELOG.md while selecting version of package in pubspec.yaml (#27)
 ### Fixed
