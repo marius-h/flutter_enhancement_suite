@@ -13,7 +13,7 @@ import de.mariushoefler.flutterenhancementsuite.utils.isPubPackageName
 import de.mariushoefler.flutterenhancementsuite.utils.isPubspecFile
 
 /**
- * Shows a tooltip for pub packages to press `Ctrl+Q` to open up the documentation
+ * Shows a tooltip which key to press to open up the full pub package documentation
  *
  * @since v1.2
  */
@@ -27,10 +27,10 @@ class UrlAnnotator : Annotator {
         if (holder.isBatchMode || !element.containingFile.isPubspecFile()) return
 
         if (element.text.isPubPackageName()) {
-            var message = holder.currentAnnotationSession.getUserData(messageKey)
-            if (message == null) {
-                message = getMessage()
+            val message = holder.currentAnnotationSession.getUserData(messageKey) ?: run {
+                val message = getMessage()
                 holder.currentAnnotationSession.putUserData(messageKey, message)
+                message
             }
             element.firstChild?.let {
                 holder.newAnnotation(HighlightSeverity.INFORMATION, message).range(it).create()
@@ -39,17 +39,10 @@ class UrlAnnotator : Annotator {
     }
 
     private fun getMessage(): String {
-        var message = "Open documentation"
         val shortcuts = KeymapManager.getInstance().activeKeymap.getShortcuts(IdeActions.ACTION_QUICK_JAVADOC)
-        var shortcutText = ""
-        val keyboardShortcut = ContainerUtil.find(shortcuts) { shortcut -> shortcut.isKeyboard }
-        if (keyboardShortcut != null) {
-            if (shortcutText.isNotEmpty()) shortcutText += ", "
-            shortcutText += KeymapUtil.getShortcutText(keyboardShortcut)
-        }
-        if (shortcutText.isNotEmpty()) {
-            message += " ($shortcutText)"
-        }
-        return message
+        return ContainerUtil.find(shortcuts) { shortcut -> shortcut.isKeyboard }?.let { keyboardShortcut ->
+            val shortcutText = KeymapUtil.getShortcutText(keyboardShortcut)
+            return "Press $shortcutText to open full documentation"
+        } ?: "Open full documentation"
     }
 }
