@@ -43,7 +43,13 @@
 
         <lang.documentationProvider language="yaml"
                                     implementationClass="de.mariushoefler.flutterenhancementsuite.actions.PubDocumentationProvider"
-                                    order="first"/>
+                                    id="PubDocumentationProvider"
+                                    order="first, before YamlJsonSchemaDocumentationProvider"/>
+
+        <lang.documentationProvider language="yaml"
+                                    implementationClass="de.mariushoefler.flutterenhancementsuite.actions.PubChangelogProvider"
+                                    id="PubChangelogProvider"
+                                    order="first, before YamlJsonSchemaDocumentationProvider"/>
 
         <annotator implementationClass="de.mariushoefler.flutterenhancementsuite.editor.UrlAnnotator"
                    order="first"
