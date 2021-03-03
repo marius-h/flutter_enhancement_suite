@@ -1,5 +1,5 @@
 <idea-plugin>
-    <id>de.mariushoefler.flutterenhancementsuite</id>
+    <id>de.mariushoefler.flutter_enhancement_suite</id>
     <name>Flutter Enhancement Suite</name>
     <vendor email="mariushofler2000@gmail.com">Marius Höfler</vendor>
 
