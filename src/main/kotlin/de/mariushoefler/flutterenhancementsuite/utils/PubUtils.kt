@@ -31,11 +31,13 @@ fun PsiFile.readPackageLines(): List<Pair<String, Int>> {
     val linesList = mutableListOf<Pair<String, Int>>()
     var line = ""
     var counter = 0
+    var dependenciesReached = false
     text.forEach {
         counter++
         if (it == '\n') {
             line = line.trim()
-            if (!line.startsWith("#") && line.isPubPackageName()) {
+            if (line == "dependencies:") dependenciesReached = true
+            if (!line.startsWith("#") && line.isPubPackageName() && dependenciesReached) {
                 val lineOffset = line.split(":")[0].length + PACKAGE_VERSION_OFFSET
                 linesList.add(line to counter - line.length + lineOffset)
             }
