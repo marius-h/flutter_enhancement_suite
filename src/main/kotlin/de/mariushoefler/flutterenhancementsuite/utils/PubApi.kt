@@ -63,6 +63,28 @@ object PubApi {
         return result
     }
 
+    fun getPackageChangelog(packageName: String): String? {
+        val pubPackage = lastPackages[packageName]
+            ?: getPackage(packageName)
+
+        if (pubPackage?.homepage == null) return null
+
+        val result = StringBuilder()
+        result.append("<html>")
+        result.append("<h1>$packageName Changelog</h1>")
+
+        val homepage = pubPackage.homepage
+        val src: String? = if (homepage.startsWith("https://github.com")) {
+            fetchContentsFromGithubFile(homepage, "changelog")
+        } else null
+
+        if (!src.isNullOrEmpty()) {
+            result.append(GithubApi.formatReadmeAsHtml(src, pubPackage.homepage))
+        }
+
+        return result.toString()
+    }
+
     fun getPackageDoc(packageName: String, short: Boolean = false): String? {
         val pubPackage = lastPackages[packageName]
             ?: getPackage(packageName)
@@ -90,39 +112,9 @@ object PubApi {
     }
 
     private fun generateFullDoc(homepage: String, result: StringBuilder) {
-        var src: String? = null
-        if (homepage.startsWith("https://github.com")) {
-
-            println("pubPackage.homepage = $homepage")
-
-            val h = homepage
-                .removePrefix("https://github.com/")
-                .replace("bloc/", "")
-                .replace("blob/", "")
-                .replace("/pubspec.yaml", "")
-                .replace("tree/", "")
-            var readmeUrl = "https://raw.githubusercontent.com/$h"
-            if (!readmeUrl.contains("/master")) {
-                readmeUrl += "/master"
-            }
-
-            var filePath = "$readmeUrl/README.md"
-            for (i in 1..2) {
-                val response = filePath.httpGet().responseString().third
-                if (response.component2() == null) {
-                    src = response.get()
-                    break
-                } else {
-                    filePath = "$readmeUrl/readme.md"
-                }
-            }
-
-            if (src != null && src.startsWith("./")) {
-                // README.md is referenced in a sub-folder
-                readmeUrl += src.replaceFirst(".", "")
-                src = readmeUrl.httpGet().responseString().third.get()
-            }
-        }
+        val src: String? = if (homepage.startsWith("https://github.com")) {
+            fetchContentsFromGithubFile(homepage, "readme")
+        } else null
 
         result.append("<a href=\"${homepage}\">Visit package's homepage</a><br><br>")
 
@@ -153,6 +145,38 @@ object PubApi {
 
             result.append(GithubApi.formatReadmeAsHtml(html, homepage))
         }
+    }
+
+    private fun fetchContentsFromGithubFile(repoUrl: String, filename: String): String? {
+        var src: String? = null
+        val h = repoUrl
+            .removePrefix("https://github.com/")
+            .replace("bloc/", "")
+            .replace("blob/", "")
+            .replace("/pubspec.yaml", "")
+            .replace("tree/", "")
+        var fileUrl = "https://raw.githubusercontent.com/$h"
+        if (!fileUrl.contains("/master")) {
+            fileUrl += "/master"
+        }
+
+        var filePath = "$fileUrl/${filename.toUpperCase()}.md"
+        for (i in 1..2) {
+            val response = filePath.httpGet().responseString().third
+            if (response.component2() == null) {
+                src = response.get()
+                break
+            } else {
+                filePath = "$fileUrl/${filename.toLowerCase()}.md"
+            }
+        }
+
+        if (src != null && src.startsWith("./")) {
+            // File is referenced in a sub-folder
+            fileUrl += src.replaceFirst(".", "")
+            src = fileUrl.httpGet().responseString().third.get()
+        }
+        return src
     }
 }
 

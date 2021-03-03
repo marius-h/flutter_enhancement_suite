@@ -1,6 +1,6 @@
 package de.mariushoefler.flutterenhancementsuite.actions
 
-import com.intellij.lang.documentation.AbstractDocumentationProvider
+import com.intellij.lang.documentation.DocumentationProvider
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.fileTypes.FileTypes
 import com.intellij.psi.PsiElement
@@ -12,25 +12,19 @@ import de.mariushoefler.flutterenhancementsuite.utils.PubApi
 import de.mariushoefler.flutterenhancementsuite.utils.isPubPackageName
 import de.mariushoefler.flutterenhancementsuite.utils.isPubspecFile
 
-class PubDocumentationProvider : AbstractDocumentationProvider() {
-    override fun getQuickNavigateInfo(element: PsiElement?, originalElement: PsiElement?): String {
-        return "Quick Info"
-    }
-
-    override fun getUrlFor(element: PsiElement?, originalElement: PsiElement?): MutableList<String>? {
-        return null
+class PubDocumentationProvider : DocumentationProvider {
+    override fun getQuickNavigateInfo(element: PsiElement?, originalElement: PsiElement?): String? {
+        return element?.parent?.parent?.firstChild?.text?.let {
+            PubApi.getPackageDoc(it, true)
+        }
     }
 
     override fun generateDoc(element: PsiElement, originalElement: PsiElement?): String? {
-        println("element = $element")
-        if (originalElement != null && !originalElement.containingFile.isPubspecFile()) {
-            return null
-        }
         return if (element is SuggestionElement) {
             PubApi.getPackageDoc(element.name, true)
         } else {
             element.parent?.text?.let {
-                if (it.isPubPackageName() && element.containingFile.isPubspecFile()) {
+                if (it.isPubPackageName()) {
                     PubApi.getPackageDoc(element.text)
                 } else null
             }
@@ -42,26 +36,22 @@ class PubDocumentationProvider : AbstractDocumentationProvider() {
         `object`: Any?,
         element: PsiElement
     ): PsiElement? {
-        if (`object` is String && element.containingFile.isPubspecFile()) {
+        if (`object` is String) {
             return SuggestionElement(psiManager, `object`)
         }
-        return null
-    }
-
-    override fun getDocumentationElementForLink(
-        psiManager: PsiManager?,
-        link: String?,
-        context: PsiElement?
-    ): PsiElement? {
         return null
     }
 
     override fun getCustomDocumentationElement(
         editor: Editor,
         file: PsiFile,
-        contextElement: PsiElement?
+        contextElement: PsiElement?,
+        targetOffset: Int
     ): PsiElement? {
-        return contextElement
+        if (file.isPubspecFile()) {
+            return contextElement
+        }
+        return null
     }
 
     inner class SuggestionElement(private val psiManager: PsiManager, private val element: String) : FakePsiElement() {
