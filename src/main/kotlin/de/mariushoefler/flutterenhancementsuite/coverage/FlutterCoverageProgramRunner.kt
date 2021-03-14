@@ -84,9 +84,12 @@ class FlutterCoverageProgramRunner : ProgramRunner<RunnerSettings> {
     private fun doExecute(descriptor: RunContentDescriptor, environment: ExecutionEnvironment) {
         descriptor.processHandler?.addProcessListener(object : ProcessAdapter() {
             override fun processTerminated(event: ProcessEvent) {
-                ApplicationManager.getApplication().invokeLater({
-                    updateCoverageView(environment)
-                }, environment.project.disposed)
+                ApplicationManager.getApplication().invokeLater(
+                    {
+                        updateCoverageView(environment)
+                    },
+                    environment.project.disposed
+                )
             }
         })
     }
