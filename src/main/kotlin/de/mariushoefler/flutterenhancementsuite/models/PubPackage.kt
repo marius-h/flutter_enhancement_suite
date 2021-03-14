@@ -6,7 +6,6 @@ import com.google.gson.Gson
 data class PubPackage(
     val name: String,
     private val version: String,
-    private val dependencies: Map<String, Any>,
     private val author: String?,
     private val authors: ArrayList<String>?,
     val description: String?,
