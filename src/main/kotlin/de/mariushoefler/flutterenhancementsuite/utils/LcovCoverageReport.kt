@@ -2,7 +2,6 @@ package de.mariushoefler.flutterenhancementsuite.utils
 
 import com.intellij.util.containers.PeekableIteratorWrapper
 import java.io.File
-import java.io.PrintWriter
 
 class LcovCoverageReport {
     private val info: MutableMap<String, List<LineHits>> = hashMapOf()

@@ -12,8 +12,6 @@ import com.intellij.psi.PsiFile
 import io.flutter.FlutterUtils
 import io.flutter.pub.PubRootCache
 import java.io.File
-import java.io.IOException
-import java.util.*
 
 class FlutterCoverageAnnotator(project: Project) : SimpleCoverageAnnotator(project) {
     companion object {
@@ -42,7 +40,6 @@ class FlutterCoverageAnnotator(project: Project) : SimpleCoverageAnnotator(proje
             }
             builder.toString()
         }
-
     }
 
     override fun getFileCoverageInformationString(
@@ -67,7 +64,11 @@ class FlutterCoverageAnnotator(project: Project) : SimpleCoverageAnnotator(proje
         when {
             info.totalLineCount == 0 -> null
             info.coveredLineCount == 0 -> CoverageBundle.message("lines.covered.info.not.covered")
-            else -> "${calcCoveragePercentage(info)} ${CoverageBundle.message("lines.covered.info.percent.lines.covered")}"
+            else -> "${calcCoveragePercentage(info)} ${
+                CoverageBundle.message(
+                    "lines.covered.info.percent.lines.covered"
+                )
+            }"
         }
 
     override fun getRoots(

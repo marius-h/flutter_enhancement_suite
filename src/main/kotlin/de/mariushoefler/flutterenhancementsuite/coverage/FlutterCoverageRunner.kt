@@ -44,7 +44,7 @@ class FlutterCoverageRunner : CoverageRunner() {
     override fun loadCoverageData(sessionDataFile: File, baseCoverageSuite: CoverageSuite?): ProjectData? {
         return try {
             readProjectData(sessionDataFile, getBaseDir())
-        } catch (e: Exception) {
+        } catch (e: IOException) {
             LOG.warn("Can't read coverage data", e)
             null
         }

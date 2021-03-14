@@ -12,26 +12,25 @@ class FlutterCoverageSuite : BaseCoverageSuite {
         this.flutterCoverageEngine = flutterCoverageEngine
     }
 
+    @Suppress("LongParameterList")
     constructor(
-        coverageRunner: CoverageRunner,
-        name: String,
-        fileProvider: CoverageFileProvider,
+        name: String?,
+        fileProvider: CoverageFileProvider?,
         lastCoverageTimeStamp: Long,
         coverageByTestEnabled: Boolean,
         tracingEnabled: Boolean,
         trackTestFolders: Boolean,
-        project: Project,
+        coverageRunner: CoverageRunner?,
+        project: Project?,
         flutterCoverageEngine: FlutterCoverageEngine
     ) : super(
-        name, fileProvider,
-        lastCoverageTimeStamp, coverageByTestEnabled,
-        tracingEnabled, trackTestFolders, coverageRunner, project
+        name, fileProvider, lastCoverageTimeStamp, coverageByTestEnabled, tracingEnabled, trackTestFolders,
+        coverageRunner, project
     ) {
         this.flutterCoverageEngine = flutterCoverageEngine
     }
 
     override fun deleteCachedCoverageData() {
-
     }
 
     override fun getCoverageEngine() = flutterCoverageEngine

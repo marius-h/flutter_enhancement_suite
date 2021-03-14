@@ -1,7 +1,10 @@
 package de.mariushoefler.flutterenhancementsuite.utils
 
-inline fun <T> buildList(builder: (CollectionBuilder<T>).() -> Unit): List<T> =
-    buildCollection(mutableListOf(), builder) as List<T>
+import com.intellij.openapi.application.ex.ApplicationUtil
+import com.intellij.openapi.progress.ProgressManager
+
+inline fun <reified T> buildList(builder: (CollectionBuilder<T>).() -> Unit): List<T> =
+    buildCollection(mutableListOf(), builder).toList()
 
 inline fun <T> buildCollection(
     result: MutableCollection<T>,
@@ -18,6 +21,9 @@ inline fun <T> buildCollection(
     }.builder()
     return result
 }
+
+fun <T> runWithCheckCanceled(callable: () -> T): T =
+    ApplicationUtil.runWithCheckCanceled(callable, ProgressManager.getInstance().progressIndicator)
 
 interface CollectionBuilder<in T> {
     fun add(item: T)

@@ -12,7 +12,6 @@ import com.intellij.execution.configurations.coverage.CoverageEnabledConfigurati
 import com.intellij.execution.executors.DefaultRunExecutor
 import com.intellij.execution.process.ProcessAdapter
 import com.intellij.execution.process.ProcessEvent
-import com.intellij.execution.process.ProcessHandler
 import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.execution.runners.ProgramRunner
 import com.intellij.execution.runners.executeState
@@ -22,7 +21,6 @@ import com.intellij.openapi.diagnostic.Logger
 import io.flutter.pub.PubRootCache
 import io.flutter.run.test.TestConfig
 import java.io.File
-import java.util.*
 
 class FlutterCoverageProgramRunner : ProgramRunner<RunnerSettings> {
     companion object {

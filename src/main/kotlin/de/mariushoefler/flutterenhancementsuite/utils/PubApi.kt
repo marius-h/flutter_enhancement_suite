@@ -4,7 +4,6 @@ import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.httpGet
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
-import com.intellij.openapi.application.ex.ApplicationUtil.runWithCheckCanceled
 import com.intellij.openapi.progress.ProgressManager
 import com.intellij.util.io.HttpRequests
 import de.mariushoefler.flutterenhancementsuite.exceptions.PubApiCouldNotBeReached
@@ -179,6 +178,3 @@ object PubApi {
         return null
     }
 }
-
-fun <T> runWithCheckCanceled(callable: () -> T): T =
-    runWithCheckCanceled(callable, ProgressManager.getInstance().progressIndicator)
