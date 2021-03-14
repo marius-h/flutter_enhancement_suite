@@ -7,6 +7,8 @@ import com.google.gson.JsonSyntaxException
 import com.intellij.openapi.application.ex.ApplicationUtil.runWithCheckCanceled
 import com.intellij.openapi.progress.ProgressManager
 import com.intellij.util.io.HttpRequests
+import de.mariushoefler.flutterenhancementsuite.exceptions.PubApiCouldNotBeReached
+import de.mariushoefler.flutterenhancementsuite.exceptions.PubApiUnknownFormat
 import de.mariushoefler.flutterenhancementsuite.models.PubPackage
 import de.mariushoefler.flutterenhancementsuite.models.PubPackageSearch
 import java.io.IOException
@@ -28,8 +30,8 @@ object PubApi {
         // val test = listOf(1,2,3)
         // println(test[4])
 
-        return try {
-            runWithCheckCanceled {
+        try {
+            return runWithCheckCanceled {
                 val q = URLEncoder.encode(query, StandardCharsets.UTF_8.toString())
                 val response = HttpRequests
                     .request("https://pub.dartlang.org/api/search?q=$q&page=$page")
@@ -37,11 +39,9 @@ object PubApi {
                 Gson().fromJson(response, PubPackageSearch::class.java)
             }
         } catch (e: IOException) {
-            // context.project.showBalloon("Could not reach pub", NotificationType.WARNING)
-            null
+            throw PubApiCouldNotBeReached(e)
         } catch (e: JsonSyntaxException) {
-            // context.project.showBalloon("Bad answer from pub", NotificationType.WARNING)
-            null
+            throw PubApiUnknownFormat(e)
         }
     }
 
@@ -148,35 +148,35 @@ object PubApi {
     }
 
     private fun fetchContentsFromGithubFile(repoUrl: String, filename: String): String? {
-        var src: String? = null
-        val h = repoUrl
+        val home = repoUrl
             .removePrefix("https://github.com/")
             .replace("bloc/", "")
             .replace("blob/", "")
             .replace("/pubspec.yaml", "")
             .replace("tree/", "")
-        var fileUrl = "https://raw.githubusercontent.com/$h"
+        var fileUrl = "https://raw.githubusercontent.com/$home"
         if (!fileUrl.contains("/master")) {
             fileUrl += "/master"
         }
 
-        var filePath = "$fileUrl/${filename.toUpperCase()}.md"
-        for (i in 1..2) {
-            val response = filePath.httpGet().responseString().third
-            if (response.component2() == null) {
-                src = response.get()
-                break
-            } else {
-                filePath = "$fileUrl/${filename.toLowerCase()}.md"
-            }
+        return (
+            fetchReadme("$fileUrl/${filename.toUpperCase()}.md")
+                ?: fetchReadme("$fileUrl/${filename.toLowerCase()}.md")
+            )?.let { src ->
+            if (src.startsWith("./")) {
+                // File is referenced in a sub-folder
+                fileUrl += src.replaceFirst(".", "")
+                fetchReadme(fileUrl)
+            } else src
         }
+    }
 
-        if (src != null && src.startsWith("./")) {
-            // File is referenced in a sub-folder
-            fileUrl += src.replaceFirst(".", "")
-            src = fileUrl.httpGet().responseString().third.get()
+    private fun fetchReadme(filePath: String): String? {
+        val response = filePath.httpGet().responseString().third
+        if (response.component2() == null) {
+            return response.get()
         }
-        return src
+        return null
     }
 }
 

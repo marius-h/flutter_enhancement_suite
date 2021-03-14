@@ -3,6 +3,7 @@ package de.mariushoefler.flutterenhancementsuite.utils
 import com.intellij.ide.plugins.PluginManagerCore
 import com.intellij.openapi.application.ApplicationInfo
 import com.intellij.openapi.extensions.PluginId
+import de.mariushoefler.flutterenhancementsuite.exceptions.FlutterVersionNotFoundException
 import io.flutter.FlutterUtils
 import io.flutter.sdk.FlutterSdk
 import java.io.ByteArrayOutputStream
@@ -47,7 +48,7 @@ fun getFlutterVersion(sdk: FlutterSdk): String? {
             String(readFully(process.inputStream), StandardCharsets.UTF_8)
         }
     } catch (e: IOException) {
-        null
+        throw FlutterVersionNotFoundException(e)
     }
 }
 
