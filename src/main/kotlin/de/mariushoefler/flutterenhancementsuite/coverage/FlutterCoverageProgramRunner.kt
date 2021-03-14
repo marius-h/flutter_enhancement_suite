@@ -22,6 +22,14 @@ import io.flutter.pub.PubRootCache
 import io.flutter.run.test.TestConfig
 import java.io.File
 
+/**
+ * Coverage program runner for Flutter
+ *
+ * Enables the "Run with coverage" action in the toolbar and launches the process.
+ *
+ * @author Marius Höfler
+ * @since v1.5.0
+ */
 class FlutterCoverageProgramRunner : ProgramRunner<RunnerSettings> {
     companion object {
         private val LOG = Logger.getInstance(FlutterCoverageProgramRunner::class.java)

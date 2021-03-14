@@ -16,6 +16,14 @@ import io.flutter.pub.PubRoot
 import io.flutter.run.test.TestConfig
 import java.io.File
 
+/**
+ * Base Coverage engine for Flutter
+ *
+ * This class contains settings for implementing a coverage engine for Flutter.
+ *
+ * @author Marius Höfler
+ * @since v1.5.0
+ */
 abstract class FlutterBaseCoverageEngine : CoverageEngine() {
     companion object {
         internal fun getQName(sourceFile: PsiFile) = sourceFile.virtualFile?.path

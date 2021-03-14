@@ -5,6 +5,14 @@ import com.intellij.coverage.CoverageFileProvider
 import com.intellij.coverage.CoverageRunner
 import com.intellij.openapi.project.Project
 
+/**
+ * Coverage suite for Flutter
+ *
+ * This is a place to store coverage settings.
+ *
+ * @author Marius Höfler
+ * @since v1.5.0
+ */
 class FlutterCoverageSuite : BaseCoverageSuite {
     private var flutterCoverageEngine: FlutterCoverageEngine
 

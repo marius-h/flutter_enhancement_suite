@@ -10,6 +10,14 @@ import de.mariushoefler.flutterenhancementsuite.utils.LcovCoverageReport
 import java.io.File
 import java.io.IOException
 
+/**
+ * Coverage runner for Flutter
+ *
+ *
+ *
+ * @author Marius Höfler
+ * @since v1.5.0
+ */
 class FlutterCoverageRunner : CoverageRunner() {
     var workingDirectory: String? = null
 

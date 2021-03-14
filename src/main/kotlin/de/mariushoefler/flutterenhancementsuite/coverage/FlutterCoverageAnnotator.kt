@@ -13,6 +13,14 @@ import io.flutter.FlutterUtils
 import io.flutter.pub.PubRootCache
 import java.io.File
 
+/**
+ * Coverage Annotator for Flutter
+ *
+ * Annotates files and directories inside the "lib/" folder with the corresponding coverage info.
+ *
+ * @author Marius Höfler
+ * @since v1.5.0
+ */
 class FlutterCoverageAnnotator(project: Project) : SimpleCoverageAnnotator(project) {
     companion object {
         fun getInstance(project: Project): FlutterCoverageAnnotator =

@@ -18,6 +18,14 @@ import com.intellij.util.containers.ContainerUtil
 import java.io.File
 import java.util.Date
 
+/**
+ * Coverage engine for Flutter
+ *
+ * Presents the coverage results to the user.
+ *
+ * @author Marius Höfler
+ * @since v1.5.0
+ */
 class FlutterCoverageEngine : FlutterBaseCoverageEngine() {
     override fun getPresentableText() = "FlutterTestRunnerCoverage"
 
