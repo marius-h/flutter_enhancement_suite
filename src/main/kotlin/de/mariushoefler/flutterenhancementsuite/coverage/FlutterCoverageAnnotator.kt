@@ -72,11 +72,10 @@ class FlutterCoverageAnnotator(project: Project) : SimpleCoverageAnnotator(proje
         when {
             info.totalLineCount == 0 -> null
             info.coveredLineCount == 0 -> CoverageBundle.message("lines.covered.info.not.covered")
-            else -> "${calcCoveragePercentage(info)} ${
-                CoverageBundle.message(
-                    "lines.covered.info.percent.lines.covered"
-                )
-            }"
+            else -> {
+                val message = CoverageBundle.message("lines.covered.info.percent.lines.covered")
+                "${calcCoveragePercentage(info)} $message"
+            }
         }
 
     override fun getRoots(
