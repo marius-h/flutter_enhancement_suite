@@ -1,6 +1,9 @@
 # :fire:&nbsp;What's new?
 
 ## [Unreleased]
+### Added
+- Display test coverage in IDE
+
 ## [1.4.0]
 ### Added
 - Display CHANGELOG.md while selecting version of package in pubspec.yaml (#27)
