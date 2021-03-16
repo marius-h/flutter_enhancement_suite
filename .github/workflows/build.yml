@@ -116,17 +116,20 @@ jobs:
         run: |
           PROPERTIES="$(./gradlew properties --console=plain -q)"
           VERSION="$(echo "$PROPERTIES" | grep "^version:" | cut -f2- -d ' ')"
-          NAME="$(echo "$PROPERTIES" | grep "^pluginName:" | cut -f2- -d ' ' | sed 's/ //g')"
+          NAME="$(echo "$PROPERTIES" | grep "^pluginName:" | cut -f2- -d ' ')"
+          PLUGINNAME="$(echo "$NAME" | sed 's/ //g')"
           CHANGELOG="$(./gradlew getChangelog --unreleased --no-header --console=plain -q)"
           CHANGELOG="${CHANGELOG//'%'/'%25'}"
           CHANGELOG="${CHANGELOG//$'\n'/'%0A'}"
           CHANGELOG="${CHANGELOG//$'\r'/'%0D'}"
-          ARTIFACT="${NAME}-${VERSION}.zip"
+          ARTIFACT="${PLUGINNAME}-${VERSION}"
+          ARTIFACTPATH="${NAME}-${VERSION}.zip"
 
           echo "::set-output name=version::$VERSION"
           echo "::set-output name=name::$NAME"
           echo "::set-output name=changelog::$CHANGELOG"
           echo "::set-output name=artifact::$ARTIFACT"
+          echo "::set-output name=artifactpath::$ARTIFACTPATH"
 
       # Build artifact using buildPlugin Gradle task
       - name: Build Plugin
@@ -136,8 +139,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v1
         with:
-          name: plugin-artifact
-          path: ./build/distributions/${{ steps.properties.outputs.artifact }}
+          name: ${{ steps.properties.outputs.artifact }}
+          path: ./build/distributions/${{ steps.properties.outputs.artifactpath }}
 
   # Verify built plugin using IntelliJ Plugin Verifier tool
   # Requires build job to be passed
