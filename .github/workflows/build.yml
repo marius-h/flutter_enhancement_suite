@@ -122,14 +122,14 @@ jobs:
           CHANGELOG="${CHANGELOG//'%'/'%25'}"
           CHANGELOG="${CHANGELOG//$'\n'/'%0A'}"
           CHANGELOG="${CHANGELOG//$'\r'/'%0D'}"
-          ARTIFACT="${PLUGINNAME}-${VERSION}"
-          ARTIFACTPATH="${NAME}-${VERSION}.zip"
+          ARTIFACTNAME="${PLUGINNAME}-${VERSION}.zip"
+          ARTIFACT="${NAME}-${VERSION}.zip"
 
           echo "::set-output name=version::$VERSION"
           echo "::set-output name=name::$NAME"
           echo "::set-output name=changelog::$CHANGELOG"
           echo "::set-output name=artifact::$ARTIFACT"
-          echo "::set-output name=artifactpath::$ARTIFACTPATH"
+          echo "::set-output name=artifactname::$ARTIFACTNAME"
 
       # Build artifact using buildPlugin Gradle task
       - name: Build Plugin
@@ -139,8 +139,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v1
         with:
-          name: ${{ steps.properties.outputs.artifact }}
-          path: ./build/distributions/${{ steps.properties.outputs.artifactpath }}
+          name: plugin-artifact
+          path: ./build/distributions/${{ steps.properties.outputs.artifact }}
 
   # Verify built plugin using IntelliJ Plugin Verifier tool
   # Requires build job to be passed
@@ -246,5 +246,5 @@ jobs:
         with:
           upload_url: ${{ steps.createDraft.outputs.upload_url }}
           asset_path: ./${{ needs.build.outputs.artifact }}
-          asset_name: ${{ needs.build.outputs.artifact }}
+          asset_name: ${{ needs.build.outputs.artifactname }}
           asset_content_type: application/zip
