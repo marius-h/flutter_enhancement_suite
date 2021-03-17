@@ -28,7 +28,12 @@ class DependencyChecker {
 
             reader.lines().getIfSingle()?.let {
                 val response = parsePackageResponse(it)
-                val latest = response.latest
+                // Check for latest stable release
+                val latest = response.latest.takeUnless { v ->
+                    v.version.matches(Regex("^[\\d.]+-.*"))
+                } ?: response.versions.reversed().first { v ->
+                    !v.version.matches(Regex("^[\\d.]+-.*"))
+                }
                 val latestVersion = latest.version.trim()
                 dependencyList.add(Dependency(packageName, latestVersion))
                 return latestVersion
