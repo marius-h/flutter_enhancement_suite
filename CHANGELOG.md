@@ -3,6 +3,8 @@
 ## [Unreleased]
 ### Added
 - Display test coverage in IDE
+### Fixed
+- Fix package update suggestions for pre-release versions (#77)
 
 ## [1.4.0]
 ### Added
