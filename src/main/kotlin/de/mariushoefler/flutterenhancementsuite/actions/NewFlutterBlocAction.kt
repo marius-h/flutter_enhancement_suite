@@ -11,6 +11,7 @@ import com.intellij.psi.PsiDirectory
 import de.mariushoefler.flutterenhancementsuite.models.Bloc
 import de.mariushoefler.flutterenhancementsuite.utils.FlutterProjectUtils
 
+@Deprecated("Use https://plugins.jetbrains.com/plugin/12129-bloc.")
 class NewFlutterBlocAction : AnAction() {
 
     override fun actionPerformed(event: AnActionEvent) {

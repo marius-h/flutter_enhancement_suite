@@ -2,6 +2,7 @@ package de.mariushoefler.flutterenhancementsuite.models
 
 import de.mariushoefler.flutterenhancementsuite.utils.toSnakeCase
 
+@Deprecated("Use https://plugins.jetbrains.com/plugin/12129-bloc.")
 data class Bloc(
     val name: String,
     val className: String,
