@@ -24,6 +24,6 @@ class DependencyQuickFix(
             startElement.replace(expression)
         }
 
-        if (forcePubGet) FlutterProjectUtils.runPackagesGet(file.virtualFile)
+        if (forcePubGet) FlutterProjectUtils.runPackagesGet(file.virtualFile, project)
     }
 }
