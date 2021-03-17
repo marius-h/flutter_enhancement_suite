@@ -1,6 +1,7 @@
 package de.mariushoefler.flutterenhancementsuite.pub
 
 import com.intellij.codeInsight.completion.CompletionContributor
+import com.intellij.codeInsight.completion.CompletionInitializationContext
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
@@ -24,6 +25,10 @@ class PubspecCompletionContributor : CompletionContributor() {
             PlatformPatterns.psiElement(),
             PubspecCompletionProvider()
         )
+    }
+
+    override fun duringCompletion(context: CompletionInitializationContext) {
+        super.duringCompletion(context)
     }
 
     override fun handleEmptyLookup(parameters: CompletionParameters, editor: Editor?): String {
@@ -76,18 +81,23 @@ class PubspecCompletionProvider : CompletionProvider<CompletionParameters>() {
 
     private fun createItem(packageResult: PubPackageResult, result: CompletionResultSet) {
         val packageName = packageResult.name.replaceFirst("dart:", "")
-        val pubPackage = PubApi.getPackage(packageName)
-        if (pubPackage != null) {
-            println("Package '$packageName' added to list")
-            val item = LookupElementBuilder
+        PubApi.getPackage(packageName)?.let { pubPackage ->
+            LookupElementBuilder
                 .create(pubPackage.generateDependencyString())
                 .withPresentableText("package: ${pubPackage.name}")
                 .withLookupString(pubPackage.name)
                 .withTypeText(pubPackage.getAuthorName(), true)
                 .withIcon(DartIcons.Dart_16)
-                .withInsertHandler { _, _ -> FlutterProjectUtils.runPackagesGet(file) }
-            lastResults.add(item)
-            result.addElement(item)
+                .withInsertHandler { context, _ ->
+                    context.editor.project?.let { project ->
+                        file?.let { it ->
+                            FlutterProjectUtils.runPackagesGet(it, project)
+                        }
+                    }
+                }.also {
+                    lastResults.add(it)
+                    result.addElement(it)
+                }
         }
     }
 }
