@@ -3,6 +3,8 @@
 ## [Unreleased]
 ### Added
 - Display test coverage in IDE
+### Deprecated
+- Deprecated bloc feature. Please use the official bloc plugin (https://plugins.jetbrains.com/plugin/12129-bloc)
 ### Fixed
 - Fix package update suggestions for pre-release versions (#77)
 - Fix adding a dependency to a pubspec file while another project is open cause pub get to run in the other project (#55)
