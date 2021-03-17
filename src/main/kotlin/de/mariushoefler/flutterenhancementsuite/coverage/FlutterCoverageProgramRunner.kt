@@ -4,7 +4,9 @@ import com.intellij.coverage.CoverageDataManager
 import com.intellij.coverage.CoverageExecutor
 import com.intellij.coverage.CoverageRunnerData
 import com.intellij.execution.ExecutionManager
+import com.intellij.execution.Executor
 import com.intellij.execution.configurations.ConfigurationInfoProvider
+import com.intellij.execution.configurations.RunConfiguration
 import com.intellij.execution.configurations.RunConfigurationBase
 import com.intellij.execution.configurations.RunProfile
 import com.intellij.execution.configurations.RunnerSettings
@@ -18,8 +20,10 @@ import com.intellij.execution.runners.executeState
 import com.intellij.execution.ui.RunContentDescriptor
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.diagnostic.Logger
+import com.intellij.openapi.options.SettingsEditor
 import io.flutter.pub.PubRootCache
 import io.flutter.run.test.TestConfig
+import io.flutter.run.test.TestFields
 import java.io.File
 
 /**
@@ -62,22 +66,62 @@ class FlutterCoverageProgramRunner : ProgramRunner<RunnerSettings> {
         return executorId == CoverageExecutor.EXECUTOR_ID && profile is TestConfig
     }
 
+    override fun getSettingsEditor(
+        executor: Executor?,
+        configuration: RunConfiguration?
+    ): SettingsEditor<RunnerSettings>? {
+        return super.getSettingsEditor(executor, configuration)
+    }
+
     override fun createConfigurationData(settingsProvider: ConfigurationInfoProvider) =
         CoverageRunnerData()
 
     @Suppress("UnstableApiUsage")
     override fun execute(environment: ExecutionEnvironment) {
+        val fakeEnvironment = createFakeExecutionEnvironment(environment)
+
+        ExecutionManager.getInstance(environment.project).startRunProfile(fakeEnvironment) { state ->
+            return@startRunProfile executeState(state, fakeEnvironment, this)?.also {
+                doExecute(it, environment)
+            }
+        }
+    }
+
+    private fun createFakeExecutionEnvironment(environment: ExecutionEnvironment): ExecutionEnvironment {
         val fakeEnvironment = ExecutionEnvironment(
             DefaultRunExecutor(),
             environment.runner,
             environment.runnerAndConfigurationSettings!!,
             environment.project
         )
+        val executionEnvironmentClass = ExecutionEnvironment::class.java
+        val myRunProfile = executionEnvironmentClass.getDeclaredField("myRunProfile").apply {
+            isAccessible = true
+        }
+        val runProfile = myRunProfile.get(fakeEnvironment) as RunProfile
 
-        ExecutionManager.getInstance(environment.project).startRunProfile(fakeEnvironment) { state ->
-            return@startRunProfile executeState(state, fakeEnvironment, this)?.also {
-                doExecute(it, environment)
+        if (runProfile is TestConfig) {
+            val runProfileCopy = runProfile.clone() as TestConfig
+            setCoverageParam(runProfileCopy)
+            myRunProfile.set(fakeEnvironment, runProfileCopy)
+        }
+
+        return fakeEnvironment
+    }
+
+    private fun setCoverageParam(profile: TestConfig) {
+        val testConfigClass = TestConfig::class.java
+        val getFields = testConfigClass.getDeclaredMethod("getFields").apply {
+            isAccessible = true
+        }
+        val setFields =
+            testConfigClass.getDeclaredMethod("setFields", io.flutter.run.test.TestFields::class.java).apply {
+                isAccessible = true
             }
+        val fields = getFields(profile) as TestFields
+        if (fields.additionalArgs?.contains("--coverage") == false) {
+            fields.additionalArgs += "--coverage"
+            setFields(profile, fields)
         }
     }
 
