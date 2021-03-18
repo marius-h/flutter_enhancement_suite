@@ -131,7 +131,8 @@ object LinterUtils {
     }
 
     private fun loadAnalysisOptionsFile(project: Project): VirtualFile? {
-        val file = VfsUtil.findFileByIoFile(File("${project.basePath}${File.separator}analysis_options.yaml"), false) ?: return null
+        val file = VfsUtil.findFileByIoFile(File("${project.basePath}${File.separator}analysis_options.yaml"), false)
+            ?: return null
         analysisOptFile = file
         return file
     }
