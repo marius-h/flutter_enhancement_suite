@@ -11,7 +11,7 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.jetbrains.lang.dart.DartFileType
-import com.jetbrains.lang.dart.psi.DartFile
+import de.mariushoefler.flutterenhancementsuite.utils.isDartFileInLib
 import io.flutter.pub.PubRoot
 import io.flutter.run.test.TestConfig
 import java.io.File
@@ -42,7 +42,7 @@ abstract class FlutterBaseCoverageEngine : CoverageEngine() {
     } is TestConfig
 
     override fun coverageEditorHighlightingApplicableTo(psiFile: PsiFile): Boolean {
-        return psiFile is DartFile && psiFile.virtualFile.path.contains("/lib/")
+        return PubRoot.forPsiFile(psiFile)?.isDartFileInLib(psiFile.virtualFile) == true
     }
 
     override fun coverageProjectViewStatisticsApplicableTo(fileOrDir: VirtualFile): Boolean {

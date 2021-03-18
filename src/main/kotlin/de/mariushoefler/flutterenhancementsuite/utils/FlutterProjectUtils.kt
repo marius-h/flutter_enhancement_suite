@@ -18,7 +18,7 @@ import java.io.IOException
 object FlutterProjectUtils {
 
     fun readProjectName(project: Project): String? {
-        val pubspec = VfsUtil.findFileByIoFile(File("${project.basePath}/pubspec.yaml"), true) ?: return null
+        val pubspec = VfsUtil.findFileByIoFile(File("${project.basePath}${File.separator}pubspec.yaml"), true) ?: return null
         val properties = readPubspecFileToMap(pubspec)
         return properties?.get("name") as String
     }

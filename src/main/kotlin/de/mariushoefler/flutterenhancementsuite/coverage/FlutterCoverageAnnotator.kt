@@ -9,7 +9,8 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
-import io.flutter.FlutterUtils
+import de.mariushoefler.flutterenhancementsuite.utils.isDartFileInLib
+import io.flutter.pub.PubRoot
 import io.flutter.pub.PubRootCache
 import java.io.File
 
@@ -54,12 +55,9 @@ class FlutterCoverageAnnotator(project: Project) : SimpleCoverageAnnotator(proje
         psiFile: PsiFile,
         currentSuite: CoverageSuitesBundle,
         manager: CoverageDataManager
-    ): String? {
-        if (psiFile.virtualFile.path.contains("/lib/") && FlutterUtils.isDartFile(psiFile.virtualFile)) {
-            return super.getFileCoverageInformationString(psiFile, currentSuite, manager)
-        }
-        return null
-    }
+    ): String? = if (PubRoot.forPsiFile(psiFile)?.isDartFileInLib(psiFile.virtualFile) == true) {
+        super.getFileCoverageInformationString(psiFile, currentSuite, manager)
+    } else null
 
     override fun getFilesCoverageInformationString(info: DirCoverageInfo): String? =
         when {
