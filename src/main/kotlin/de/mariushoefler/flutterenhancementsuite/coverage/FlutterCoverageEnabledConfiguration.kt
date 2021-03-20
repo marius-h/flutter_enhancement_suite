@@ -5,8 +5,6 @@ import com.intellij.coverage.CoverageRunner
 import com.intellij.execution.configurations.RunConfigurationBase
 import com.intellij.execution.configurations.coverage.CoverageEnabledConfiguration
 import io.flutter.pub.PubRootCache
-import java.io.File
-import java.net.URI
 
 /**
  * Coverage Enabled Configuration for Flutter
@@ -22,7 +20,7 @@ class FlutterCoverageEnabledConfiguration(conf: RunConfigurationBase<*>) : Cover
     init {
         coverageRunner = CoverageRunner.getInstance(FlutterCoverageRunner::class.java)
         PubRootCache.getInstance(project).getRoot(project.projectFile)?.let {
-            myCoverageFilePath = File(URI("${it.root}/coverage/lcov.info")).path
+            myCoverageFilePath = "${it.root.canonicalPath}/coverage/lcov.info"
         }
         currentCoverageSuite = CoverageDataManager.getInstance(project)
             .addCoverageSuite(this)
