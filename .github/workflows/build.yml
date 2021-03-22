@@ -40,11 +40,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      # Setup Java 11 environment for the next steps
+      # Setup Java 1.8 environment for the next steps
       - name: Setup Java
         uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: 1.8
 
       # Check out current repository
       - name: Fetch Sources
@@ -85,11 +85,11 @@ jobs:
       artifact: ${{ steps.properties.outputs.artifact }}
     steps:
 
-      # Setup Java 11 environment for the next steps
+      # Setup Java 1.8 environment for the next steps
       - name: Setup Java
         uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: 1.8
 
       # Check out current repository
       - name: Fetch Sources
@@ -150,11 +150,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      # Setup Java 11 environment for the next steps
+      # Setup Java 1.8 environment for the next steps
       - name: Setup Java
         uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: 1.8
 
       # Check out current repository
       - name: Fetch Sources
