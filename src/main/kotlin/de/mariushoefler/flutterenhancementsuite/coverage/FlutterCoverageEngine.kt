@@ -3,18 +3,11 @@ package de.mariushoefler.flutterenhancementsuite.coverage
 import com.intellij.coverage.CoverageFileProvider
 import com.intellij.coverage.CoverageRunner
 import com.intellij.coverage.CoverageSuitesBundle
-import com.intellij.coverage.view.CoverageListRootNode
 import com.intellij.coverage.view.CoverageViewManager
-import com.intellij.coverage.view.DirectoryCoverageViewExtension
 import com.intellij.execution.configurations.RunConfigurationBase
 import com.intellij.execution.configurations.coverage.CoverageEnabledConfiguration
-import com.intellij.ide.util.treeView.AbstractTreeNode
-import com.intellij.openapi.application.ReadAction
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.util.text.StringUtil
 import com.intellij.psi.PsiFile
-import com.intellij.psi.PsiManager
-import com.intellij.util.containers.ContainerUtil
 import java.io.File
 import java.util.Date
 
@@ -91,21 +84,21 @@ class FlutterCoverageEngine : FlutterBaseCoverageEngine() {
         project: Project,
         suiteBundle: CoverageSuitesBundle,
         stateBean: CoverageViewManager.StateBean?
-    ) =
-        object : DirectoryCoverageViewExtension(project, getCoverageAnnotator(project), suiteBundle, stateBean) {
-            override fun getChildrenNodes(node: AbstractTreeNode<*>?): MutableList<AbstractTreeNode<*>> {
-                return ContainerUtil.filter(super.getChildrenNodes(node)) { child ->
-                    !StringUtil.equals(child.name, ".idea")
-                }
-            }
-
-            override fun createRootNode(): AbstractTreeNode<*> {
-                return ReadAction.compute<AbstractTreeNode<*>, NullPointerException> {
-                    val rootDir = findRootDir(project) ?: project.projectFile!!
-                    val psiRootDir = PsiManager.getInstance(project).findDirectory(rootDir)!!
-
-                    return@compute CoverageListRootNode(myProject, psiRootDir, mySuitesBundle, myStateBean)
-                }
-            }
-        }
+    ) = null
+//        object : DirectoryCoverageViewExtension(project, getCoverageAnnotator(project), suiteBundle, stateBean) {
+//            override fun getChildrenNodes(node: AbstractTreeNode<*>?): MutableList<AbstractTreeNode<*>> {
+//                return ContainerUtil.filter(super.getChildrenNodes(node)) { child ->
+//                    !StringUtil.equals(child.name, ".idea")
+//                }
+//            }
+//
+//            override fun createRootNode(): AbstractTreeNode<*> {
+//                return ReadAction.compute<AbstractTreeNode<*>, NullPointerException> {
+//                    val rootDir = findRootDir(project) ?: project.projectFile!!
+//                    val psiRootDir = PsiManager.getInstance(project).findDirectory(rootDir)!!
+//
+//                    return@compute CoverageListRootNode(myProject, psiRootDir, mySuitesBundle, myStateBean)
+//                }
+//            }
+//        }
 }

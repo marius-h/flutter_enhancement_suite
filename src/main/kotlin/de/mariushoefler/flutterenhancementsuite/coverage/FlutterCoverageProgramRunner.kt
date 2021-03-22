@@ -25,7 +25,7 @@ import io.flutter.pub.PubRootCache
 import io.flutter.run.test.TestConfig
 import io.flutter.run.test.TestFields
 import java.nio.file.Files
-import java.nio.file.Path
+import java.nio.file.Paths
 
 /**
  * Coverage program runner for Flutter
@@ -43,7 +43,7 @@ class FlutterCoverageProgramRunner : ProgramRunner<RunnerSettings> {
         private fun updateCoverageView(env: ExecutionEnvironment) {
             val runConfiguration = env.runProfile as RunConfigurationBase<*>
             CoverageEnabledConfiguration.getOrCreate(runConfiguration).coverageFilePath?.let {
-                val lcovFilePath = Path.of(it)
+                val lcovFilePath = Paths.get(it)
                 if (Files.exists(lcovFilePath)) {
                     val runnerSettings = env.runnerSettings
                     if (runnerSettings != null) {
@@ -120,6 +120,9 @@ class FlutterCoverageProgramRunner : ProgramRunner<RunnerSettings> {
         val fields = getFields(profile) as TestFields
         if (fields.additionalArgs?.contains("--coverage") == false) {
             fields.additionalArgs += "--coverage"
+            setFields(profile, fields)
+        } else if (fields.additionalArgs == null) {
+            fields.additionalArgs = "--coverage"
             setFields(profile, fields)
         }
     }
