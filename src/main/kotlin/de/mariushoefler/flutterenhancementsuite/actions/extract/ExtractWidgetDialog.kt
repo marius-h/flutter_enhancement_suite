@@ -1,23 +1,19 @@
-package de.mariushoefler.flutterenhancementsuite.actions
+package de.mariushoefler.flutterenhancementsuite.actions.extract
 
-import com.intellij.CommonBundle
-import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.openapi.actionSystem.PlatformDataKeys
+import com.intellij.openapi.Disposable
 import com.intellij.openapi.application.runUndoTransparentWriteAction
-import com.intellij.openapi.editor.Caret
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.fileEditor.FileDocumentManager
-import com.intellij.openapi.project.DumbAwareAction
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.MessageType
 import com.intellij.openapi.ui.popup.util.PopupUtil
 import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiManager
 import com.intellij.psi.PsiTreeChangeEvent
 import com.intellij.psi.PsiTreeChangeListener
 import com.intellij.psi.util.PsiTreeUtil
-import com.intellij.refactoring.util.CommonRefactoringUtil
 import com.intellij.ui.DocumentAdapter
 import com.intellij.util.ui.JBUI
 import com.jetbrains.lang.dart.ide.actions.DartStyleAction
@@ -25,8 +21,8 @@ import com.jetbrains.lang.dart.ide.refactoring.ServerRefactoringDialog
 import com.jetbrains.lang.dart.psi.DartClassDefinition
 import com.jetbrains.lang.dart.util.PubspecYamlUtil
 import de.mariushoefler.flutterenhancementsuite.utils.createImportStatement
+import de.mariushoefler.flutterenhancementsuite.utils.extractDartImportStatements
 import de.mariushoefler.flutterenhancementsuite.utils.toSnakeCase
-import io.flutter.FlutterUtils
 import io.flutter.refactoring.ExtractWidgetRefactoring
 import java.awt.Dimension
 import java.awt.GridBagConstraints
@@ -37,77 +33,15 @@ import javax.swing.JPanel
 import javax.swing.JTextField
 import javax.swing.event.DocumentEvent
 
-const val NAME_FIELD_WIDTH = 200
-const val SMALL_PADDING = 4
-
-/**
- * Extract a widget to a seperate file
- *
- * @since v1.3
- */
-class ExtractWidgetToFileAction : DumbAwareAction() {
-
-    override fun actionPerformed(event: AnActionEvent) {
-        val dataContext = event.dataContext
-        val project = dataContext.getData(PlatformDataKeys.PROJECT)
-        val file = dataContext.getData(PlatformDataKeys.VIRTUAL_FILE)
-        val editor = dataContext.getData(PlatformDataKeys.EDITOR)
-        val caret = dataContext.getData(PlatformDataKeys.CARET)
-
-        ifLet(project, file, editor, caret) { (project, file, editor, caret) ->
-            createExtractDialog(caret as Caret, project as Project, file as VirtualFile, editor as Editor)
-        }
-    }
-
-    private inline fun <T : Any> ifLet(vararg elements: T?, closure: (List<T>) -> Unit) {
-        if (elements.all { it != null }) {
-            closure(elements.filterNotNull())
-        }
-    }
-
-    private fun createExtractDialog(
-        caret: Caret,
-        project: Project,
-        file: VirtualFile,
-        editor: Editor
-    ) {
-        val offset = caret.selectionStart
-        val length = caret.selectionEnd - offset
-        val refactoring = ExtractWidgetRefactoring(project, file, offset, length)
-
-        // Validate the initial status.
-        val initialStatus = refactoring.checkInitialConditions() ?: return
-        if (initialStatus.hasError()) {
-            initialStatus.message?.let { message ->
-                CommonRefactoringUtil.showErrorHint(project, editor, message, CommonBundle.getErrorTitle(), null)
-            }
-            return
-        }
-
-        ExtractWidgetDialog(project, file, editor, refactoring).show()
-    }
-
-    override fun update(e: AnActionEvent) {
-        e.presentation.isVisible = isVisibleFor(e)
-        super.update(e)
-    }
-
-    private fun isVisibleFor(e: AnActionEvent): Boolean {
-        val dataContext = e.dataContext
-        val file = dataContext.getData(PlatformDataKeys.VIRTUAL_FILE)
-        return !(file == null || !FlutterUtils.isDartFile(file))
-    }
-}
-
 internal class ExtractWidgetDialog(
     project: Project,
     val file: VirtualFile,
     var editor: Editor?,
     myRefactoring: ExtractWidgetRefactoring
-) : ServerRefactoringDialog<ExtractWidgetRefactoring>(project, editor, myRefactoring) {
+) : ServerRefactoringDialog<ExtractWidgetRefactoring>(project, editor, myRefactoring), Disposable {
 
     private val myNameField = JTextField()
-    private val myTreeChangeListener = WidgetTreeChangeListener()
+    private val myWidgetTreeChangeListener = WidgetTreeChangeListener()
 
     init {
         title = "Extract Widget to New File"
@@ -149,9 +83,13 @@ internal class ExtractWidgetDialog(
     }
 
     override fun doAction() {
-        PsiManager.getInstance(project).addPsiTreeChangeListener(myTreeChangeListener)
+        PsiManager.getInstance(project).addPsiTreeChangeListener(myWidgetTreeChangeListener, this)
         super.doAction()
         FileDocumentManager.getInstance().saveAllDocuments()
+    }
+
+    override fun dispose() {
+        super.dispose()
     }
 
     override fun createCenterPanel(): JComponent? = null
@@ -204,7 +142,6 @@ internal class ExtractWidgetDialog(
                                 MessageType.ERROR
                             )
                         }
-                        PsiManager.getInstance(project).removePsiTreeChangeListener(myTreeChangeListener)
                     }
                 }
             }
@@ -230,15 +167,36 @@ internal class ExtractWidgetDialog(
                     val projectName = PubspecYamlUtil.getDartProjectName(pubspecFile)
                     val pathToNewFile = projectName + it.virtualFile.path.split("lib")[1]
                     val importStatementOrig = project.createImportStatement("package:$pathToNewFile")
-                    val importStatement = project.createImportStatement("package:flutter/material.dart")
 
-                    originalFile.addAfter(importStatementOrig, originalFile.firstChild)
-                    it.add(importStatement)
+                    originalFile.extractDartImportStatements().forEach { importStatement ->
+                        it.add(importStatement)
+                        println("importStatement = ${importStatement.text}")
+                    }
+                    originalFile.addBefore(importStatementOrig, originalFile.firstChild)
                     it.add(event.child)
                     event.child.delete()
-                    DartStyleAction.runDartfmt(project, mutableListOf(it.virtualFile, file))
+                    PsiDocumentManager.getInstance(project).commitAllDocuments()
+                    formatFiles(mutableListOf(it.virtualFile, file))
                 }
+                PsiManager.getInstance(project).removePsiTreeChangeListener(myWidgetTreeChangeListener)
             }
+        }
+
+        private fun formatFiles(filesToFormat: MutableList<VirtualFile>) {
+
+            DartStyleAction.runDartfmt(project, filesToFormat)
+//            OptimizeImportsProcessor(
+//                project, ReformatCodeAction.convertToPsiFiles(filesToFormat.toTypedArray(), project), null
+//            ).run()
+            PsiDocumentManager.getInstance(project).commitAllDocuments()
+//            val importOptimizer = DartImportOptimizer()
+//            ReformatCodeAction.convertToPsiFiles(filesToFormat.toTypedArray(), project).forEach {
+//                it.virtualFile.refresh(true, true) {
+//                    val runnable = importOptimizer.processFile(it)
+//                    WriteCommandAction.writeCommandAction(project, it).run(
+//                        ThrowableRunnable<RuntimeException> { runnable.run() })
+//                }
+//            }
         }
     }
 }
