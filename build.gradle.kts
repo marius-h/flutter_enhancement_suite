@@ -74,7 +74,9 @@ tasks {
     withType<JavaCompile> {
         sourceCompatibility = "1.8"
         targetCompatibility = "1.8"
+        options.compilerArgs.add("--illegal-access=warn")
     }
+
     withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "1.8"
     }

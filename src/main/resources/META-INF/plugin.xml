@@ -91,7 +91,7 @@
                           relative-to-action="Flutter.NewWidget"/>
         </action>
         <action id="Flutter.ExtractWidgetToFile"
-                class="de.mariushoefler.flutterenhancementsuite.actions.ExtractWidgetToFileAction"
+                class="de.mariushoefler.flutterenhancementsuite.actions.extract.ExtractWidgetToFileAction"
                 text="Extract Widget to File">
             <add-to-group group-id="RefactoringMenu"
                           relative-to-action="RefactoringMenu"
