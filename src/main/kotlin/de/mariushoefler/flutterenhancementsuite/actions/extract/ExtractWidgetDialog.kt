@@ -1,5 +1,6 @@
 package de.mariushoefler.flutterenhancementsuite.actions.extract
 
+import com.intellij.codeInsight.actions.OptimizeImportsProcessor
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.application.runUndoTransparentWriteAction
 import com.intellij.openapi.editor.Editor
@@ -8,9 +9,9 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.MessageType
 import com.intellij.openapi.ui.popup.util.PopupUtil
 import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiManager
+import com.intellij.psi.PsiParserFacade
 import com.intellij.psi.PsiTreeChangeEvent
 import com.intellij.psi.PsiTreeChangeListener
 import com.intellij.psi.util.PsiTreeUtil
@@ -47,13 +48,15 @@ internal class ExtractWidgetDialog(
         title = "Extract Widget to New File"
         init()
 
-        myNameField.text = getFilenameSuggestion()
-        myNameField.selectAll()
-        myNameField.document.addDocumentListener(object : DocumentAdapter() {
-            override fun textChanged(e: DocumentEvent) {
-                updateRefactoringOptions()
-            }
-        })
+        myNameField.apply {
+            text = getFilenameSuggestion()
+            selectAll()
+            document.addDocumentListener(object : DocumentAdapter() {
+                override fun textChanged(e: DocumentEvent) {
+                    updateRefactoringOptions()
+                }
+            })
+        }
 
         updateRefactoringOptions()
     }
@@ -94,33 +97,36 @@ internal class ExtractWidgetDialog(
 
     override fun createCenterPanel(): JComponent? = null
 
-    override fun createNorthPanel(): JComponent {
-        val panel = JPanel(GridBagLayout())
-        val gbConstraints = GridBagConstraints()
+    override fun createNorthPanel() = JPanel(GridBagLayout()).apply {
+        add(
+            JLabel("Widget name:"),
+            GridBagConstraints().apply {
+                insets = JBUI.insetsBottom(SMALL_PADDING)
+                gridx = 0
+                gridy = 0
+                gridwidth = 1
+                weightx = 0.0
+                weighty = 0.0
+                fill = GridBagConstraints.NONE
+                anchor = GridBagConstraints.WEST
+            },
+        )
 
-        gbConstraints.insets = JBUI.insetsBottom(SMALL_PADDING)
-        gbConstraints.gridx = 0
-        gbConstraints.gridy = 0
-        gbConstraints.gridwidth = 1
-        gbConstraints.weightx = 0.0
-        gbConstraints.weighty = 0.0
-        gbConstraints.fill = GridBagConstraints.NONE
-        gbConstraints.anchor = GridBagConstraints.WEST
-        val nameLabel = JLabel("Widget name:")
-        panel.add(nameLabel, gbConstraints)
-
-        gbConstraints.insets = JBUI.insets(0, SMALL_PADDING, SMALL_PADDING, 0)
-        gbConstraints.gridx = 1
-        gbConstraints.gridy = 0
-        gbConstraints.gridwidth = GridBagConstraints.REMAINDER
-        gbConstraints.weightx = 1.0
-        gbConstraints.weighty = 0.0
-        gbConstraints.fill = GridBagConstraints.BOTH
-        gbConstraints.anchor = GridBagConstraints.WEST
-        panel.add(myNameField, gbConstraints)
-        myNameField.preferredSize = Dimension(NAME_FIELD_WIDTH, myNameField.preferredSize.height)
-
-        return panel
+        add(
+            myNameField.apply {
+                preferredSize = Dimension(NAME_FIELD_WIDTH, myNameField.preferredSize.height)
+            },
+            GridBagConstraints().apply {
+                insets = JBUI.insets(0, SMALL_PADDING, SMALL_PADDING, 0)
+                gridx = 1
+                gridy = 0
+                gridwidth = GridBagConstraints.REMAINDER
+                weightx = 1.0
+                weighty = 0.0
+                fill = GridBagConstraints.BOTH
+                anchor = GridBagConstraints.WEST
+            },
+        )
     }
 
     override fun getPreferredFocusedComponent() = myNameField
@@ -158,45 +164,30 @@ internal class ExtractWidgetDialog(
             fileName: String,
             pubspecFile: VirtualFile,
             event: PsiTreeChangeEvent
-        ) {
-            runUndoTransparentWriteAction {
-                val newFile = originalFile.containingDirectory?.findFile(fileName)
-                    ?: originalFile.containingDirectory?.createFile(fileName)
+        ) = runUndoTransparentWriteAction {
+            val newFile = originalFile.containingDirectory?.findFile(fileName)
+                ?: originalFile.containingDirectory?.createFile(fileName)
 
-                newFile?.let {
-                    val projectName = PubspecYamlUtil.getDartProjectName(pubspecFile)
-                    val pathToNewFile = projectName + it.virtualFile.path.split("lib")[1]
-                    val importStatementOrig = project.createImportStatement("package:$pathToNewFile")
+            PsiManager.getInstance(project).removePsiTreeChangeListener(myWidgetTreeChangeListener)
+            newFile?.let {
+                val projectName = PubspecYamlUtil.getDartProjectName(pubspecFile)
+                val pathToNewFile = projectName + it.virtualFile.path.split("lib")[1]
+                val importStatementOrig = project.createImportStatement("package:$pathToNewFile")
+                val space = PsiParserFacade.SERVICE.getInstance(project).createWhiteSpaceFromText("\n")
 
-                    originalFile.extractDartImportStatements().forEach { importStatement ->
-                        it.add(importStatement)
-                        println("importStatement = ${importStatement.text}")
-                    }
-                    originalFile.addBefore(importStatementOrig, originalFile.firstChild)
-                    it.add(event.child)
-                    event.child.delete()
-                    PsiDocumentManager.getInstance(project).commitAllDocuments()
-                    formatFiles(mutableListOf(it.virtualFile, file))
+                originalFile.extractDartImportStatements().forEach { importStatement ->
+                    it.addAfter(space, it.add(importStatement))
                 }
-                PsiManager.getInstance(project).removePsiTreeChangeListener(myWidgetTreeChangeListener)
+                originalFile.addAfter(space, originalFile.addBefore(importStatementOrig, originalFile.firstChild))
+                it.add(event.child)
+                event.child.delete()
+                formatFiles(mutableListOf(it, originalFile))
             }
         }
 
-        private fun formatFiles(filesToFormat: MutableList<VirtualFile>) {
-
-            DartStyleAction.runDartfmt(project, filesToFormat)
-//            OptimizeImportsProcessor(
-//                project, ReformatCodeAction.convertToPsiFiles(filesToFormat.toTypedArray(), project), null
-//            ).run()
-            PsiDocumentManager.getInstance(project).commitAllDocuments()
-//            val importOptimizer = DartImportOptimizer()
-//            ReformatCodeAction.convertToPsiFiles(filesToFormat.toTypedArray(), project).forEach {
-//                it.virtualFile.refresh(true, true) {
-//                    val runnable = importOptimizer.processFile(it)
-//                    WriteCommandAction.writeCommandAction(project, it).run(
-//                        ThrowableRunnable<RuntimeException> { runnable.run() })
-//                }
-//            }
+        private fun formatFiles(filesToFormat: MutableList<PsiFile>) {
+            DartStyleAction.runDartfmt(project, filesToFormat.map { it.virtualFile })
+            OptimizeImportsProcessor(project, filesToFormat.toTypedArray(), null).run()
         }
     }
 }
