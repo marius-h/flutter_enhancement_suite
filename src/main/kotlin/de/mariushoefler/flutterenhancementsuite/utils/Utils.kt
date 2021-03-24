@@ -22,6 +22,12 @@ inline fun <T> buildCollection(
     return result
 }
 
+inline fun <T : Any> ifLet(vararg elements: T?, closure: (List<T>) -> Unit) {
+    if (elements.all { it != null }) {
+        closure(elements.filterNotNull())
+    }
+}
+
 fun <T> runWithCheckCanceled(callable: () -> T): T =
     ApplicationUtil.runWithCheckCanceled(callable, ProgressManager.getInstance().progressIndicator)
 
