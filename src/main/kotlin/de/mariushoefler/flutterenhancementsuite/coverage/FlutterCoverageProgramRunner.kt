@@ -24,7 +24,8 @@ import com.intellij.openapi.options.SettingsEditor
 import io.flutter.pub.PubRootCache
 import io.flutter.run.test.TestConfig
 import io.flutter.run.test.TestFields
-import java.io.File
+import java.nio.file.Files
+import java.nio.file.Paths
 
 /**
  * Coverage program runner for Flutter
@@ -42,8 +43,8 @@ class FlutterCoverageProgramRunner : ProgramRunner<RunnerSettings> {
         private fun updateCoverageView(env: ExecutionEnvironment) {
             val runConfiguration = env.runProfile as RunConfigurationBase<*>
             CoverageEnabledConfiguration.getOrCreate(runConfiguration).coverageFilePath?.let {
-                val lcovFile = File(it)
-                if (lcovFile.isFile) {
+                val lcovFilePath = Paths.get(it)
+                if (Files.exists(lcovFilePath)) {
                     val runnerSettings = env.runnerSettings
                     if (runnerSettings != null) {
                         val coverageRunner: FlutterCoverageRunner = FlutterCoverageRunner.getInstance()
@@ -53,9 +54,7 @@ class FlutterCoverageProgramRunner : ProgramRunner<RunnerSettings> {
                         CoverageDataManager.getInstance(env.project)
                             .processGatheredCoverage(runConfiguration, runnerSettings)
                     }
-                } else {
-                    LOG.warn("Cannot find " + lcovFile.absolutePath)
-                }
+                } else LOG.warn("Cannot find $lcovFilePath")
             }
         }
     }
@@ -121,6 +120,9 @@ class FlutterCoverageProgramRunner : ProgramRunner<RunnerSettings> {
         val fields = getFields(profile) as TestFields
         if (fields.additionalArgs?.contains("--coverage") == false) {
             fields.additionalArgs += "--coverage"
+            setFields(profile, fields)
+        } else if (fields.additionalArgs == null) {
+            fields.additionalArgs = "--coverage"
             setFields(profile, fields)
         }
     }
