@@ -86,7 +86,7 @@ class PubspecCompletionProvider : CompletionProvider<CompletionParameters>() {
                 .create(pubPackage.generateDependencyString())
                 .withPresentableText("package: ${pubPackage.name}")
                 .withLookupString(pubPackage.name)
-                .withTypeText(pubPackage.getAuthorName(), true)
+                .withTypeText(pubPackage.latest.pubspec.getAuthorName(), true)
                 .withIcon(DartIcons.Dart_16)
                 .withInsertHandler { context, _ ->
                     context.editor.project?.let { project ->

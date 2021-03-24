@@ -2,7 +2,6 @@ package de.mariushoefler.flutterenhancementsuite.utils
 
 import com.intellij.psi.PsiFile
 import de.mariushoefler.flutterenhancementsuite.exceptions.GetLatestPackageVersionException
-import de.mariushoefler.flutterenhancementsuite.pub.DependencyChecker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -12,10 +11,7 @@ import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.coroutineScope
 import kotlin.coroutines.CoroutineContext
 
-class FileParser(
-    private val file: PsiFile,
-    private val dependencyChecker: DependencyChecker
-) : CoroutineScope {
+class FileParser(private val file: PsiFile) : CoroutineScope {
 
     private val parentJob = SupervisorJob()
     private val scope = CoroutineScope(Dispatchers.IO + parentJob)
@@ -56,7 +52,7 @@ class FileParser(
         val dependency = it.first
         val counter = it.second
 
-        val latestVersion = dependencyChecker.getLatestVersion(dependency)
+        val latestVersion = PubApi.getPackageLatestVersion(dependency.getPubPackageName())
         val currentVersion = dependency.getCurrentPubPackageVersion()
 
         return VersionDescription(counter, currentVersion, latestVersion)

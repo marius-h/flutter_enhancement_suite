@@ -9,8 +9,6 @@ import kotlinx.coroutines.runBlocking
 
 class PubPackagesInspection : LocalInspectionTool() {
 
-    private val dependencyChecker = DependencyChecker()
-
     override fun getDisplayName() = "Pub Packages latest versions"
 
     override fun getGroupDisplayName(): String = "group.names.modularization.issues"
@@ -18,7 +16,7 @@ class PubPackagesInspection : LocalInspectionTool() {
     override fun getShortName() = "PubVersions"
 
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
-        return YamlElementVisitor(holder, isOnTheFly, dependencyChecker)
+        return YamlElementVisitor(holder, isOnTheFly)
     }
 
     override fun isEnabledByDefault() = true
@@ -27,14 +25,13 @@ class PubPackagesInspection : LocalInspectionTool() {
 class YamlElementVisitor(
     private val holder: ProblemsHolder,
     private val isOnTheFly: Boolean,
-    private val dependencyChecker: DependencyChecker
 ) : PsiElementVisitor() {
 
     override fun visitFile(file: PsiFile) {
         if (!isOnTheFly) return
 
         runBlocking {
-            val fileParser = FileParser(file, dependencyChecker)
+            val fileParser = FileParser(file)
             val problemDescriptions = fileParser.checkFile()
 
             problemDescriptions.forEach {
