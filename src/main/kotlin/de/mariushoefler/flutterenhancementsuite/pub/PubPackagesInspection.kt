@@ -11,7 +11,7 @@ class PubPackagesInspection : LocalInspectionTool() {
 
     override fun getDisplayName() = "Pub Packages latest versions"
 
-    override fun getGroupDisplayName(): String = "group.names.modularization.issues"
+    override fun getGroupDisplayName(): String = "Flutter"
 
     override fun getShortName() = "PubVersions"
 

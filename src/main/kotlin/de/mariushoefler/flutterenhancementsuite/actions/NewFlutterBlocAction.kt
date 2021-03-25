@@ -1,6 +1,6 @@
 package de.mariushoefler.flutterenhancementsuite.actions
 
-import TemplateBuilder
+import de.mariushoefler.flutterenhancementsuite.utils.TemplateBuilder
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.LangDataKeys

@@ -1,7 +1,6 @@
 package de.mariushoefler.flutterenhancementsuite.pub
 
 import com.intellij.codeInsight.completion.CompletionContributor
-import com.intellij.codeInsight.completion.CompletionInitializationContext
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
@@ -25,10 +24,6 @@ class PubspecCompletionContributor : CompletionContributor() {
             PlatformPatterns.psiElement(),
             PubspecCompletionProvider()
         )
-    }
-
-    override fun duringCompletion(context: CompletionInitializationContext) {
-        super.duringCompletion(context)
     }
 
     override fun handleEmptyLookup(parameters: CompletionParameters, editor: Editor?): String {

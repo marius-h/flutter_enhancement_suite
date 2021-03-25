@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package de.mariushoefler.flutterenhancementsuite.exceptions
 
 import java.io.IOException
