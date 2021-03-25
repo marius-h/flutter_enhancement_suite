@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package de.mariushoefler.flutterenhancementsuite.utils
 
 import com.google.common.base.CaseFormat

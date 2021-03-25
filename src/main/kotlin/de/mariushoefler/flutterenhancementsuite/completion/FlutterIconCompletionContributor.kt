@@ -1,4 +1,4 @@
-package de.mariushoefler.flutterenhancementsuite.editor
+package de.mariushoefler.flutterenhancementsuite.completion
 
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.openapi.project.Project

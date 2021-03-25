@@ -1,6 +1,5 @@
 package de.mariushoefler.flutterenhancementsuite.actions
 
-import TemplateBuilder
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.LangDataKeys
@@ -10,6 +9,7 @@ import com.intellij.openapi.ui.Messages
 import com.intellij.psi.PsiDirectory
 import de.mariushoefler.flutterenhancementsuite.models.Bloc
 import de.mariushoefler.flutterenhancementsuite.utils.FlutterProjectUtils
+import de.mariushoefler.flutterenhancementsuite.utils.TemplateBuilder
 
 @Deprecated("Use https://plugins.jetbrains.com/plugin/12129-bloc.")
 class NewFlutterBlocAction : AnAction() {

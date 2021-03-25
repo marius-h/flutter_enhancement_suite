@@ -1,7 +1,6 @@
-package de.mariushoefler.flutterenhancementsuite.pub
+package de.mariushoefler.flutterenhancementsuite.completion
 
 import com.intellij.codeInsight.completion.CompletionContributor
-import com.intellij.codeInsight.completion.CompletionInitializationContext
 import com.intellij.codeInsight.completion.CompletionParameters
 import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
@@ -12,7 +11,7 @@ import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.patterns.PlatformPatterns
 import com.intellij.util.ProcessingContext
-import de.mariushoefler.flutterenhancementsuite.models.PubPackageResult
+import de.mariushoefler.flutterenhancementsuite.models.PubPackageSearch
 import de.mariushoefler.flutterenhancementsuite.utils.FlutterProjectUtils
 import de.mariushoefler.flutterenhancementsuite.utils.PubApi
 import icons.DartIcons
@@ -25,10 +24,6 @@ class PubspecCompletionContributor : CompletionContributor() {
             PlatformPatterns.psiElement(),
             PubspecCompletionProvider()
         )
-    }
-
-    override fun duringCompletion(context: CompletionInitializationContext) {
-        super.duringCompletion(context)
     }
 
     override fun handleEmptyLookup(parameters: CompletionParameters, editor: Editor?): String {
@@ -79,14 +74,14 @@ class PubspecCompletionProvider : CompletionProvider<CompletionParameters>() {
         }
     }
 
-    private fun createItem(packageResult: PubPackageResult, result: CompletionResultSet) {
+    private fun createItem(packageResult: PubPackageSearch.PubPackageResult, result: CompletionResultSet) {
         val packageName = packageResult.name.replaceFirst("dart:", "")
         PubApi.getPackage(packageName)?.let { pubPackage ->
             LookupElementBuilder
                 .create(pubPackage.generateDependencyString())
                 .withPresentableText("package: ${pubPackage.name}")
                 .withLookupString(pubPackage.name)
-                .withTypeText(pubPackage.getAuthorName(), true)
+                .withTypeText(pubPackage.latest.pubspec.getAuthorName(), true)
                 .withIcon(DartIcons.Dart_16)
                 .withInsertHandler { context, _ ->
                     context.editor.project?.let { project ->

@@ -28,11 +28,11 @@ abstract class FlutterBaseCoverageEngine : CoverageEngine() {
     companion object {
         internal fun getQName(sourceFile: PsiFile) = sourceFile.virtualFile?.path
 
-        internal fun findRootDir(project: Project): VirtualFile? {
-            return project.projectFile?.let {
-                PubRoot.forDescendant(it, project)?.lib
-            }
-        }
+//        internal fun findRootDir(project: Project): VirtualFile? {
+//            return project.projectFile?.let {
+//                PubRoot.forDescendant(it, project)?.lib
+//            }
+//        }
     }
 
     override fun isApplicableTo(conf: RunConfigurationBase<*>) = if (conf is WrappingRunConfiguration<*>) {

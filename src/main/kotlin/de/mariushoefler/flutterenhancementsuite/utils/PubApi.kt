@@ -1,11 +1,13 @@
 package de.mariushoefler.flutterenhancementsuite.utils
 
 import com.github.kittinunf.fuel.core.FuelManager
+import com.github.kittinunf.fuel.core.isServerError
 import com.github.kittinunf.fuel.httpGet
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.intellij.openapi.progress.ProgressManager
 import com.intellij.util.io.HttpRequests
+import de.mariushoefler.flutterenhancementsuite.exceptions.GetLatestPackageVersionException
 import de.mariushoefler.flutterenhancementsuite.exceptions.PubApiCouldNotBeReached
 import de.mariushoefler.flutterenhancementsuite.exceptions.PubApiUnknownFormat
 import de.mariushoefler.flutterenhancementsuite.models.PubPackage
@@ -15,6 +17,7 @@ import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
 object PubApi {
+    private val dependencyCache = mutableMapOf<String, String>()
 
     init {
         FuelManager.instance.basePath = "https://pub.dev/api/"
@@ -49,7 +52,10 @@ object PubApi {
 
         "packages/${URLEncoder.encode(name, StandardCharsets.UTF_8.toString())}"
             .httpGet()
-            .responseObject(PubPackage.Deserializer()) { _, _, res ->
+            .responseObject(PubPackage.Deserializer()) { _, response, res ->
+                if (response.isServerError && res.component2() != null) {
+                    throw PubApiCouldNotBeReached(res.component2()?.exception as Exception)
+                }
                 res.component1()?.let {
                     result = res.get()
                 }
@@ -62,23 +68,38 @@ object PubApi {
         return result
     }
 
+    @Throws(GetLatestPackageVersionException::class)
+    fun getPackageLatestVersion(packageName: String): String {
+        dependencyCache[packageName]?.let {
+            return it
+        }
+
+        getPackage(packageName)?.let {
+            val latestVersion = it.getLatestVersion()
+            dependencyCache[packageName] = latestVersion
+            return latestVersion
+        }
+
+        throw GetLatestPackageVersionException(packageName)
+    }
+
     fun getPackageChangelog(packageName: String): String? {
         val pubPackage = lastPackages[packageName]
             ?: getPackage(packageName)
 
-        if (pubPackage?.homepage == null) return null
+        if (pubPackage?.latest?.pubspec?.homepage == null) return null
 
         val result = StringBuilder()
         result.append("<html>")
         result.append("<h1>$packageName Changelog</h1>")
 
-        val homepage = pubPackage.homepage
+        val homepage = pubPackage.latest.pubspec.homepage
         val src: String? = if (homepage.startsWith("https://github.com")) {
             fetchContentsFromGithubFile(homepage, "changelog")
         } else null
 
         if (!src.isNullOrEmpty()) {
-            result.append(GithubApi.formatReadmeAsHtml(src, pubPackage.homepage))
+            result.append(GithubApi.formatReadmeAsHtml(src, pubPackage.latest.pubspec.homepage))
         }
 
         return result.toString()
@@ -93,16 +114,16 @@ object PubApi {
         result.append("<html>")
         result.append("<h1>$packageName</h1>")
 
-        pubPackage.getAuthorName().let { authors ->
+        pubPackage.latest.pubspec.getAuthorName().let { authors ->
             if (authors.isNotEmpty()) {
                 result.append("<small><i>by $authors</i></small><br><br>")
             }
         }
 
-        result.append("<p>${pubPackage.description}</p><br>")
+        result.append("<p>${pubPackage.latest.pubspec.description}</p><br>")
 
-        if (!short && pubPackage.homepage != null) {
-            generateFullDoc(pubPackage.homepage, result)
+        if (!short && pubPackage.latest.pubspec.homepage != null) {
+            generateFullDoc(pubPackage.latest.pubspec.homepage, result)
         }
 
         result.append("</html>")

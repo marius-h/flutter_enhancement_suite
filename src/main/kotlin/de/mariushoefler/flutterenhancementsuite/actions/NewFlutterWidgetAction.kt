@@ -43,5 +43,5 @@ class NewFlutterWidgetAction :
         return super.isAvailable(dataContext)
     }
 
-    override fun getActionName(directory: PsiDirectory?, newName: String, templateName: String?) = "New Flutter widget"
+    override fun getActionName(directory: PsiDirectory?, newName: String, templateName: String?) = "New Flutter Widget"
 }

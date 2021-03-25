@@ -1,7 +1,6 @@
-package de.mariushoefler.flutterenhancementsuite.pub
+package de.mariushoefler.flutterenhancementsuite.inspections
 
 import com.intellij.codeInspection.LocalQuickFixOnPsiElement
-import com.intellij.openapi.application.runUndoTransparentWriteAction
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
@@ -15,14 +14,13 @@ class DependencyQuickFix(
 ) : LocalQuickFixOnPsiElement(psiElement) {
     override fun getFamilyName(): String = "Update package"
 
+    override fun startInWriteAction() = true
+
     override fun getText(): String = "Update package" + if (!forcePubGet) " without running pub get" else ""
 
     override fun invoke(project: Project, file: PsiFile, startElement: PsiElement, endElement: PsiElement) {
         val expression = YAMLElementGenerator(project).createDummyYamlWithText("^$latestVersion").firstChild
-
-        runUndoTransparentWriteAction {
-            startElement.replace(expression)
-        }
+        startElement.replace(expression)
 
         if (forcePubGet) FlutterProjectUtils.runPackagesGet(file.virtualFile, project)
     }
