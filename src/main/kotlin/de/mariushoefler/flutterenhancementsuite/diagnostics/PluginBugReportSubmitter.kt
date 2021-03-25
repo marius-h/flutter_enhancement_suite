@@ -1,4 +1,4 @@
-package de.mariushoefler.flutterenhancementsuite
+package de.mariushoefler.flutterenhancementsuite.diagnostics
 
 import com.intellij.ide.DataManager
 import com.intellij.ide.scratch.ScratchRootType

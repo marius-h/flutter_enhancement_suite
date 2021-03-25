@@ -23,11 +23,15 @@
                                                       language="Dart"/>
 
         <!--        Pub package version checker-->
-        <inspectionToolProvider implementation="de.mariushoefler.flutterenhancementsuite.pub.PackagesInspectionProvider"/>
+        <localInspection enabledByDefault="true"
+                         displayName="Pub Packages latest versions"
+                         groupName="Flutter"
+                         language="yaml"
+                         implementationClass="de.mariushoefler.flutterenhancementsuite.inspections.PubPackagesInspection"/>
 
         <!--        Pub package auto-complete-->
         <completion.contributor language="yaml"
-                                implementationClass="de.mariushoefler.flutterenhancementsuite.pub.PubspecCompletionContributor"/>
+                                implementationClass="de.mariushoefler.flutterenhancementsuite.completion.PubspecCompletionContributor"/>
 
         <!--        Gutter Icon Provider-->
         <annotator language="Dart"
@@ -44,15 +48,15 @@
         <internalFileTemplate name="stateful_widget"/>
         <internalFileTemplate name="stateless_widget"/>
 
-        <errorHandler implementation="de.mariushoefler.flutterenhancementsuite.PluginBugReportSubmitter"/>
+        <errorHandler implementation="de.mariushoefler.flutterenhancementsuite.diagnostics.PluginBugReportSubmitter"/>
 
         <lang.documentationProvider language="yaml"
-                                    implementationClass="de.mariushoefler.flutterenhancementsuite.actions.PubDocumentationProvider"
+                                    implementationClass="de.mariushoefler.flutterenhancementsuite.codeInsight.PubDocumentationProvider"
                                     id="PubDocumentationProvider"
                                     order="first, before YamlJsonSchemaDocumentationProvider"/>
 
         <lang.documentationProvider language="yaml"
-                                    implementationClass="de.mariushoefler.flutterenhancementsuite.actions.PubChangelogProvider"
+                                    implementationClass="de.mariushoefler.flutterenhancementsuite.codeInsight.PubChangelogProvider"
                                     id="PubChangelogProvider"
                                     order="first, before YamlJsonSchemaDocumentationProvider"/>
 
@@ -64,7 +68,7 @@
     </extensions>
 
     <extensions defaultExtensionNs="Dart">
-        <completionExtension implementation="de.mariushoefler.flutterenhancementsuite.editor.FlutterIconCompletionContributor"
+        <completionExtension implementation="de.mariushoefler.flutterenhancementsuite.completion.FlutterIconCompletionContributor"
                              order="last"/>
     </extensions>
 
@@ -91,7 +95,7 @@
                           relative-to-action="Flutter.NewWidget"/>
         </action>
         <action id="Flutter.ExtractWidgetToFile"
-                class="de.mariushoefler.flutterenhancementsuite.actions.extract.ExtractWidgetToFileAction"
+                class="de.mariushoefler.flutterenhancementsuite.refactoring.ExtractWidgetToFileAction"
                 text="Extract Widget to File">
             <add-to-group group-id="RefactoringMenu"
                           relative-to-action="RefactoringMenu"

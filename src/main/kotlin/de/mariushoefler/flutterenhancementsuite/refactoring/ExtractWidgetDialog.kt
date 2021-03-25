@@ -1,4 +1,4 @@
-package de.mariushoefler.flutterenhancementsuite.actions.extract
+package de.mariushoefler.flutterenhancementsuite.refactoring
 
 import com.intellij.codeInsight.actions.OptimizeImportsProcessor
 import com.intellij.openapi.Disposable

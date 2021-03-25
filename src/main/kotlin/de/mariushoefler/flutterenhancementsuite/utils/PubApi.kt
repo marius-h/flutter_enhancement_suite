@@ -179,12 +179,12 @@ object PubApi {
             fetchReadme("$fileUrl/${filename.toUpperCase()}.md")
                 ?: fetchReadme("$fileUrl/${filename.toLowerCase()}.md")
             )?.let { src ->
-                if (src.startsWith("./")) {
-                    // File is referenced in a sub-folder
-                    fileUrl += src.replaceFirst(".", "")
-                    fetchReadme(fileUrl)
-                } else src
-            }
+            if (src.startsWith("./")) {
+                // File is referenced in a sub-folder
+                fileUrl += src.replaceFirst(".", "")
+                fetchReadme(fileUrl)
+            } else src
+        }
     }
 
     private fun fetchReadme(filePath: String): String? {

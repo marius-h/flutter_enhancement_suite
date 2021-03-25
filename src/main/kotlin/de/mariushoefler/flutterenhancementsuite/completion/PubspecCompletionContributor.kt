@@ -1,4 +1,4 @@
-package de.mariushoefler.flutterenhancementsuite.pub
+package de.mariushoefler.flutterenhancementsuite.completion
 
 import com.intellij.codeInsight.completion.CompletionContributor
 import com.intellij.codeInsight.completion.CompletionParameters
@@ -11,7 +11,7 @@ import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.patterns.PlatformPatterns
 import com.intellij.util.ProcessingContext
-import de.mariushoefler.flutterenhancementsuite.models.PubPackageResult
+import de.mariushoefler.flutterenhancementsuite.models.PubPackageSearch
 import de.mariushoefler.flutterenhancementsuite.utils.FlutterProjectUtils
 import de.mariushoefler.flutterenhancementsuite.utils.PubApi
 import icons.DartIcons
@@ -74,7 +74,7 @@ class PubspecCompletionProvider : CompletionProvider<CompletionParameters>() {
         }
     }
 
-    private fun createItem(packageResult: PubPackageResult, result: CompletionResultSet) {
+    private fun createItem(packageResult: PubPackageSearch.PubPackageResult, result: CompletionResultSet) {
         val packageName = packageResult.name.replaceFirst("dart:", "")
         PubApi.getPackage(packageName)?.let { pubPackage ->
             LookupElementBuilder

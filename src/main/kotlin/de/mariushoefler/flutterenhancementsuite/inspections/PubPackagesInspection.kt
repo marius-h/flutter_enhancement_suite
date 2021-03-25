@@ -1,4 +1,4 @@
-package de.mariushoefler.flutterenhancementsuite.pub
+package de.mariushoefler.flutterenhancementsuite.inspections
 
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemsHolder
@@ -8,18 +8,11 @@ import de.mariushoefler.flutterenhancementsuite.utils.FileParser
 import kotlinx.coroutines.runBlocking
 
 class PubPackagesInspection : LocalInspectionTool() {
-
-    override fun getDisplayName() = "Pub Packages latest versions"
-
-    override fun getGroupDisplayName(): String = "Flutter"
-
     override fun getShortName() = "PubVersions"
 
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
         return YamlElementVisitor(holder, isOnTheFly)
     }
-
-    override fun isEnabledByDefault() = true
 }
 
 class YamlElementVisitor(
