@@ -23,11 +23,8 @@
                                                       language="Dart"/>
 
         <!--        Pub package version checker-->
-        <localInspection enabledByDefault="true"
-                         displayName="Pub Packages latest versions"
-                         groupName="Flutter"
-                         language="yaml"
-                         implementationClass="de.mariushoefler.flutterenhancementsuite.inspections.PubPackagesInspection"/>
+        <externalAnnotator language="yaml"
+                           implementationClass="de.mariushoefler.flutterenhancementsuite.inspections.PackageUpdateExternalAnnotator"/>
 
         <!--        Pub package auto-complete-->
         <completion.contributor language="yaml"
@@ -70,10 +67,6 @@
     <extensions defaultExtensionNs="Dart">
         <completionExtension implementation="de.mariushoefler.flutterenhancementsuite.completion.FlutterIconCompletionContributor"
                              order="last"/>
-    </extensions>
-
-    <extensions defaultExtensionNs="org.jetbrains.plugins.yaml">
-        <extension order="last"/>
     </extensions>
 
     <actions>

@@ -1,6 +1,7 @@
 package de.mariushoefler.flutterenhancementsuite.utils
 
 import com.github.kittinunf.fuel.core.FuelManager
+import com.github.kittinunf.fuel.core.isServerError
 import com.github.kittinunf.fuel.httpGet
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
@@ -51,7 +52,10 @@ object PubApi {
 
         "packages/${URLEncoder.encode(name, StandardCharsets.UTF_8.toString())}"
             .httpGet()
-            .responseObject(PubPackage.Deserializer()) { _, _, res ->
+            .responseObject(PubPackage.Deserializer()) { _, response, res ->
+                if (response.isServerError && res.component2() != null) {
+                    throw PubApiCouldNotBeReached(res.component2()?.exception as Exception)
+                }
                 res.component1()?.let {
                     result = res.get()
                 }

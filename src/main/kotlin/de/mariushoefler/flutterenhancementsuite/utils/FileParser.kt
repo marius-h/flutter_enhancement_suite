@@ -1,47 +1,34 @@
 package de.mariushoefler.flutterenhancementsuite.utils
 
+import com.intellij.openapi.progress.ProgressManager
+import com.intellij.openapi.progress.mapWithProgress
 import com.intellij.psi.PsiFile
 import de.mariushoefler.flutterenhancementsuite.exceptions.GetLatestPackageVersionException
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.cancelChildren
-import kotlinx.coroutines.coroutineScope
-import kotlin.coroutines.CoroutineContext
+import de.mariushoefler.flutterenhancementsuite.models.VersionDescription
 
-class FileParser(private val file: PsiFile) : CoroutineScope {
+class FileParser(private val file: PsiFile) {
 
-    private val parentJob = SupervisorJob()
-    private val scope = CoroutineScope(Dispatchers.IO + parentJob)
-
-    override val coroutineContext: CoroutineContext
-        get() = scope.coroutineContext
-
-    suspend fun checkFile(): List<VersionDescription> {
-        parentJob.cancelChildren(cause = null)
-
+    fun checkFile(): List<VersionDescription> {
         return if (file.isPubspecFile()) {
-            return getVersionsFromFile()
+            getVersionsFromFile()
         } else {
             emptyList()
         }
     }
 
-    private suspend fun getVersionsFromFile(): MutableList<VersionDescription> {
+    private fun getVersionsFromFile(): MutableList<VersionDescription> {
+        val progressIndicator = ProgressManager.getInstance().progressIndicator
         val problemDescriptionList = mutableListOf<VersionDescription>()
-
-        val lines: List<VersionDescription> =
-            file.readPackageLines().map { coroutineScope { async { mapToVersionDescription(it) } } }.awaitAll()
-
-        lines.forEach { versionDescription ->
-            try {
-                if (versionDescription.latestVersion != versionDescription.currentVersion) {
-                    problemDescriptionList.add(versionDescription)
-                }
-            } catch (e: GetLatestPackageVersionException) {
-                print(e)
+        val packageLines = file.readPackageLines()
+        var i = 0.0
+        packageLines.mapWithProgress(progressIndicator) { pair, progress ->
+            i++
+            progress.text = "Fetching latest version of " + pair.first
+            progress.fraction = (i / packageLines.size)
+            mapToVersionDescription(pair)
+        }.forEach { versionDescription ->
+            if (versionDescription.latestVersion != versionDescription.currentVersion) {
+                problemDescriptionList.add(versionDescription)
             }
         }
         return problemDescriptionList
@@ -58,9 +45,3 @@ class FileParser(private val file: PsiFile) : CoroutineScope {
         return VersionDescription(counter, currentVersion, latestVersion)
     }
 }
-
-data class VersionDescription(
-    val counter: Int,
-    val currentVersion: String,
-    val latestVersion: String
-)
