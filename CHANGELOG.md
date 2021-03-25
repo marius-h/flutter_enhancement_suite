@@ -4,6 +4,7 @@
 ### Added
 - Display test coverage in IDE
 ### Changed
+- Major performance improvements for package version checking
 - Auto-import packages when extracting a widget to a new file
 ### Deprecated
 - Deprecated bloc feature. Please use the official bloc plugin (https://plugins.jetbrains.com/plugin/12129-bloc)
