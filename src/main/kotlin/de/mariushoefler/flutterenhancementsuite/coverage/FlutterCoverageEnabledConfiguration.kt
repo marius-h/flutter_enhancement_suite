@@ -4,6 +4,7 @@ import com.intellij.coverage.CoverageDataManager
 import com.intellij.coverage.CoverageRunner
 import com.intellij.execution.configurations.RunConfigurationBase
 import com.intellij.execution.configurations.coverage.CoverageEnabledConfiguration
+import de.mariushoefler.flutterenhancementsuite.exceptions.ProjectException
 import io.flutter.pub.PubRoot
 
 /**
@@ -19,7 +20,9 @@ class FlutterCoverageEnabledConfiguration(conf: RunConfigurationBase<*>) : Cover
 
     init {
         coverageRunner = CoverageRunner.getInstance(FlutterCoverageRunner::class.java)
-        val root = project.basePath ?: PubRoot.forFile(project.projectFile)?.root?.canonicalPath ?: throw Exception("")
+        val root = project.basePath
+            ?: PubRoot.forFile(project.projectFile)?.root?.canonicalPath
+            ?: throw ProjectException("Root of the project couldn't be found")
         myCoverageFilePath = "$root/coverage/lcov.info"
         currentCoverageSuite = CoverageDataManager.getInstance(project)
             .addCoverageSuite(this)
