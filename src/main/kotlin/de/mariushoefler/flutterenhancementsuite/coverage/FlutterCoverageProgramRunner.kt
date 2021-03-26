@@ -21,7 +21,6 @@ import com.intellij.execution.ui.RunContentDescriptor
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.options.SettingsEditor
-import io.flutter.pub.PubRootCache
 import io.flutter.run.test.TestConfig
 import io.flutter.run.test.TestFields
 import java.nio.file.Files
@@ -42,14 +41,14 @@ class FlutterCoverageProgramRunner : ProgramRunner<RunnerSettings> {
 
         private fun updateCoverageView(env: ExecutionEnvironment) {
             val runConfiguration = env.runProfile as RunConfigurationBase<*>
-            CoverageEnabledConfiguration.getOrCreate(runConfiguration).coverageFilePath?.let {
+            val test = CoverageEnabledConfiguration.getOrCreate(runConfiguration)
+            test.coverageFilePath?.let {
                 val lcovFilePath = Paths.get(it)
                 if (Files.exists(lcovFilePath)) {
                     val runnerSettings = env.runnerSettings
                     if (runnerSettings != null) {
                         val coverageRunner: FlutterCoverageRunner = FlutterCoverageRunner.getInstance()
-                        coverageRunner.workingDirectory =
-                            PubRootCache.getInstance(env.project).getRoot(env.project.projectFile)?.root?.path
+                        coverageRunner.workingDirectory = env.project.basePath
 
                         CoverageDataManager.getInstance(env.project)
                             .processGatheredCoverage(runConfiguration, runnerSettings)
