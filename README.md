@@ -5,6 +5,7 @@
 [![Build](https://github.com/marius-h/flutter_enhancement_suite/actions/workflows/build.yml/badge.svg)](https://github.com/marius-h/flutter_enhancement_suite/actions/workflows/build.yml)
 [![Version](https://img.shields.io/jetbrains/plugin/v/12693-flutter-enhancement-suite.svg)](https://plugins.jetbrains.com/plugin/12693-flutter-enhancement-suite)
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/12693-flutter-enhancement-suite.svg)](https://plugins.jetbrains.com/plugin/12693-flutter-enhancement-suite)
+[![Ratings](https://img.shields.io/jetbrains/plugin/r/rating/12693-flutter-enhancement-suite.svg)](https://plugins.jetbrains.com/plugin/12693-flutter-enhancement-suite)
 
 <!-- Plugin description -->
 
@@ -39,18 +40,19 @@ Easy-to-use tools for managing your pubspec.yaml, snippets & more
 <img src="https://i.imgur.com/ks2i0Hx.png" width="400" alt="View package's changelog screenshot"/>
 <p>
 
+<h3>View Test Coverage Report</h3>
+<p>Ever wondered why you can't view the test coverage in your IDE?</p>
+<p>Well, with this plugin you can! Just press the "Run with coverage" button when launching your tests.</p>
+<img src="https://i.imgur.com/s22Wo7t.png" width="400" alt="View package's changelog screenshot"/>
+<p>
+
+><strong>Please note:</strong> This requires you to run the tests in a directory. Single files DO NOT work yet.
+
 <h3>Generate Widgets</h3>
 <p>When creating a new file, choose the <em>"New Flutter Widget"</em> option.
 Enter the name for your widget and select its type.</p>
 <p>
 <img src="https://i.imgur.com/FKQtOVa.png" width="400" alt="Generate widgets screenshot"/>
-<p>
-
-<h3>Generate Blocs</h3>
-<p>When creating a new file, choose the <em>"New Flutter Bloc"</em> option.
-Enter a name for your bloc and it will automatically generate all required classes for you.<br>
-
-><strong>Please note:</strong> This requires you to add the package <a href="https://pub.dev/packages/bloc">bloc</a> to your pub dependencies.
 <p>
 
 <h3>Dart & Flutter Code Snippets</h3>
@@ -76,6 +78,13 @@ select the "Linter Rules Editor" tab at the bottom to see all linting options av
 </p>
 <p>
 <img src="https://i.imgur.com/kg9GeiY.png" width="400" alt="Edit linting rules screenshot"/>
+<p>
+
+<h3>(Deprecated) Generate Blocs</h3>
+<p>When creating a new file, choose the <em>"New Flutter Bloc"</em> option.
+Enter a name for your bloc and it will automatically generate all required classes for you.<br>
+
+><strong>Please note:</strong> This requires you to add the package <a href="https://pub.dev/packages/bloc">bloc</a> to your pub dependencies.
 <p>
 
 <!-- Plugin description end -->
