@@ -10,6 +10,12 @@ import de.mariushoefler.flutterenhancementsuite.models.VersionDescription
 import de.mariushoefler.flutterenhancementsuite.utils.FileParser
 import de.mariushoefler.flutterenhancementsuite.utils.isPubspecFile
 
+/**
+ * Package Update Availability Annotator
+ *
+ * @author Marius Höfler
+ * @since v1.5.0
+ */
 class PackageUpdateExternalAnnotator : ExternalAnnotator<PsiFile, List<VersionDescription>>() {
 
     override fun collectInformation(file: PsiFile) = file

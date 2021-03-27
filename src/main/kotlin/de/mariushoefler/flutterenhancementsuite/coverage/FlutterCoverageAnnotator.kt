@@ -11,7 +11,6 @@ import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
 import de.mariushoefler.flutterenhancementsuite.utils.isDartFileInLib
 import io.flutter.pub.PubRoot
-import io.flutter.pub.PubRootCache
 import java.io.File
 
 /**
@@ -82,7 +81,7 @@ class FlutterCoverageAnnotator(project: Project) : SimpleCoverageAnnotator(proje
         suite: CoverageSuitesBundle?
     ): Array<VirtualFile> {
         project?.let { p ->
-            PubRootCache.getInstance(p).getRoot(p.projectFile)?.lib?.let {
+            PubRoot.forFile(p.workspaceFile)?.lib?.let {
                 return arrayOf(it)
             }
         }
