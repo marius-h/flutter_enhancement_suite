@@ -1,6 +1,8 @@
 # :fire:&nbsp;What's new?
 
 ## [Unreleased]
+
+## [1.5.0]
 ### Added
 - Display test coverage in IDE
 ### Changed
