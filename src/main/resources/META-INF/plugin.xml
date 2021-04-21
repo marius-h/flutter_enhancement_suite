@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>de.mariushoefler.flutter_enhancement_suite</id>
     <name>Flutter Enhancement Suite</name>
-    <vendor email="mariushofler2000@gmail.com">Marius Höfler</vendor>
+    <vendor email="contact@mariushoefler.de">Marius Höfler</vendor>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.plugins.yaml</depends>
