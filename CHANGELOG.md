@@ -1,6 +1,7 @@
 # :fire:&nbsp;What's new?
 
 ## [Unreleased]
+## [1.5.0]
 
 ## [1.5.0]
 ### Added
