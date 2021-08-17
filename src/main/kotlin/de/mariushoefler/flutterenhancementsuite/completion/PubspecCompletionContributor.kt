@@ -76,23 +76,25 @@ class PubspecCompletionProvider : CompletionProvider<CompletionParameters>() {
 
     private fun createItem(packageResult: PubPackageSearch.PubPackageResult, result: CompletionResultSet) {
         val packageName = packageResult.name.replaceFirst("dart:", "")
-        PubApi.getPackage(packageName)?.let { pubPackage ->
-            LookupElementBuilder
-                .create(pubPackage.generateDependencyString())
-                .withPresentableText("package: ${pubPackage.name}")
-                .withLookupString(pubPackage.name)
-                .withTypeText(pubPackage.latest.pubspec.getAuthorName(), true)
-                .withIcon(DartIcons.Dart_16)
-                .withInsertHandler { context, _ ->
-                    context.editor.project?.let { project ->
-                        file?.let { it ->
-                            FlutterProjectUtils.runPackagesGet(it, project)
+        PubApi.getPackage(packageName) { response ->
+            response.body()?.let { pubPackage ->
+                LookupElementBuilder
+                    .create(pubPackage.generateDependencyString())
+                    .withPresentableText("package: ${pubPackage.name}")
+                    .withLookupString(pubPackage.name)
+                    .withTypeText(pubPackage.latest.pubspec.getAuthorName(), true)
+                    .withIcon(DartIcons.Dart_16)
+                    .withInsertHandler { context, _ ->
+                        context.editor.project?.let { project ->
+                            file?.let { it ->
+                                FlutterProjectUtils.runPackagesGet(it, project)
+                            }
                         }
+                    }.also {
+                        lastResults.add(it)
+                        result.addElement(it)
                     }
-                }.also {
-                    lastResults.add(it)
-                    result.addElement(it)
-                }
+            }
         }
     }
 }
