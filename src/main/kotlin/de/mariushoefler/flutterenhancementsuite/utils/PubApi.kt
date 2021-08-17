@@ -100,11 +100,10 @@ object PubApi {
             GithubApi.fetchContentsFromFile(homepage, "changelog")
         } else null
 
-        if (!src.isNullOrEmpty()) {
+        return if (!src.isNullOrEmpty()) {
             result.append(GithubApi.formatMarkdownAsHtml(src, pubPackage.latest.pubspec.homepage))
-            return result.toString()
-        }
-        return null
+            result.toString()
+        } else null
     }
 
     fun getPackageDoc(packageName: String, short: Boolean = false): String? {
@@ -168,7 +167,6 @@ object PubApi {
             result.append(GithubApi.formatMarkdownAsHtml(html, homepage))
         }
     }
-
 }
 
 private interface PubApiService {
