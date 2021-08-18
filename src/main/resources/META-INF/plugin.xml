@@ -73,15 +73,6 @@
                           anchor="before"
                           relative-to-action="NewFromTemplate"/>
         </action>
-        <action id="Flutter.NewBloc"
-                class="de.mariushoefler.flutterenhancementsuite.actions.NewFlutterBlocAction"
-                text="Flutter Bloc"
-                icon="PluginIcons.BlocIcon"
-                description="Create a new Flutter bloc">
-            <add-to-group group-id="NewGroup"
-                          anchor="after"
-                          relative-to-action="Flutter.NewWidget"/>
-        </action>
         <action id="Flutter.ExtractWidgetToFile"
                 class="de.mariushoefler.flutterenhancementsuite.refactoring.ExtractWidgetToFileAction"
                 text="Extract Widget to File">
