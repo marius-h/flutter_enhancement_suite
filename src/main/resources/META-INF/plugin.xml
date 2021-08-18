@@ -9,11 +9,6 @@
     <depends>Dart</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <programRunner implementation="de.mariushoefler.flutterenhancementsuite.coverage.FlutterCoverageProgramRunner"/>
-        <coverageEngine implementation="de.mariushoefler.flutterenhancementsuite.coverage.FlutterCoverageEngine"/>
-        <coverageRunner implementation="de.mariushoefler.flutterenhancementsuite.coverage.FlutterCoverageRunner"/>
-        <projectService serviceImplementation="de.mariushoefler.flutterenhancementsuite.coverage.FlutterCoverageAnnotator"/>
-
         <!--        Dart Code Snippets-->
         <defaultLiveTemplates file="/liveTemplates/Dart.xml"/>
 
