@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 #end
 #parse("File Header.java")
 class ${CamelCaseName} extends StatefulWidget {
-  ${CamelCaseName}({Key key}) : super(key: key);
+  const ${CamelCaseName}({Key key}) : super(key: key);
 
   @override
   _${CamelCaseName}State createState() => _${CamelCaseName}State();
