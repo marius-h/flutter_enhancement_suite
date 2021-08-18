@@ -1,6 +1,0 @@
-part of '${NAME}_bloc.dart';
-
-@immutable
-abstract class ${CLASS_NAME}State {}
-
-class Initial${CLASS_NAME}State extends ${CLASS_NAME}State {}
