@@ -1,7 +1,7 @@
 package de.mariushoefler.flutterenhancementsuite.utils
 
 import de.mariushoefler.flutterenhancementsuite.exceptions.MarkdownParseException
-import net.minidev.json.JSONObject
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -25,9 +25,9 @@ object GithubApi {
             }
 
         val jsonObj = JSONObject()
-        jsonObj["text"] = text
-        jsonObj["mode"] = "gfm"
-        jsonObj["context"] = context
+        jsonObj.put("text", text)
+        jsonObj.put("mode", "gfm")
+        jsonObj.put("context", context)
 
         return githubApiService.postMarkdown(jsonObj.toString()).execute().body() ?: throw MarkdownParseException(text)
     }
@@ -48,12 +48,12 @@ object GithubApi {
             fetchFileContents("$fileUrl/${filename.toUpperCase()}.md")
                 ?: fetchFileContents("$fileUrl/${filename.toLowerCase()}.md")
             )?.let { src ->
-            if (src.startsWith("./")) {
-                // File is referenced in a sub-folder
-                fileUrl += src.replaceFirst(".", "")
-                fetchFileContents(fileUrl)
-            } else src
-        }
+                if (src.startsWith("./")) {
+                    // File is referenced in a sub-folder
+                    fileUrl += src.replaceFirst(".", "")
+                    fetchFileContents(fileUrl)
+                } else src
+            }
     }
 
     private fun fetchFileContents(filePath: String): String? {
