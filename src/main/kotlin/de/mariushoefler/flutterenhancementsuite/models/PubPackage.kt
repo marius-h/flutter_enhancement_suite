@@ -1,8 +1,5 @@
 package de.mariushoefler.flutterenhancementsuite.models
 
-import com.github.kittinunf.fuel.core.ResponseDeserializable
-import com.google.gson.Gson
-
 data class PubPackage(
     val name: String,
     val latest: Version,
@@ -18,10 +15,6 @@ data class PubPackage(
             !v.version.matches(Regex("^[\\d.]+-.*"))
         }
         return latestVersion.version.trim()
-    }
-
-    class Deserializer : ResponseDeserializable<PubPackage> {
-        override fun deserialize(content: String): PubPackage = Gson().fromJson(content, PubPackage::class.java)
     }
 
     data class Version(

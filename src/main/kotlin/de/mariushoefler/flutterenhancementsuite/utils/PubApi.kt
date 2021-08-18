@@ -1,8 +1,5 @@
 package de.mariushoefler.flutterenhancementsuite.utils
 
-import com.github.kittinunf.fuel.core.FuelManager
-import com.github.kittinunf.fuel.core.isServerError
-import com.github.kittinunf.fuel.httpGet
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.intellij.openapi.progress.ProgressManager
@@ -12,6 +9,13 @@ import de.mariushoefler.flutterenhancementsuite.exceptions.PubApiCouldNotBeReach
 import de.mariushoefler.flutterenhancementsuite.exceptions.PubApiUnknownFormat
 import de.mariushoefler.flutterenhancementsuite.models.PubPackage
 import de.mariushoefler.flutterenhancementsuite.models.PubPackageSearch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Path
 import java.io.IOException
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -19,11 +23,11 @@ import java.nio.charset.StandardCharsets
 object PubApi {
     private val dependencyCache = mutableMapOf<String, String>()
 
-    init {
-        FuelManager.instance.basePath = "https://pub.dev/api/"
-    }
-
     private var lastPackages = mapOf<String, PubPackage>()
+
+    private val pubApiService by lazy {
+        PubApiService.create()
+    }
 
     fun searchPackage(query: String, page: Int): PubPackageSearch? {
         // +--- Uncomment to test bug report dialog
@@ -47,25 +51,21 @@ object PubApi {
         }
     }
 
-    fun getPackage(name: String): PubPackage? {
-        var result: PubPackage? = null
-
-        "packages/${URLEncoder.encode(name, StandardCharsets.UTF_8.toString())}"
-            .httpGet()
-            .responseObject(PubPackage.Deserializer()) { _, response, res ->
-                if (response.isServerError && res.component2() != null) {
-                    throw PubApiCouldNotBeReached(res.component2()?.exception as Exception)
+    @Throws(PubApiCouldNotBeReached::class)
+    fun getPackage(name: String, function: (response: Response<PubPackage>) -> Unit) {
+        pubApiService.getPackage(name).enqueue(object : Callback<PubPackage> {
+            override fun onResponse(call: Call<PubPackage>, response: Response<PubPackage>) {
+                if (!lastPackages.containsKey(name)) {
+                    lastPackages.map { response.body() to name }
                 }
-                res.component1()?.let {
-                    result = res.get()
-                }
-            }.join()
 
-        if (!lastPackages.containsKey(name)) {
-            lastPackages.map { result to name }
-        }
+                return function(response)
+            }
 
-        return result
+            override fun onFailure(call: Call<PubPackage>, t: Throwable) {
+                throw PubApiCouldNotBeReached(Exception(t))
+            }
+        })
     }
 
     @Throws(GetLatestPackageVersionException::class)
@@ -74,10 +74,12 @@ object PubApi {
             return it
         }
 
-        getPackage(packageName)?.let {
-            val latestVersion = it.getLatestVersion()
-            dependencyCache[packageName] = latestVersion
-            return latestVersion
+        pubApiService.getPackage(packageName).execute().let { response ->
+            response.body()?.let {
+                val latestVersion = it.getLatestVersion()
+                dependencyCache[packageName] = latestVersion
+                return latestVersion
+            }
         }
 
         throw GetLatestPackageVersionException(packageName)
@@ -85,7 +87,7 @@ object PubApi {
 
     fun getPackageChangelog(packageName: String): String? {
         val pubPackage = lastPackages[packageName]
-            ?: getPackage(packageName)
+            ?: pubApiService.getPackage(packageName).execute().body()
 
         if (pubPackage?.latest?.pubspec?.homepage == null) return null
 
@@ -95,19 +97,18 @@ object PubApi {
 
         val homepage = pubPackage.latest.pubspec.homepage
         val src: String? = if (homepage.startsWith("https://github.com")) {
-            fetchContentsFromGithubFile(homepage, "changelog")
+            GithubApi.fetchContentsFromFile(homepage, "changelog")
         } else null
 
-        if (!src.isNullOrEmpty()) {
-            result.append(GithubApi.formatReadmeAsHtml(src, pubPackage.latest.pubspec.homepage))
-        }
-
-        return result.toString()
+        return if (!src.isNullOrEmpty()) {
+            result.append(GithubApi.formatMarkdownAsHtml(src, pubPackage.latest.pubspec.homepage))
+            result.toString()
+        } else null
     }
 
     fun getPackageDoc(packageName: String, short: Boolean = false): String? {
         val pubPackage = lastPackages[packageName]
-            ?: getPackage(packageName)
+            ?: pubApiService.getPackage(packageName).execute().body()
             ?: return null
 
         val result = StringBuilder()
@@ -123,7 +124,7 @@ object PubApi {
         result.append("<p>${pubPackage.latest.pubspec.description}</p><br>")
 
         if (!short && pubPackage.latest.pubspec.homepage != null) {
-            generateFullDoc(pubPackage.latest.pubspec.homepage, result)
+            generateFullPackageDoc(pubPackage.latest.pubspec.homepage, result)
         }
 
         result.append("</html>")
@@ -131,9 +132,9 @@ object PubApi {
         return result.toString()
     }
 
-    private fun generateFullDoc(homepage: String, result: StringBuilder) {
+    private fun generateFullPackageDoc(homepage: String, result: StringBuilder) {
         val src: String? = if (homepage.startsWith("https://github.com")) {
-            fetchContentsFromGithubFile(homepage, "readme")
+            GithubApi.fetchContentsFromFile(homepage, "readme")
         } else null
 
         result.append("<a href=\"${homepage}\">Visit package's homepage</a><br><br>")
@@ -163,39 +164,22 @@ object PubApi {
 
             result.append("<br><h2><u>Documentation</u></h2>")
 
-            result.append(GithubApi.formatReadmeAsHtml(html, homepage))
+            result.append(GithubApi.formatMarkdownAsHtml(html, homepage))
         }
     }
+}
 
-    private fun fetchContentsFromGithubFile(repoUrl: String, filename: String): String? {
-        val home = repoUrl
-            .removePrefix("https://github.com/")
-            .replace("bloc/", "")
-            .replace("blob/", "")
-            .replace("/pubspec.yaml", "")
-            .replace("tree/", "")
-        var fileUrl = "https://raw.githubusercontent.com/$home"
-        if (!fileUrl.contains("/master")) {
-            fileUrl += "/master"
-        }
+private interface PubApiService {
+    @GET("packages/{name}")
+    fun getPackage(@Path("name") name: String): Call<PubPackage>
 
-        return (
-            fetchReadme("$fileUrl/${filename.toUpperCase()}.md")
-                ?: fetchReadme("$fileUrl/${filename.toLowerCase()}.md")
-            )?.let { src ->
-            if (src.startsWith("./")) {
-                // File is referenced in a sub-folder
-                fileUrl += src.replaceFirst(".", "")
-                fetchReadme(fileUrl)
-            } else src
-        }
-    }
+    companion object {
+        fun create(): PubApiService {
+            val retrofit =
+                Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl("https://pub.dev/api/")
+                    .build()
 
-    private fun fetchReadme(filePath: String): String? {
-        val response = filePath.httpGet().responseString().third
-        if (response.component2() == null) {
-            return response.get()
+            return retrofit.create(PubApiService::class.java)
         }
-        return null
     }
 }
