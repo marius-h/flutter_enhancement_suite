@@ -1,7 +1,11 @@
 # :fire:&nbsp;What's new?
 
 ## [Unreleased]
-## [1.5.0]
+### Added
+- Custom file templates for "New Flutter widget" menu
+### Removed
+- Remove coverage feature
+- Remove bloc feature
 
 ## [1.5.0]
 ### Added
