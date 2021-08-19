@@ -3,6 +3,8 @@
 ## [Unreleased]
 ### Added
 - Custom file templates for "New Flutter widget" menu
+### Changed
+- Const constructor added for StatelessWidget and StatefulWidget templates (#141)
 ### Removed
 - Remove coverage feature
 - Remove bloc feature
