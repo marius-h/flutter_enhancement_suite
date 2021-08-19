@@ -52,6 +52,12 @@
                                     id="PubChangelogProvider"
                                     order="first, before YamlJsonSchemaDocumentationProvider"/>
 
+        <localInspection language="Dart"
+                         implementationClass="de.mariushoefler.flutterenhancementsuite.inspections.ModifyVisibilityInspection"
+                         displayName="Visibility Modifier Inspection"
+                         enabledByDefault="true"
+                         groupName="Dart"/>
+
         <annotator implementationClass="de.mariushoefler.flutterenhancementsuite.editor.UrlAnnotator"
                    order="first"
                    language="yaml"/>
