@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Added
+- Open a package's pub.dev page directly from your pubspec.yaml (#121)
 - Custom file templates for "New Flutter widget" menu
 ### Changed
 - Const constructor added for StatelessWidget and StatefulWidget templates (#141)

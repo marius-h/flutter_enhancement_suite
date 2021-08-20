@@ -6,7 +6,7 @@ import de.mariushoefler.flutterenhancementsuite.exceptions.GetCurrentPackageVers
 import java.util.regex.Pattern
 
 const val REGEX_DEPENDENCY =
-    """^\s*(?!version|sdk|ref|url)\S+:\s*[<|=>|^]*([0-9]+\.[0-9]+\.[0-9]+\+?\S*)"""
+    """^\s*(?!version|sdk|ref)\S+:\s*[<|=>|^]*([0-9]+\.[0-9]+\.[0-9]+\+?\S*)"""
 const val PACKAGE_VERSION_OFFSET = 4
 
 fun String.isPubPackageName(): Boolean {

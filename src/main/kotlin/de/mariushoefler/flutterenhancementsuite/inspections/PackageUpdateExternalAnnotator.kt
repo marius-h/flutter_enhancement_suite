@@ -35,7 +35,7 @@ class PackageUpdateExternalAnnotator : ExternalAnnotator<PsiFile, List<VersionDe
                     ProblemHighlightType.WARNING,
                     true
                 )
-                holder.newAnnotation(HighlightSeverity.WARNING, "Update package")
+                holder.newAnnotation(HighlightSeverity.WEAK_WARNING, "Update package")
                     .range(psiElement)
                     .tooltip("There's a new version available: ${it.latestVersion}")
                     .problemGroup { "Flutter" }
