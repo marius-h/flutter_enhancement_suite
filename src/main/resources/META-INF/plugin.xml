@@ -25,6 +25,9 @@
         <completion.contributor language="yaml"
                                 implementationClass="de.mariushoefler.flutterenhancementsuite.completion.PubspecCompletionContributor"/>
 
+        <!--        Pub package pub.dev linker-->
+        <psi.referenceContributor language="yaml" implementation="de.mariushoefler.flutterenhancementsuite.editor.PackageReferenceContributor"/>
+
         <!--        Gutter Icon Provider-->
         <annotator language="Dart"
                    implementationClass="de.mariushoefler.flutterenhancementsuite.editor.FlutterEditorAnnotator"/>
