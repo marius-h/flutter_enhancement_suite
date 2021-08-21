@@ -18,7 +18,7 @@ private const val VELOCITY_FILE_TEMPLATE_SUFFIX = ".ft"
  * Allows users to add their own file templates inside "New Flutter Widget" action.
  *
  * @author Karol Czeryna
- * @since v1.5.0
+ * @since v1.6.0
  */
 class CustomFlutterTemplateManager {
     fun isCustomFileTemplate(templateName: String): Boolean = templateName.startsWith(CUSTOM_FILE_TEMPLATE_NAME_PREFIX)
