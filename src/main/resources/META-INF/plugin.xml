@@ -85,5 +85,10 @@
             <keyboard-shortcut keymap="$default"
                                first-keystroke="ctrl alt E"/>
         </action>
+        <action id="Flutter.RunPackagesGet"
+                class="de.mariushoefler.flutterenhancementsuite.actions.RunPackagesGetAction"
+                text="Run Pub Get">
+            <add-to-group group-id="ProjectViewPopupMenuModifyGroup" anchor="before" relative-to-action="$Delete"/>
+        </action>
     </actions>
 </idea-plugin>
