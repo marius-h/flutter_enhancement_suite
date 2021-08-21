@@ -8,8 +8,8 @@ import com.intellij.codeInsight.completion.CompletionType
 import com.intellij.codeInsight.lookup.LookupElement
 import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.openapi.editor.Editor
-import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.patterns.PlatformPatterns
+import com.intellij.psi.PsiFile
 import com.intellij.util.ProcessingContext
 import de.mariushoefler.flutterenhancementsuite.models.PubPackageSearch
 import de.mariushoefler.flutterenhancementsuite.utils.FlutterProjectUtils
@@ -35,7 +35,7 @@ class PubspecCompletionProvider : CompletionProvider<CompletionParameters>() {
 
     private var lastResults = arrayListOf<LookupElement>()
     private var lastSearchterm = ""
-    var file: VirtualFile? = null
+    var file: PsiFile? = null
 
     override fun addCompletions(
         parameters: CompletionParameters,
@@ -43,11 +43,10 @@ class PubspecCompletionProvider : CompletionProvider<CompletionParameters>() {
         result: CompletionResultSet
     ) {
         if (file == null) {
-            file = parameters.originalFile.virtualFile
+            file = parameters.originalFile
         }
-        println(file?.nameWithoutExtension)
 
-        file?.let { if (it.nameWithoutExtension != "pubspec") return }
+        file?.let { if (it.virtualFile.nameWithoutExtension != "pubspec") return }
 
         val userInput = result.prefixMatcher.prefix
 

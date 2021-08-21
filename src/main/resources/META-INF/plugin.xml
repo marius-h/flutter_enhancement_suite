@@ -25,6 +25,9 @@
         <completion.contributor language="yaml"
                                 implementationClass="de.mariushoefler.flutterenhancementsuite.completion.PubspecCompletionContributor"/>
 
+        <!--        Pub package pub.dev linker-->
+        <psi.referenceContributor language="yaml" implementation="de.mariushoefler.flutterenhancementsuite.editor.PackageReferenceContributor"/>
+
         <!--        Gutter Icon Provider-->
         <annotator language="Dart"
                    implementationClass="de.mariushoefler.flutterenhancementsuite.editor.FlutterEditorAnnotator"/>
@@ -87,6 +90,11 @@
                           anchor="after"/>
             <keyboard-shortcut keymap="$default"
                                first-keystroke="ctrl alt E"/>
+        </action>
+        <action id="Flutter.RunPackagesGet"
+                class="de.mariushoefler.flutterenhancementsuite.actions.RunPackagesGetAction"
+                text="Run Pub Get">
+            <add-to-group group-id="ProjectViewPopupMenuModifyGroup" anchor="before" relative-to-action="$Delete"/>
         </action>
     </actions>
 </idea-plugin>
