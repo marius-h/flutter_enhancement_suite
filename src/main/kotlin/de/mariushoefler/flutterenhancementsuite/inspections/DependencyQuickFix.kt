@@ -22,6 +22,6 @@ class DependencyQuickFix(
         val expression = YAMLElementGenerator(project).createDummyYamlWithText("^$latestVersion").firstChild
         startElement.replace(expression)
 
-        if (forcePubGet) FlutterProjectUtils.runPackagesGet(file.virtualFile, project)
+        if (forcePubGet) FlutterProjectUtils.runPackagesGet(file, project)
     }
 }

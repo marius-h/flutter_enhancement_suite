@@ -4,6 +4,8 @@ import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.psi.PsiDocumentManager
+import com.intellij.psi.PsiFile
 import io.flutter.pub.PubRoot
 import io.flutter.sdk.FlutterSdk
 import org.yaml.snakeyaml.DumperOptions
@@ -54,12 +56,17 @@ object FlutterProjectUtils {
      *
      * @since v1.2
      */
-    fun runPackagesGet(file: VirtualFile, project: Project) {
-        PubRoot.forDescendant(file, project)?.let { pubRoot ->
-            FileDocumentManager.getInstance().saveAllDocuments()
-            pubRoot.getModule(project)?.let { module ->
-                FlutterSdk.getFlutterSdk(project)?.flutterPackagesGet(pubRoot)
-                    ?.startInModuleConsole(module, { pubRoot.refresh() }, null)
+    fun runPackagesGet(file: PsiFile, project: Project) {
+        PubRoot.forDescendant(file.virtualFile, project)?.let { pubRoot ->
+            PsiDocumentManager.getInstance(project)?.let {
+                it.getDocument(file)?.let { doc ->
+                    it.doPostponedOperationsAndUnblockDocument(doc)
+                    FileDocumentManager.getInstance().saveAllDocuments()
+                    pubRoot.getModule(project)?.let { module ->
+                        FlutterSdk.getFlutterSdk(project)?.flutterPackagesGet(pubRoot)
+                            ?.startInModuleConsole(module, { pubRoot.refresh() }, null)
+                    }
+                }
             }
         }
     }
