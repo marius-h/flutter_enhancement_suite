@@ -55,11 +55,14 @@
                                     id="PubChangelogProvider"
                                     order="first, before YamlJsonSchemaDocumentationProvider"/>
 
-        <localInspection language="Dart"
-                         implementationClass="de.mariushoefler.flutterenhancementsuite.inspections.ModifyVisibilityInspection"
-                         displayName="Visibility Modifier Inspection"
-                         enabledByDefault="true"
-                         groupName="Dart"/>
+        <intentionAction order="first">
+            <className>de.mariushoefler.flutterenhancementsuite.intentions.MakePrivateIntention</className>
+            <category>Dart</category>
+        </intentionAction>
+        <intentionAction order="first">
+            <className>de.mariushoefler.flutterenhancementsuite.intentions.MakePublicIntention</className>
+            <category>Dart</category>
+        </intentionAction>
 
         <annotator implementationClass="de.mariushoefler.flutterenhancementsuite.editor.UrlAnnotator"
                    order="first"

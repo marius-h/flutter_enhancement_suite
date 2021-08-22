@@ -3,6 +3,7 @@
 ## [Unreleased]
 ### Added
 - Open a package's pub.dev page directly from your pubspec.yaml (#121)
+- Make a variable, function or class private or public via alt+enter (#107)
 - Custom file templates for "New Flutter widget" menu
 - Run `flutter pub get` from menu by right-clicking a file or a directory (#52)
 ### Changed
