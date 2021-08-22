@@ -4,12 +4,12 @@ import de.mariushoefler.flutterenhancementsuite.exceptions.MarkdownParseExceptio
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.Url
 
 object GithubApi {
     private val githubApiService by lazy {
@@ -17,12 +17,7 @@ object GithubApi {
     }
 
     fun formatMarkdownAsHtml(text: String, repoUrl: String): String {
-        var context: String
-        repoUrl.replace(Regex("https?://github.com/"), "")
-            .split("/")
-            .let {
-                context = "${it[0]}/${it[1]}"
-            }
+        val context = repoUrl.replace(Regex("https?://github.com/"), "")
 
         val jsonObj = JSONObject()
         jsonObj.put("text", text)
@@ -66,13 +61,14 @@ private interface GithubApiService {
     @POST("markdown")
     fun postMarkdown(@Body text: String): Call<String>
 
-    @GET("{filepath}")
-    fun getTextFromFile(@Path("filepath") filePath: String): Call<String>
+    @GET
+    fun getTextFromFile(@Url filePath: String): Call<String>
 
     companion object {
         fun create(): GithubApiService {
             val retrofit =
-                Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl("https://api.github.com/")
+                Retrofit.Builder().baseUrl("https://api.github.com/")
+                    .addConverterFactory(ScalarsConverterFactory.create())
                     .build()
 
             return retrofit.create(GithubApiService::class.java)

@@ -25,7 +25,8 @@ class PubDocumentationProvider : DocumentationProvider {
         } else {
             element.parent?.text?.let {
                 if (it.isPubPackageName()) {
-                    PubApi.getPackageDoc(element.text)
+                    // TODO: unshorten again when performance was improved
+                    PubApi.getPackageDoc(element.text, true)
                 } else null
             }
         }

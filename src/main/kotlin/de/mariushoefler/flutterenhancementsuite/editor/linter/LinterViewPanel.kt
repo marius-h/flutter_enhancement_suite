@@ -73,7 +73,7 @@ class LinterViewPanel(val project: Project, parentDisposable: Disposable) : Disp
 
     inner class MyTableModel : AbstractTableModel() {
         private val columnNames = arrayListOf("", "Rule", "Description")
-        val data = ArrayList<LinterRule>()
+        private val data = ArrayList<LinterRule>()
 
         override fun getRowCount(): Int = data.size
 
