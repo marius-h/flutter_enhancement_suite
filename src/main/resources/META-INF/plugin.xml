@@ -55,6 +55,15 @@
                                     id="PubChangelogProvider"
                                     order="first, before YamlJsonSchemaDocumentationProvider"/>
 
+        <intentionAction order="first">
+            <className>de.mariushoefler.flutterenhancementsuite.intentions.MakePrivateIntention</className>
+            <category>Dart</category>
+        </intentionAction>
+        <intentionAction order="first">
+            <className>de.mariushoefler.flutterenhancementsuite.intentions.MakePublicIntention</className>
+            <category>Dart</category>
+        </intentionAction>
+
         <annotator implementationClass="de.mariushoefler.flutterenhancementsuite.editor.UrlAnnotator"
                    order="first"
                    language="yaml"/>
