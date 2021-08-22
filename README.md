@@ -12,6 +12,7 @@
 The essential plugin for making working with Flutter easier than ever!
 <p>
 Easy-to-use tools for managing your pubspec.yaml, snippets & more
+<p>
 
 ## Features
 
@@ -22,7 +23,7 @@ Easy-to-use tools for managing your pubspec.yaml, snippets & more
 <p>
 
 <h3>Update Pub Packages</h3>
-<p>Whenever there's a new version available for a package, it will tell you. Just press <code>alt + ⮐</code> or <code>⌥ + ⮐</code> and choose <em>"Update package"</em>.</p>
+<p>Whenever there's a new version available for a package, it will tell you. Just press <code>alt+⮐</code> or <code>⌥+⮐</code> and choose <em>"Update package"</em>.</p>
 <p>
 <img src="https://i.imgur.com/BEgj52a.png" width="400" alt="Update pub packages screenshot"/>
 <p>
@@ -40,13 +41,17 @@ Easy-to-use tools for managing your pubspec.yaml, snippets & more
 <img src="https://i.imgur.com/ks2i0Hx.png" width="400" alt="View package's changelog screenshot"/>
 <p>
 
-<h3>View Test Coverage Report</h3>
-<p>Ever wondered why you can't view the test coverage in your IDE?</p>
-<p>Well, with this plugin you can! Just press the "Run with coverage" button when launching your tests.</p>
-<img src="https://i.imgur.com/s22Wo7t.png" width="400" alt="View package's changelog screenshot"/>
+<h3>Open a package's page on pub.dev</h3>
+<p>No more need to copy a package's name and pasting it into the searchbar on pub.dev!</p>
+<p>No you can just get there by pressing <code>ctrl+B</code> or <code>⌘+B</code> while the cursor is on the package's name.</p>
+<img src="https://i.imgur.com/K2jd8bN.png" width="400" alt="Open a package's page on pub.dev"/>
 <p>
 
-><strong>Please note:</strong> This requires you to run the tests in a directory. Single files DO NOT work yet.
+<h3>Quickly make classes, functions and variables private or public</h3>
+<p>For all of you who got tired pressing <code>⇧+F6</code> and adding or removing the underscore: You're finally redeemed!</p>
+<p>Just use <code>alt+⮐</code> or <code>⌥+⮐</code> to make it private or public.</p>
+<img src="https://i.imgur.com/72tAvtf.png" width="400" alt="Quickly make classes, functions and variables private or public"/>
+<p>
 
 <h3>Generate Widgets</h3>
 <p>When creating a new file, choose the <em>"New Flutter Widget"</em> option.
@@ -67,7 +72,7 @@ A bunch of snippets/LiveTemplates for quicker coding. Use <code>ctrl+Q</code> or
 <h3>Icon Previews</h3>
 <p>Preview icons from different icon packs in the sidebar.<br>
 
-><strong>Please note:</strong> This requires you to add the package <a href="https://pub.dev/packages/flutter_vector_icons">flutter_vector_icons</a> to your pub dependencies. The only compatible iconpacks for now are FontAwesome, Ionicons and MaterialCommunityIcons.</p>
+> <strong>Please note:</strong> This requires you to add the package <a href="https://pub.dev/packages/flutter_vector_icons">flutter_vector_icons</a> to your pub dependencies. The only compatible iconpacks for now are FontAwesome, Ionicons and MaterialCommunityIcons.</p>
 <p>
 <img src="https://i.imgur.com/JB9MkjA.png" width="400" alt="Icon previews screenshot"/>
 <p>
@@ -80,19 +85,12 @@ select the "Linter Rules Editor" tab at the bottom to see all linting options av
 <img src="https://i.imgur.com/kg9GeiY.png" width="400" alt="Edit linting rules screenshot"/>
 <p>
 
-<h3>(Deprecated) Generate Blocs</h3>
-<p>When creating a new file, choose the <em>"New Flutter Bloc"</em> option.
-Enter a name for your bloc and it will automatically generate all required classes for you.<br>
-
-><strong>Please note:</strong> This requires you to add the package <a href="https://pub.dev/packages/bloc">bloc</a> to your pub dependencies.
-<p>
-
 <!-- Plugin description end -->
-
 
 ## :arrow_down:&nbsp;How to install?
 
 You can install plugin directly from IntelliJ IDEA or Android Studio:
+
 1. Open _Preferences_
 2. Choose _Plugins_
 3. Select the _Marketplace_ tab
