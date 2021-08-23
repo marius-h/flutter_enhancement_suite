@@ -1,6 +1,8 @@
 # :fire:&nbsp;What's new?
 
 ## [Unreleased]
+
+## [1.6.0]
 ### Added
 - Open a package's pub.dev page directly from your pubspec.yaml (#121)
 - Make a variable, function or class private or public via alt+enter (#107)
