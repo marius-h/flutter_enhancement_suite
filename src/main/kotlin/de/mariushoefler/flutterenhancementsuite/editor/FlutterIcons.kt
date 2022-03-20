@@ -9,7 +9,7 @@ open class FlutterIcons<T>(fileName: String, private val iconClass: Class<T>) {
     private val icons: Properties = Properties()
 
     init {
-        icons.load(this::class.java.classLoader.getResourceAsStream("/flutter/${fileName}_icons.properties"))
+        icons.load(this::class.java.classLoader.getResourceAsStream("flutter/${fileName}_icons.properties"))
     }
 
     fun getIconByCode(code: String): Icon? {
