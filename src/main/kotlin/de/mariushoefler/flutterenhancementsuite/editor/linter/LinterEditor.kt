@@ -8,6 +8,7 @@ import com.intellij.openapi.fileEditor.FileEditorState
 import com.intellij.openapi.fileEditor.FileEditorStateLevel
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.UserDataHolderBase
+import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.util.ui.UIUtil
 import java.beans.PropertyChangeListener
 import javax.swing.JComponent
@@ -17,7 +18,7 @@ import javax.swing.JComponent
  *
  * @since v1.3
  */
-class LinterEditor(val project: Project) : FileEditorImpl() {
+class LinterEditor(val project: Project, val virtualFile: VirtualFile?) : FileEditorImpl() {
     private lateinit var myPanel: LinterViewPanel
 
     init {
@@ -37,6 +38,8 @@ class LinterEditor(val project: Project) : FileEditorImpl() {
     override fun toString(): String {
         return "LinterEditor ${System.identityHashCode(this)}"
     }
+
+    override fun getFile() = virtualFile
 }
 
 abstract class FileEditorImpl : UserDataHolderBase(), FileEditor {

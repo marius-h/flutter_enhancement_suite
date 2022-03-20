@@ -25,12 +25,7 @@ class LinterEditorProvider : FileEditorProvider, DumbAware {
     }
 
     override fun createEditor(project: Project, file: VirtualFile): FileEditor {
-        return LinterEditor(project)
-    }
-
-    override fun disposeEditor(editor: FileEditor) {
-        println("DISPOSE EDITOR")
-        super.disposeEditor(editor)
+        return LinterEditor(project, file)
     }
 
     override fun getEditorTypeId() = ID
