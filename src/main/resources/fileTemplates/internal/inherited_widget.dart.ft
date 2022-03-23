@@ -8,16 +8,16 @@ import 'package:flutter/material.dart';
 #parse("File Header.java")
 class ${CamelCaseName} extends InheritedWidget {
   const ${CamelCaseName}({
-    Key key,
-    @required this.object,
-    @required Widget child,
+    Key? key,
+    required this.object,
+    required Widget child,
   })  : assert(child != null),
         super(key: key, child: child);
 
   final dynamic object;
 
   static ${CamelCaseName} of(BuildContext context) {
-    return context.inheritFromWidgetOfExactType(${CamelCaseName}) as ${CamelCaseName};
+    return context.dependOnInheritedWidgetOfExactType<${CamelCaseName}>() as ${CamelCaseName};
   }
 
   @override
