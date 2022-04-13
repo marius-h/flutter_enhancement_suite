@@ -47,7 +47,7 @@
 
     <!--    HookWidget-->
     <template name="hook"
-              value="class $NAME$ extends HookWidget {&#10;  const $NAME$({Key key}) : super(key: key);&#10;  &#10;  @override&#10;  Widget build(BuildContext context) {&#10;    $END$&#10;  }&#10;}"
+              value="class $NAME$ extends HookWidget {&#10;  const $NAME$({Key? key}) : super(key: key);&#10;  &#10;  @override&#10;  Widget build(BuildContext context) {&#10;    $END$&#10;  }&#10;}"
               description="New Hook widget"
               toReformat="false"
               toShortenFQNames="true">
