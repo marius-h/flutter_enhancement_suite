@@ -10,11 +10,11 @@ class ${CamelCaseName} extends StatefulWidget {
   const ${CamelCaseName}({Key? key}) : super(key: key);
 
   @override
-  _${CamelCaseName}State createState() => _${CamelCaseName}State();
+  State<_${CamelCaseName}> createState() => _${CamelCaseName}State();
 }
 
 class _${CamelCaseName}State extends State<${CamelCaseName}> with SingleTickerProviderStateMixin {
-  AnimationController _controller;
+  late AnimationController _controller;
 
   @override
   void initState() {
