@@ -10,7 +10,7 @@ class ${CamelCaseName} extends StatefulWidget {
   const ${CamelCaseName}({Key? key}) : super(key: key);
 
   @override
-  State<_${CamelCaseName}> createState() => _${CamelCaseName}State();
+  State<${CamelCaseName}> createState() => _${CamelCaseName}State();
 }
 
 class _${CamelCaseName}State extends State<${CamelCaseName}> {
