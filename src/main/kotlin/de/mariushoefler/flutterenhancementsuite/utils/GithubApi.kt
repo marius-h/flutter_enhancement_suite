@@ -5,6 +5,7 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import retrofit2.create
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -40,8 +41,8 @@ object GithubApi {
         }
 
         return (
-            fetchFileContents("$fileUrl/${filename.toUpperCase()}.md")
-                ?: fetchFileContents("$fileUrl/${filename.toLowerCase()}.md")
+            fetchFileContents("$fileUrl/${filename.uppercase()}.md")
+                ?: fetchFileContents("$fileUrl/${filename.lowercase()}.md")
             )?.let { src ->
                 if (src.startsWith("./")) {
                     // File is referenced in a sub-folder
@@ -66,12 +67,9 @@ private interface GithubApiService {
 
     companion object {
         fun create(): GithubApiService {
-            val retrofit =
-                Retrofit.Builder().baseUrl("https://api.github.com/")
-                    .addConverterFactory(ScalarsConverterFactory.create())
-                    .build()
-
-            return retrofit.create(GithubApiService::class.java)
+            return Retrofit.Builder().baseUrl("https://api.github.com/")
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .build().create()
         }
     }
 }

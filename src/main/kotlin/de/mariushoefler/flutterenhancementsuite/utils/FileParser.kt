@@ -49,7 +49,7 @@ class FileParser(private val file: PsiFile) {
             if (vnum2 > vnum1) return true
 
             vnum2 = 0
-            vnum1 = vnum2
+            vnum1 = 0
             i++
             j++
         }

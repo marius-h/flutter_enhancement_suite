@@ -59,5 +59,6 @@ class CustomFlutterTemplateManager {
     private fun computeExtensionFromFileTemplate(filename: String) =
         filename.removeSuffix(VELOCITY_FILE_TEMPLATE_SUFFIX).substringAfter('.')
 
-    private fun String.snakeCaseToTemplateName() = split('_').joinToString(" ", transform = String::capitalize)
+    private fun String.snakeCaseToTemplateName() =
+        split('_').joinToString(" ") { word -> word.replaceFirstChar { it.uppercase() } }
 }
