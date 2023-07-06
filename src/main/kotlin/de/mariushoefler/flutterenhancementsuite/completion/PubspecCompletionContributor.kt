@@ -85,7 +85,7 @@ class PubspecCompletionProvider : CompletionProvider<CompletionParameters>() {
                     .withIcon(DartIcons.Dart_16)
                     .withInsertHandler { context, _ ->
                         context.editor.project?.let { project ->
-                            file?.let { it ->
+                            file?.let {
                                 FlutterProjectUtils.runPackagesGet(it, project)
                             }
                         }

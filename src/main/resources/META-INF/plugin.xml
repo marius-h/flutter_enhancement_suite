@@ -9,6 +9,8 @@
     <depends>Dart</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+        <breadcrumbsInfoProvider implementation="de.mariushoefler.flutterenhancementsuite.editor.DartBreadcrumbsInfoProvider"/>
+
         <!--        Dart Code Snippets-->
         <defaultLiveTemplates file="/liveTemplates/Dart.xml"/>
 
@@ -26,7 +28,8 @@
                                 implementationClass="de.mariushoefler.flutterenhancementsuite.completion.PubspecCompletionContributor"/>
 
         <!--        Pub package pub.dev linker-->
-        <psi.referenceContributor language="yaml" implementation="de.mariushoefler.flutterenhancementsuite.editor.PackageReferenceContributor"/>
+        <psi.referenceContributor language="yaml"
+                                  implementation="de.mariushoefler.flutterenhancementsuite.editor.PackageReferenceContributor"/>
 
         <!--        Gutter Icon Provider-->
         <annotator language="Dart"
@@ -68,7 +71,7 @@
                    order="first"
                    language="yaml"/>
 
-        <fileEditorProvider implementation="de.mariushoefler.flutterenhancementsuite.editor.linter.LinterEditorProvider"/>
+        <!--        <fileEditorProvider implementation="de.mariushoefler.flutterenhancementsuite.editor.linter.LinterEditorProvider"/>-->
     </extensions>
 
     <extensions defaultExtensionNs="Dart">
@@ -97,7 +100,9 @@
         <action id="Flutter.RunPackagesGet"
                 class="de.mariushoefler.flutterenhancementsuite.actions.RunPackagesGetAction"
                 text="Run Pub Get">
-            <add-to-group group-id="ProjectViewPopupMenuModifyGroup" anchor="before" relative-to-action="$Delete"/>
+            <add-to-group group-id="ProjectViewPopupMenuModifyGroup"
+                          anchor="before"
+                          relative-to-action="$Delete"/>
         </action>
     </actions>
 </idea-plugin>

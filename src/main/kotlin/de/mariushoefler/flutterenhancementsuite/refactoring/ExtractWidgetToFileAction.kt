@@ -1,6 +1,7 @@
 package de.mariushoefler.flutterenhancementsuite.refactoring
 
 import com.intellij.CommonBundle
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.PlatformDataKeys
 import com.intellij.openapi.editor.Caret
@@ -22,6 +23,7 @@ const val SMALL_PADDING = 4
  * @since v1.3
  */
 class ExtractWidgetToFileAction : DumbAwareAction() {
+    override fun getActionUpdateThread() = ActionUpdateThread.BGT
 
     override fun actionPerformed(event: AnActionEvent) {
         event.dataContext.run {

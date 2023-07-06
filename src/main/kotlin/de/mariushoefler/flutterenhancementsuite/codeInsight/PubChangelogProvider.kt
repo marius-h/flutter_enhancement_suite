@@ -14,11 +14,11 @@ import de.mariushoefler.flutterenhancementsuite.utils.isPubspecFile
  * @since v1.4
  */
 class PubChangelogProvider : DocumentationProvider {
-    override fun getQuickNavigateInfo(element: PsiElement, originalElement: PsiElement?): String {
+    override fun getQuickNavigateInfo(element: PsiElement, originalElement: PsiElement?): String? {
         return findPackageNameAndGenerateDoc(element)
     }
 
-    override fun generateDoc(element: PsiElement, originalElement: PsiElement?): String {
+    override fun generateDoc(element: PsiElement, originalElement: PsiElement?): String? {
         return findPackageNameAndGenerateDoc(element)
     }
 
@@ -35,9 +35,13 @@ class PubChangelogProvider : DocumentationProvider {
         }
     }
 
-    private fun findPackageNameAndGenerateDoc(element: PsiElement): String {
-        return element.parent.parent.firstChild.text?.let {
-            PubApi.getPackageChangelog(it)
-        } ?: "Changelog not available"
+    private fun findPackageNameAndGenerateDoc(element: PsiElement): String? {
+        return if (element.containingFile.isPubspecFile()
+            && element.parent.parent.text.matches(REGEX_DEPENDENCY.toRegex())
+        ) {
+            element.parent.parent.firstChild.text?.let {
+                PubApi.getPackageChangelog(it)
+            } ?: "Changelog not available"
+        } else null
     }
 }

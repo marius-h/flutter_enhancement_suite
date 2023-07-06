@@ -72,7 +72,7 @@ internal class ExtractWidgetDialog(
 
             val classElement = PsiTreeUtil.getParentOfType(psiElement, DartClassDefinition::class.java) ?: return@let
 
-            val widgetName = psiElement.text.capitalize().split(".")[0]
+            val widgetName = psiElement.text.replaceFirstChar { it.uppercase() }.split(".")[0]
 
             return classElement.name + widgetName
         }
@@ -173,7 +173,7 @@ internal class ExtractWidgetDialog(
                 val projectName = PubspecYamlUtil.getDartProjectName(pubspecFile)
                 val pathToNewFile = projectName + it.virtualFile.path.split("lib")[1]
                 val importStatementOrig = project.createImportStatement("package:$pathToNewFile")
-                val space = PsiParserFacade.SERVICE.getInstance(project).createWhiteSpaceFromText("\n")
+                val space = PsiParserFacade.getInstance(project).createWhiteSpaceFromText("\n")
 
                 originalFile.extractDartImportStatements().forEach { importStatement ->
                     it.addAfter(space, it.add(importStatement))

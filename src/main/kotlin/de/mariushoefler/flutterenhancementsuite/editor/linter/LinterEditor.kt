@@ -18,7 +18,7 @@ import javax.swing.JComponent
  *
  * @since v1.3
  */
-class LinterEditor(val project: Project, val virtualFile: VirtualFile?) : FileEditorImpl() {
+class LinterEditor(val project: Project, private val virtualFile: VirtualFile?) : FileEditorImpl() {
     private lateinit var myPanel: LinterViewPanel
 
     init {

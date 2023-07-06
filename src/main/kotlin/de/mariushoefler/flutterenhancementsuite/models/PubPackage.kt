@@ -7,14 +7,14 @@ data class PubPackage(
 ) {
     fun generateDependencyString() = "$name: ^${getLatestVersion()}"
 
-    fun getLatestVersion(): String {
+    fun getLatestVersion(): String? {
         // Check for latest stable release
         val latestVersion = latest.takeUnless { v ->
             v.version.matches(Regex("^[\\d.]+-.*"))
-        } ?: versions.reversed().first { v ->
+        } ?: versions.reversed().firstOrNull { v ->
             !v.version.matches(Regex("^[\\d.]+-.*"))
         }
-        return latestVersion.version.trim()
+        return latestVersion?.version?.trim()
     }
 
     data class Version(

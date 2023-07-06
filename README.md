@@ -47,6 +47,10 @@ Easy-to-use tools for managing your pubspec.yaml, snippets & more
 <img src="https://i.imgur.com/K2jd8bN.png" width="400" alt="Open a package's page on pub.dev"/>
 <p>
 
+<h3>Extract widgets to a new file</h3>
+<p>Just use <code>ctrl+alt+E</code> or <code>⌘+⌥+⮐</code> to extract the widget to a new file.</p>
+<p>
+
 <h3>Quickly make classes, functions and variables private or public</h3>
 <p>For all of you who got tired pressing <code>⇧+F6</code> and adding or removing the underscore: You're finally redeemed!</p>
 <p>Just use <code>alt+⮐</code> or <code>⌥+⮐</code> to make it private or public.</p>
@@ -58,6 +62,12 @@ Easy-to-use tools for managing your pubspec.yaml, snippets & more
 Enter the name for your widget and select its type.</p>
 <p>
 <img src="https://i.imgur.com/FKQtOVa.png" width="400" alt="Generate widgets screenshot"/>
+<p>
+
+<h3>Easily navigate around</h3>
+<p>Shows breadcrumbs in your editor to easily navigate through Dart files</p>
+<p>
+<img src="" width="400" alt="Dart breadcrumb navigation support"/>
 <p>
 
 <h3>Dart & Flutter Code Snippets</h3>
@@ -75,14 +85,6 @@ A bunch of snippets/LiveTemplates for quicker coding. Use <code>ctrl+Q</code> or
 > <strong>Please note:</strong> This requires you to add the package <a href="https://pub.dev/packages/flutter_vector_icons">flutter_vector_icons</a> to your pub dependencies. The only compatible iconpacks for now are FontAwesome, Ionicons and MaterialCommunityIcons.</p>
 <p>
 <img src="https://i.imgur.com/JB9MkjA.png" width="400" alt="Icon previews screenshot"/>
-<p>
-
-<h3>Edit Linting Rules</h3>
-<p>When viewing the <em>"analysis_options.yaml"</em> file, 
-select the "Linter Rules Editor" tab at the bottom to see all linting options available.
-</p>
-<p>
-<img src="https://i.imgur.com/kg9GeiY.png" width="400" alt="Edit linting rules screenshot"/>
 <p>
 
 <!-- Plugin description end -->
