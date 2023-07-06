@@ -76,9 +76,10 @@ object PubApi {
 
         pubApiService.getPackage(packageName).execute().let { response ->
             response.body()?.let {
-                val latestVersion = it.getLatestVersion()
-                dependencyCache[packageName] = latestVersion
-                return latestVersion
+                it.getLatestVersion()?.let { latestVersion ->
+                    dependencyCache[packageName] = latestVersion
+                    return latestVersion
+                }
             }
         }
 

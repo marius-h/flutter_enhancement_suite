@@ -1,6 +1,15 @@
 # :fire:&nbsp;What's new?
 
 ## [Unreleased]
+### Added
+- Show breadcrumbs to easily navigate through Dart files
+### Changed
+- Improve version detection for dependency in pubspec.yaml
+### Fixed
+- Fix `NoSuchElementException`
+- TODO: add more fixed things
+### Removed
+- Lint editor (for now)
 
 ## [1.6.0]
 ### Added
