@@ -7,7 +7,7 @@
 - Improve version detection for dependency in pubspec.yaml
 ### Fixed
 - Fix `NoSuchElementException`
-- TODO: add more fixed things
+- Other minor bugs
 ### Removed
 - Lint editor (for now)
 
