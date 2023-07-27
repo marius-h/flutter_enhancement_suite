@@ -25,6 +25,7 @@
 
         <!--        Pub package auto-complete-->
         <completion.contributor language="yaml"
+                                order="first"
                                 implementationClass="de.mariushoefler.flutterenhancementsuite.completion.PubspecCompletionContributor"/>
 
         <!--        Pub package pub.dev linker-->
