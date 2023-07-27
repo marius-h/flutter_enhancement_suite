@@ -2,11 +2,14 @@ package de.mariushoefler.flutterenhancementsuite.codeInsight
 
 import com.intellij.lang.documentation.DocumentationProvider
 import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.util.Key
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import de.mariushoefler.flutterenhancementsuite.utils.PubApi
 import de.mariushoefler.flutterenhancementsuite.utils.REGEX_DEPENDENCY
 import de.mariushoefler.flutterenhancementsuite.utils.isPubspecFile
+
+val changelogKey = Key<String>("changelog")
 
 /**
  * Shows the changelog of a package when hovering over its version in pubspec.yaml
@@ -14,12 +17,12 @@ import de.mariushoefler.flutterenhancementsuite.utils.isPubspecFile
  * @since v1.4
  */
 class PubChangelogProvider : DocumentationProvider {
-    override fun getQuickNavigateInfo(element: PsiElement, originalElement: PsiElement?): String? {
-        return findPackageNameAndGenerateDoc(element)
+    override fun getQuickNavigateInfo(element: PsiElement, originalElement: PsiElement?): String {
+        return findPackageNameAndGenerateChangelog(element)
     }
 
-    override fun generateDoc(element: PsiElement, originalElement: PsiElement?): String? {
-        return findPackageNameAndGenerateDoc(element)
+    override fun generateDoc(element: PsiElement, originalElement: PsiElement?): String {
+        return findPackageNameAndGenerateChangelog(element)
     }
 
     override fun getCustomDocumentationElement(
@@ -35,13 +38,13 @@ class PubChangelogProvider : DocumentationProvider {
         }
     }
 
-    private fun findPackageNameAndGenerateDoc(element: PsiElement): String? {
-        return if (element.containingFile.isPubspecFile()
-            && element.parent.parent.text.matches(REGEX_DEPENDENCY.toRegex())
-        ) {
-            element.parent.parent.firstChild.text?.let {
-                PubApi.getPackageChangelog(it)
-            } ?: "Changelog not available"
-        } else null
+    private fun findPackageNameAndGenerateChangelog(element: PsiElement): String {
+        val cachedValue = element.getUserData(changelogKey)
+        if (cachedValue != null) return cachedValue
+        val changelogData = element.parent.parent.firstChild.text?.let {
+            PubApi.getPackageChangelog(it)
+        } ?: "Changelog not available"
+        element.putUserData(changelogKey, changelogData)
+        return changelogData
     }
 }
