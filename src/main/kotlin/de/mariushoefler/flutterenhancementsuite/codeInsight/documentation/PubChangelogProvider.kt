@@ -1,4 +1,4 @@
-package de.mariushoefler.flutterenhancementsuite.codeInsight
+package de.mariushoefler.flutterenhancementsuite.codeInsight.documentation
 
 import com.intellij.lang.documentation.DocumentationProvider
 import com.intellij.openapi.editor.Editor
