@@ -13,6 +13,8 @@
 
         <codeInsight.parameterNameHints implementationClass="de.mariushoefler.flutterenhancementsuite.codeInsight.hints.DartInlayParameterHintsProvider"
                                    language="Dart"/>
+        <codeInsight.inlayProvider implementationClass="de.mariushoefler.flutterenhancementsuite.codeInsight.hints.types.DartTypeInlayHintsProvider"
+                                   language="Dart"/>
 
         <!--        Dart Code Snippets-->
         <defaultLiveTemplates file="/liveTemplates/Dart.xml"/>
