@@ -32,7 +32,7 @@ class PubChangelogProvider : DocumentationProvider {
         targetOffset: Int
     ): PsiElement? {
         return contextElement?.let {
-            return if (file.isPubspecFile() && it.parent.parent.text.matches(REGEX_DEPENDENCY.toRegex())) {
+            return if (file.isPubspecFile() && it.parent?.parent?.text?.matches(REGEX_DEPENDENCY.toRegex()) == true) {
                 contextElement
             } else null
         }
@@ -41,7 +41,7 @@ class PubChangelogProvider : DocumentationProvider {
     private fun findPackageNameAndGenerateChangelog(element: PsiElement): String {
         val cachedValue = element.getUserData(changelogKey)
         if (cachedValue != null) return cachedValue
-        val changelogData = element.parent.parent.firstChild.text?.let {
+        val changelogData = element.parent?.parent?.firstChild?.text?.let {
             PubApi.getPackageChangelog(it)
         } ?: "Changelog not available"
         element.putUserData(changelogKey, changelogData)
