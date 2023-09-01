@@ -8,6 +8,7 @@ import com.intellij.psi.PsiFile
 import de.mariushoefler.flutterenhancementsuite.utils.PubApi
 import de.mariushoefler.flutterenhancementsuite.utils.REGEX_DEPENDENCY
 import de.mariushoefler.flutterenhancementsuite.utils.isPubspecFile
+import io.flutter.utils.FlutterModuleUtils
 
 val changelogKey = Key<String>("changelog")
 
@@ -17,11 +18,11 @@ val changelogKey = Key<String>("changelog")
  * @since v1.4
  */
 class PubChangelogProvider : DocumentationProvider {
-    override fun getQuickNavigateInfo(element: PsiElement, originalElement: PsiElement?): String {
+    override fun getQuickNavigateInfo(element: PsiElement, originalElement: PsiElement?): String? {
         return findPackageNameAndGenerateChangelog(element)
     }
 
-    override fun generateDoc(element: PsiElement, originalElement: PsiElement?): String {
+    override fun generateDoc(element: PsiElement, originalElement: PsiElement?): String? {
         return findPackageNameAndGenerateChangelog(element)
     }
 
@@ -38,9 +39,12 @@ class PubChangelogProvider : DocumentationProvider {
         }
     }
 
-    private fun findPackageNameAndGenerateChangelog(element: PsiElement): String {
+    private fun findPackageNameAndGenerateChangelog(element: PsiElement): String? {
         val cachedValue = element.getUserData(changelogKey)
         if (cachedValue != null) return cachedValue
+
+        if (!FlutterModuleUtils.isInFlutterModule(element)) return null
+
         val changelogData = element.parent?.parent?.firstChild?.text?.let {
             PubApi.getPackageChangelog(it)
         } ?: "Changelog not available"
