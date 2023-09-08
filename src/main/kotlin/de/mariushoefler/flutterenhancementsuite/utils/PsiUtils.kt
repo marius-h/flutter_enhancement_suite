@@ -4,7 +4,12 @@ import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiWhiteSpace
+import com.jetbrains.lang.dart.psi.DartClassDefinition
+import com.jetbrains.lang.dart.psi.DartClassMembers
+import com.jetbrains.lang.dart.psi.DartComponent
+import com.jetbrains.lang.dart.psi.DartFunctionDeclarationWithBodyOrNative
 import com.jetbrains.lang.dart.psi.DartImportStatement
+import com.jetbrains.lang.dart.psi.DartVarDeclarationList
 import com.jetbrains.lang.dart.util.DartElementGenerator
 
 // import 'package:flutter/material.dart';
@@ -24,4 +29,10 @@ fun PsiFile.extractDartImportStatements(): List<PsiElement> {
     }
 
     return importStatements
+}
+
+fun PsiElement.enablesCodeVision(): Boolean {
+    if (!manager.isInProject(this)) return false
+
+    return (this is DartComponent || this is DartVarDeclarationList) && parent is DartClassMembers || this is DartClassDefinition || this is DartFunctionDeclarationWithBodyOrNative
 }
