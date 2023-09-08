@@ -64,6 +64,11 @@
                                     id="PubChangelogProvider"
                                     order="first, before YamlJsonSchemaDocumentationProvider"/>
 
+        <!--       Code Vision -->
+        <codeInsight.daemonBoundCodeVisionProvider implementation="de.mariushoefler.flutterenhancementsuite.codeInsight.codevision.DartReferencesCodeVisionProvider"/>
+        <codeInsight.daemonBoundCodeVisionProvider implementation="de.mariushoefler.flutterenhancementsuite.codeInsight.codevision.DartInheritorsCodeVisionProvider"/>
+        <vcs.codeVisionLanguageContext language="Dart" implementationClass="de.mariushoefler.flutterenhancementsuite.codeInsight.codevision.DartVcsCodeVisionContext"/>
+
         <intentionAction order="first">
             <className>de.mariushoefler.flutterenhancementsuite.intentions.MakePrivateIntention</className>
             <category>Dart</category>
