@@ -78,6 +78,7 @@ class DartInlayParameterHintsProvider : InlayParameterHintsProvider {
                     target.parent as DartComponent, classResolveResult
                 ) else null
         }
+
         else -> null
     }
 

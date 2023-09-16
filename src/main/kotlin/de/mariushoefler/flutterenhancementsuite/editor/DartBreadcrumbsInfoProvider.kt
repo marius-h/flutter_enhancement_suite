@@ -27,6 +27,7 @@ class DartBreadcrumbsInfoProvider : BreadcrumbsProvider {
         is DartClassDefinition, is DartFactoryConstructorDeclaration, is DartMethodDeclaration, is DartVarAccessDeclaration -> {
             e is DartPsiCompositeElement && e.name != null
         }
+
         else -> false
     }
 

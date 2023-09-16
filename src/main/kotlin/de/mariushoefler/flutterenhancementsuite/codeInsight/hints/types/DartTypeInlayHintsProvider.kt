@@ -50,7 +50,7 @@ class DartTypeInlayHintsProvider : InlayHintsProvider<DartTypeInlayHintsProvider
         }
     """.trimIndent()
 
-    override fun createConfigurable(settings: Settings): ImmediateConfigurable = object: ImmediateConfigurable {
+    override fun createConfigurable(settings: Settings): ImmediateConfigurable = object : ImmediateConfigurable {
         val insertTypeHintBeforeIdentifier: Boolean = settings.insertBeforeIdentifier
 
         override fun createComponent(listener: ChangeListener): JPanel = panel {

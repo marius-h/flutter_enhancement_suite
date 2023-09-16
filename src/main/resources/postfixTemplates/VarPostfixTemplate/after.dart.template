@@ -1,3 +1,10 @@
 m(expr) {
-  var <spot></spot> = expr;
+  var
+  <
+  spot
+  ></
+  spot
+  >
+  =
+  expr;
 }

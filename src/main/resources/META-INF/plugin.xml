@@ -12,7 +12,7 @@
         <breadcrumbsInfoProvider implementation="de.mariushoefler.flutterenhancementsuite.editor.DartBreadcrumbsInfoProvider"/>
 
         <codeInsight.parameterNameHints implementationClass="de.mariushoefler.flutterenhancementsuite.codeInsight.hints.DartInlayParameterHintsProvider"
-                                   language="Dart"/>
+                                        language="Dart"/>
         <codeInsight.inlayProvider implementationClass="de.mariushoefler.flutterenhancementsuite.codeInsight.hints.types.DartTypeInlayHintsProvider"
                                    language="Dart"/>
 
@@ -67,22 +67,23 @@
         <!--       Code Vision -->
         <codeInsight.daemonBoundCodeVisionProvider implementation="de.mariushoefler.flutterenhancementsuite.codeInsight.codevision.DartReferencesCodeVisionProvider"/>
         <codeInsight.daemonBoundCodeVisionProvider implementation="de.mariushoefler.flutterenhancementsuite.codeInsight.codevision.DartInheritorsCodeVisionProvider"/>
-        <vcs.codeVisionLanguageContext language="Dart" implementationClass="de.mariushoefler.flutterenhancementsuite.codeInsight.codevision.DartVcsCodeVisionContext"/>
+        <vcs.codeVisionLanguageContext language="Dart"
+                                       implementationClass="de.mariushoefler.flutterenhancementsuite.codeInsight.codevision.DartVcsCodeVisionContext"/>
 
         <intentionAction order="first">
             <className>de.mariushoefler.flutterenhancementsuite.intentions.MakePrivateIntention</className>
             <category>Dart</category>
+            <language>Dart</language>
         </intentionAction>
         <intentionAction order="first">
             <className>de.mariushoefler.flutterenhancementsuite.intentions.MakePublicIntention</className>
             <category>Dart</category>
+            <language>Dart</language>
         </intentionAction>
 
         <annotator implementationClass="de.mariushoefler.flutterenhancementsuite.editor.UrlAnnotator"
                    order="first"
                    language="yaml"/>
-
-        <!--        <fileEditorProvider implementation="de.mariushoefler.flutterenhancementsuite.editor.linter.LinterEditorProvider"/>-->
     </extensions>
 
     <extensions defaultExtensionNs="Dart">

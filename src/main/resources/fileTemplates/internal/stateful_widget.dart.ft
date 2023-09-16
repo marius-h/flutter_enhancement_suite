@@ -7,15 +7,15 @@ import 'package:flutter/material.dart';
 #end
 #parse("File Header.java")
 class ${CamelCaseName} extends StatefulWidget {
-  const ${CamelCaseName}({Key? key}) : super(key: key);
+const ${CamelCaseName}({Key? key}) : super(key: key);
 
-  @override
-  _${CamelCaseName}State createState() => _${CamelCaseName}State();
+@override
+_${CamelCaseName}State createState() => _${CamelCaseName}State();
 }
 
 class _${CamelCaseName}State extends State<${CamelCaseName}> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
+@override
+Widget build(BuildContext context) {
+return Container();
+}
 }

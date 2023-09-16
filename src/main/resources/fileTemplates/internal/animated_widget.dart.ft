@@ -7,29 +7,29 @@ import 'package:flutter/material.dart';
 #end
 #parse("File Header.java")
 class ${CamelCaseName} extends StatefulWidget {
-  const ${CamelCaseName}({Key? key}) : super(key: key);
+const ${CamelCaseName}({Key? key}) : super(key: key);
 
-  @override
-  _${CamelCaseName}State createState() => _${CamelCaseName}State();
+@override
+_${CamelCaseName}State createState() => _${CamelCaseName}State();
 }
 
 class _${CamelCaseName}State extends State<${CamelCaseName}> with SingleTickerProviderStateMixin {
-  AnimationController _controller;
+AnimationController _controller;
 
-  @override
-  void initState() {
-    _controller = AnimationController(vsync: this);
-    super.initState();
-  }
+@override
+void initState() {
+_controller = AnimationController(vsync: this);
+super.initState();
+}
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+@override
+void dispose() {
+_controller.dispose();
+super.dispose();
+}
 
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
+@override
+Widget build(BuildContext context) {
+return Container();
+}
 }

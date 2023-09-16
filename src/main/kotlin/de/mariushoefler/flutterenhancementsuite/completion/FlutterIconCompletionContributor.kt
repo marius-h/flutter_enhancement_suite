@@ -44,15 +44,19 @@ class FlutterIconCompletionContributor : DartCompletionExtension() {
         "FontAwesome" -> {
             FontAwesomeIcons.getIcon(name)
         }
+
         "Ionicons" -> {
             IonIcons.getIcon(name)
         }
+
         "MaterialCommunityIcons" -> {
             MaterialCommunityIcons.getIcon(name)
         }
+
         "MdiIcons" -> {
             MdiIcons.getIcon(name)
         }
+
         else -> null
     }
 }

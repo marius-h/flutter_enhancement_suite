@@ -14,10 +14,6 @@ Simplify pubspec.yaml management, auto-complete pub packages & view package's ch
 Download now to enhance your Flutter development experience!
 <p>
 
-The features are split into two categories:
-- [pubspec.yaml features](#pubspecyaml-features)
-- [editor features](#editor-features)
-
 ## pubspec.yaml Features
 
 <h3>Autocomplete Pub Packages</h3>

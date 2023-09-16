@@ -5,6 +5,7 @@ import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.ExternalAnnotator
 import com.intellij.lang.annotation.HighlightSeverity
+import com.intellij.openapi.project.DumbAware
 import com.intellij.psi.PsiFile
 import de.mariushoefler.flutterenhancementsuite.models.VersionDescription
 import de.mariushoefler.flutterenhancementsuite.utils.FileParser
@@ -16,7 +17,7 @@ import de.mariushoefler.flutterenhancementsuite.utils.isPubspecFile
  * @author Marius Höfler
  * @since v1.5.0
  */
-class PackageUpdateExternalAnnotator : ExternalAnnotator<PsiFile, List<VersionDescription>>() {
+class PackageUpdateExternalAnnotator : ExternalAnnotator<PsiFile, List<VersionDescription>>(), DumbAware {
 
     override fun collectInformation(file: PsiFile) = file
 
