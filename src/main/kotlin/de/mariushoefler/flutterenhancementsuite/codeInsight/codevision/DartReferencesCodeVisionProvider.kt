@@ -18,6 +18,12 @@ import de.mariushoefler.flutterenhancementsuite.utils.enablesCodeVision
 import java.awt.event.MouseEvent
 import java.util.concurrent.atomic.AtomicInteger
 
+/**
+ * This class is responsible for providing usages of elements in the code vision feature.
+ *
+ * @author Marius Höfler
+ * @since v1.7.0
+ */
 class DartReferencesCodeVisionProvider : ReferencesCodeVisionProvider() {
     companion object {
         const val ID = "dart.references"

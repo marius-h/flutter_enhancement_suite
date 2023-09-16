@@ -12,6 +12,12 @@ import com.jetbrains.lang.dart.psi.DartSimpleFormalParameter
 import com.jetbrains.lang.dart.psi.DartType
 import com.jetbrains.lang.dart.psi.DartVarAccessDeclaration
 
+/**
+ * This class is responsible for collecting type hints for Dart.
+ *
+ * @author Marius Höfler
+ * @since v1.7.0
+ */
 @Suppress("UnstableApiUsage")
 class DartTypeHintsCollector(
     editor: Editor,

@@ -12,6 +12,15 @@ import com.intellij.psi.PsiFile
 import com.intellij.ui.dsl.builder.panel
 import javax.swing.JPanel
 
+/**
+ * This class is responsible for providing type hints in the code.
+ *
+ * It is used to show the type of a variable.
+ * It is also used to show the type of a parameter.
+ *
+ * @author Marius Höfler
+ * @since v1.7.0
+ */
 @Suppress("UnstableApiUsage")
 class DartTypeInlayHintsProvider : InlayHintsProvider<DartTypeInlayHintsProvider.Settings> {
     companion object {

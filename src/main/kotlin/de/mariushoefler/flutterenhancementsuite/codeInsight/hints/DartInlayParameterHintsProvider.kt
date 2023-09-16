@@ -16,6 +16,14 @@ import com.jetbrains.lang.dart.psi.DartComponentName
 import com.jetbrains.lang.dart.psi.DartNewExpression
 import com.jetbrains.lang.dart.util.DartResolveUtil
 
+/**
+ * This class is responsible for providing parameter hints for Dart.
+ *
+ * It is used to show the parameter names of a method.
+ *
+ * @author Marius Höfler
+ * @since v1.7.0
+ */
 @Suppress("UnstableApiUsage")
 class DartInlayParameterHintsProvider : InlayParameterHintsProvider {
     override fun getDefaultBlackList(): MutableSet<String> {

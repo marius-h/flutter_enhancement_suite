@@ -21,6 +21,12 @@ import com.jetbrains.lang.dart.test.DartTestSourcesFilter
 import com.jetbrains.lang.dart.util.DartResolveUtil
 import java.awt.event.MouseEvent
 
+/**
+ * This class is responsible for providing implementation usages of elements in the code vision feature.
+ *
+ * @author Marius Höfler
+ * @since v1.7.0
+ */
 class DartInheritorsCodeVisionProvider : InheritorsCodeVisionProvider() {
     companion object {
         const val ID = "dart.inheritors"
