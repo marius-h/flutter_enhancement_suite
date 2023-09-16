@@ -15,12 +15,18 @@ import java.util.concurrent.TimeUnit
 const val OUTPUT_STREAM_SIZE = 4096
 const val FLUTTER_VERSION_TIMEOUT = 3L
 
+fun fetchThisPluginVersion(builder: StringBuilder) {
+    val plugin = PluginManagerCore.getPlugin(PluginId.getId("de.mariushoefler.flutterenhancementsuite"))
+    if (plugin != null) {
+        builder.append(" • Flutter Enhancement Suite plugin `").append(plugin.version).append("`")
+    }
+}
+
 fun fetchDartPluginVersion(builder: StringBuilder) {
     val dartPlugin = PluginManagerCore.getPlugin(PluginId.getId("Dart"))
     if (dartPlugin != null) {
         builder.append(" • Dart plugin `").append(dartPlugin.version).append("`")
     }
-    builder.append("\n\n")
 }
 
 fun fetchFlutterPluginVersion(builder: StringBuilder) {

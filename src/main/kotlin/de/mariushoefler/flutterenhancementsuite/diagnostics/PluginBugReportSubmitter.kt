@@ -14,6 +14,7 @@ import com.intellij.util.Consumer
 import de.mariushoefler.flutterenhancementsuite.utils.fetchDartPluginVersion
 import de.mariushoefler.flutterenhancementsuite.utils.fetchFlutterPluginVersion
 import de.mariushoefler.flutterenhancementsuite.utils.fetchIntelliJVersion
+import de.mariushoefler.flutterenhancementsuite.utils.fetchThisPluginVersion
 import de.mariushoefler.flutterenhancementsuite.utils.getFlutterVersion
 import io.flutter.sdk.FlutterSdk
 import java.awt.Component
@@ -96,6 +97,7 @@ class PluginBugReportSubmitter : ErrorReportSubmitter() {
         builder.append("\n")
 
         fetchIntelliJVersion(builder)
+        fetchThisPluginVersion(builder)
         fetchFlutterPluginVersion(builder)
         fetchDartPluginVersion(builder)
         fetchFlutterSdkVersion(project, builder)

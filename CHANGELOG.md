@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+### Added
+- Variable type hints
+- Parameter name hints
+- Code vision support for insights of usages, implementations and code contributors
+
+### Changed
+- Improve performance and reliability of loading changelogs (#227)
+- Improve performance and reliability of loading documentations (#227)
+- Include this plugin's version in bug reports
+
+### Fixed
+- Fix null exception for PsiElement.getParent() (#254)
+- Fix "Make private action doesn't create a proper constructor signature" (#255)
+- Fix pub changelog provider enabled for non-Flutter projects (#256)
+
 ## 1.6.1 - 2023-07-07
 
 ### Added

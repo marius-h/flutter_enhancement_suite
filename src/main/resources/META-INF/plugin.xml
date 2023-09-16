@@ -11,6 +11,11 @@
     <extensions defaultExtensionNs="com.intellij">
         <breadcrumbsInfoProvider implementation="de.mariushoefler.flutterenhancementsuite.editor.DartBreadcrumbsInfoProvider"/>
 
+        <codeInsight.parameterNameHints implementationClass="de.mariushoefler.flutterenhancementsuite.codeInsight.hints.DartInlayParameterHintsProvider"
+                                        language="Dart"/>
+        <codeInsight.inlayProvider implementationClass="de.mariushoefler.flutterenhancementsuite.codeInsight.hints.types.DartTypeInlayHintsProvider"
+                                   language="Dart"/>
+
         <!--        Dart Code Snippets-->
         <defaultLiveTemplates file="/liveTemplates/Dart.xml"/>
 
@@ -25,6 +30,7 @@
 
         <!--        Pub package auto-complete-->
         <completion.contributor language="yaml"
+                                order="first"
                                 implementationClass="de.mariushoefler.flutterenhancementsuite.completion.PubspecCompletionContributor"/>
 
         <!--        Pub package pub.dev linker-->
@@ -49,29 +55,35 @@
         <errorHandler implementation="de.mariushoefler.flutterenhancementsuite.diagnostics.PluginBugReportSubmitter"/>
 
         <lang.documentationProvider language="yaml"
-                                    implementationClass="de.mariushoefler.flutterenhancementsuite.codeInsight.PubDocumentationProvider"
+                                    implementationClass="de.mariushoefler.flutterenhancementsuite.codeInsight.documentation.PubDocumentationProvider"
                                     id="PubDocumentationProvider"
                                     order="first, before YamlJsonSchemaDocumentationProvider"/>
 
         <lang.documentationProvider language="yaml"
-                                    implementationClass="de.mariushoefler.flutterenhancementsuite.codeInsight.PubChangelogProvider"
+                                    implementationClass="de.mariushoefler.flutterenhancementsuite.codeInsight.documentation.PubChangelogProvider"
                                     id="PubChangelogProvider"
                                     order="first, before YamlJsonSchemaDocumentationProvider"/>
+
+        <!--       Code Vision -->
+        <codeInsight.daemonBoundCodeVisionProvider implementation="de.mariushoefler.flutterenhancementsuite.codeInsight.codevision.DartReferencesCodeVisionProvider"/>
+        <codeInsight.daemonBoundCodeVisionProvider implementation="de.mariushoefler.flutterenhancementsuite.codeInsight.codevision.DartInheritorsCodeVisionProvider"/>
+        <vcs.codeVisionLanguageContext language="Dart"
+                                       implementationClass="de.mariushoefler.flutterenhancementsuite.codeInsight.codevision.DartVcsCodeVisionContext"/>
 
         <intentionAction order="first">
             <className>de.mariushoefler.flutterenhancementsuite.intentions.MakePrivateIntention</className>
             <category>Dart</category>
+            <language>Dart</language>
         </intentionAction>
         <intentionAction order="first">
             <className>de.mariushoefler.flutterenhancementsuite.intentions.MakePublicIntention</className>
             <category>Dart</category>
+            <language>Dart</language>
         </intentionAction>
 
         <annotator implementationClass="de.mariushoefler.flutterenhancementsuite.editor.UrlAnnotator"
                    order="first"
                    language="yaml"/>
-
-        <!--        <fileEditorProvider implementation="de.mariushoefler.flutterenhancementsuite.editor.linter.LinterEditorProvider"/>-->
     </extensions>
 
     <extensions defaultExtensionNs="Dart">

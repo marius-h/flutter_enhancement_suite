@@ -21,9 +21,6 @@ class FileParser(private val file: PsiFile) {
             .map { pair -> mapToVersionDescription(pair) }
             .forEach { versionDescription ->
                 val currentVersionWithoutExtras = versionDescription.currentVersion.split("-").first()
-                println(
-                    "currentVersionWithoutExtras = $currentVersionWithoutExtras to ${versionDescription.latestVersion}"
-                )
                 if (isNewerVersion(currentVersionWithoutExtras, versionDescription.latestVersion)) {
                     problemDescriptionList.add(versionDescription)
                 }

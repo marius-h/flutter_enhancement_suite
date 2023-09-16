@@ -27,7 +27,8 @@ data class PubPackage(
         private val author: String?,
         private val authors: ArrayList<String>?,
         val description: String?,
-        val homepage: String?
+        val homepage: String?,
+        val repository: String?,
     ) {
         fun getAuthorName(): String {
             return if (author != null) {

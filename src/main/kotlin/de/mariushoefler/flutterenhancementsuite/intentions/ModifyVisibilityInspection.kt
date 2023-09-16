@@ -19,7 +19,7 @@ import com.jetbrains.lang.dart.psi.DartReferenceExpression
 import com.jetbrains.lang.dart.psi.DartSimpleType
 import com.jetbrains.lang.dart.psi.DartType
 
-const val PRIVATE_MODIFIER = "_"
+const val PRIVATE_MODIFIER = '_'
 
 /**
  * Provides quick fixes for modifying the visibility of classes, functions and variables

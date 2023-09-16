@@ -1,8 +1,9 @@
-package de.mariushoefler.flutterenhancementsuite.codeInsight
+package de.mariushoefler.flutterenhancementsuite.codeInsight.documentation
 
 import com.intellij.lang.documentation.DocumentationProvider
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.fileTypes.FileTypes
+import com.intellij.openapi.util.Key
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiFileFactory
@@ -12,24 +13,42 @@ import de.mariushoefler.flutterenhancementsuite.utils.PubApi
 import de.mariushoefler.flutterenhancementsuite.utils.isPubPackageName
 import de.mariushoefler.flutterenhancementsuite.utils.isPubspecFile
 
+val shortDocKey = Key<String>("short_doc")
+val longDocKey = Key<String>("long_doc")
+
 class PubDocumentationProvider : DocumentationProvider {
     override fun getQuickNavigateInfo(element: PsiElement?, originalElement: PsiElement?): String? {
         return element?.parent?.parent?.firstChild?.text?.let {
-            PubApi.getPackageDoc(it, true)
+            getShortDoc(element, it)
         }
     }
 
     override fun generateDoc(element: PsiElement, originalElement: PsiElement?): String? {
         return if (element is SuggestionElement) {
-            PubApi.getPackageDoc(element.name, true)
+            getShortDoc(element, element.name)
         } else {
-            element.parent?.text?.let {
-                if (it.isPubPackageName()) {
-                    // TODO: unshorten again when performance was improved
-                    PubApi.getPackageDoc(element.text, true)
-                } else null
-            }
+            getLongDoc(element)
         }
+    }
+
+    private fun getShortDoc(element: PsiElement, packageName: String): String? {
+        val cachedValue = element.getUserData(shortDocKey)
+        if (cachedValue != null) return cachedValue
+        val shortDoc = PubApi.getPackageDoc(packageName, true)
+        element.putUserData(shortDocKey, shortDoc)
+        return shortDoc
+    }
+
+    private fun getLongDoc(element: PsiElement): String? {
+        val cachedValue = element.getUserData(longDocKey)
+        if (cachedValue != null) return cachedValue
+        val longDoc = element.parent?.text?.let {
+            if (it.isPubPackageName()) {
+                PubApi.getPackageDoc(element.text, false)
+            } else null
+        }
+        element.putUserData(longDocKey, longDoc)
+        return longDoc
     }
 
     override fun getDocumentationElementForLookupItem(
@@ -37,10 +56,9 @@ class PubDocumentationProvider : DocumentationProvider {
         `object`: Any?,
         element: PsiElement
     ): PsiElement? {
-        if (`object` is String) {
-            return SuggestionElement(psiManager, `object`)
-        }
-        return null
+        return if (`object` is String) {
+            SuggestionElement(psiManager, `object`)
+        } else null
     }
 
     override fun getCustomDocumentationElement(
@@ -49,10 +67,9 @@ class PubDocumentationProvider : DocumentationProvider {
         contextElement: PsiElement?,
         targetOffset: Int
     ): PsiElement? {
-        if (file.isPubspecFile()) {
-            return contextElement
-        }
-        return null
+        return if (file.isPubspecFile()) {
+            contextElement
+        } else null
     }
 
     inner class SuggestionElement(private val psiManager: PsiManager, private val element: String) : FakePsiElement() {

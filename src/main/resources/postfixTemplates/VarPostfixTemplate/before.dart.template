@@ -1,3 +1,10 @@
 m(expr) {
-  <spot>expr</spot>.var
+  <
+  spot
+  >expr<
+  /
+  spot
+  >
+  .
+  var
 }

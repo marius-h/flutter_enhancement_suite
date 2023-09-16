@@ -46,12 +46,15 @@ class FlutterEditorAnnotator : Annotator {
         element.containingFile.name.contains("ionicons") -> {
             IonIcons.getIconByCode(value)
         }
+
         element.containingFile.name.contains("font_awesome") -> {
             FontAwesomeIcons.getIconByCode(value)
         }
+
         element.containingFile.name.contains("material_community_icons") -> {
             MaterialCommunityIcons.getIconByCode(value)
         }
+
         else -> null
     }
 
@@ -59,15 +62,19 @@ class FlutterEditorAnnotator : Annotator {
         text.startsWith("Ionicons.") -> {
             findIcon(text, "Ionicons.", IonIcons)
         }
+
         text.startsWith("MaterialCommunityIcons.") -> {
             findIcon(text, "MaterialCommunityIcons.", MaterialCommunityIcons)
         }
+
         text.startsWith("FontAwesome.") -> {
             findIcon(text, "FontAwesome.", FontAwesomeIcons)
         }
+
         text.startsWith("MdiIcons.") -> {
             findIcon(text, "MdiIcons.", MdiIcons)
         }
+
         else -> null
     }
 
