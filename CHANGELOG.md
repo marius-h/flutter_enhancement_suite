@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.7.0 - 2023-09-17
+
 ### Added
 - Variable type hints
 - Parameter name hints
