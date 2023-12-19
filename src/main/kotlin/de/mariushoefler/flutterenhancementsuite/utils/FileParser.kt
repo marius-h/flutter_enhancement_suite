@@ -2,6 +2,7 @@ package de.mariushoefler.flutterenhancementsuite.utils
 
 import com.intellij.psi.PsiFile
 import de.mariushoefler.flutterenhancementsuite.exceptions.GetLatestPackageVersionException
+import de.mariushoefler.flutterenhancementsuite.exceptions.PubApiCouldNotBeReachedException
 import de.mariushoefler.flutterenhancementsuite.models.VersionDescription
 
 class FileParser(private val file: PsiFile) {
@@ -60,6 +61,8 @@ class FileParser(private val file: PsiFile) {
         val latestVersion = try {
             PubApi.getPackageLatestVersion(dependency.getPubPackageName())
         } catch (e: GetLatestPackageVersionException) {
+            return null
+        } catch (e: PubApiCouldNotBeReachedException) {
             return null
         }
         val currentVersion = dependency.getCurrentPubPackageVersion()
