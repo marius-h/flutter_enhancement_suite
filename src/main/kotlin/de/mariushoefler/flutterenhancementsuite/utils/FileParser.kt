@@ -2,6 +2,7 @@ package de.mariushoefler.flutterenhancementsuite.utils
 
 import com.intellij.psi.PsiFile
 import de.mariushoefler.flutterenhancementsuite.exceptions.GetLatestPackageVersionException
+import de.mariushoefler.flutterenhancementsuite.exceptions.PubApiCouldNotBeReachedException
 import de.mariushoefler.flutterenhancementsuite.models.VersionDescription
 
 class FileParser(private val file: PsiFile) {
@@ -18,7 +19,7 @@ class FileParser(private val file: PsiFile) {
         val problemDescriptionList = mutableListOf<VersionDescription>()
         val packageLines = file.readPackageLines()
         packageLines
-            .map { pair -> mapToVersionDescription(pair) }
+            .mapNotNull { pair -> mapToVersionDescription(pair) }
             .forEach { versionDescription ->
                 val currentVersionWithoutExtras = versionDescription.currentVersion.split("-").first()
                 if (isNewerVersion(currentVersionWithoutExtras, versionDescription.latestVersion)) {
@@ -53,12 +54,17 @@ class FileParser(private val file: PsiFile) {
         return false
     }
 
-    @Throws(GetLatestPackageVersionException::class)
-    private fun mapToVersionDescription(it: Pair<String, Int>): VersionDescription {
+    private fun mapToVersionDescription(it: Pair<String, Int>): VersionDescription? {
         val dependency = it.first
         val counter = it.second
 
-        val latestVersion = PubApi.getPackageLatestVersion(dependency.getPubPackageName())
+        val latestVersion = try {
+            PubApi.getPackageLatestVersion(dependency.getPubPackageName())
+        } catch (e: GetLatestPackageVersionException) {
+            return null
+        } catch (e: PubApiCouldNotBeReachedException) {
+            return null
+        }
         val currentVersion = dependency.getCurrentPubPackageVersion()
 
         return VersionDescription(counter, currentVersion, latestVersion)

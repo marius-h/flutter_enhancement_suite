@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Changed
+- Ignore package versions which were retracted from pub.dev (#262)
+
+### Fixed
+- Fix exception when including a package which is not published on pub.dev (#260)
+- Fix exception when Pub API could not be reached (#261)
+
 ## 1.7.0 - 2023-09-17
 
 ### Added
