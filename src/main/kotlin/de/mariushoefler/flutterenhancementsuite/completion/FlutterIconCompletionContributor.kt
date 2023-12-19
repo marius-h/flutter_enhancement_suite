@@ -8,7 +8,6 @@ import de.mariushoefler.flutterenhancementsuite.editor.icons.FontAwesomeIcons
 import de.mariushoefler.flutterenhancementsuite.editor.icons.IonIcons
 import de.mariushoefler.flutterenhancementsuite.editor.icons.MaterialCommunityIcons
 import de.mariushoefler.flutterenhancementsuite.editor.icons.MdiIcons
-import org.apache.commons.lang.StringUtils
 import org.dartlang.analysis.server.protocol.CompletionSuggestion
 import javax.swing.Icon
 
@@ -27,7 +26,7 @@ class FlutterIconCompletionContributor : DartCompletionExtension() {
         val element = suggestion.element
         if (element != null) {
             val returnType = element.returnType
-            if (!StringUtils.isEmpty(returnType)) {
+            if (!returnType.isNullOrEmpty()) {
                 element.name?.let { name ->
                     return getIconForDeclaringType(suggestion, name)
                 }
