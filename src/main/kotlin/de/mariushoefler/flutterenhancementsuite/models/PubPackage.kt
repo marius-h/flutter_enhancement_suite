@@ -10,15 +10,16 @@ data class PubPackage(
     fun getLatestVersion(): String? {
         // Check for latest stable release
         val latestVersion = latest.takeUnless { v ->
-            v.version.matches(Regex("^[\\d.]+-.*"))
+            v.version.matches(Regex("^[\\d.]+-.*")) || v.retracted
         } ?: versions.reversed().firstOrNull { v ->
-            !v.version.matches(Regex("^[\\d.]+-.*"))
+            !v.version.matches(Regex("^[\\d.]+-.*")) && !v.retracted
         }
         return latestVersion?.version?.trim()
     }
 
     data class Version(
         val version: String,
+        val retracted: Boolean = false,
         val pubspec: PubspecInfo
     )
 
