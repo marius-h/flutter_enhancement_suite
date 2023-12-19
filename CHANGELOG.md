@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Fixed
+- Fix exception when including a package which is not published on pub.dev (#260)
+
 ## 1.7.0 - 2023-09-17
 
 ### Added
