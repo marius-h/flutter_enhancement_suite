@@ -4,6 +4,7 @@
 
 ### Fixed
 - Fix exception when including a package which is not published on pub.dev (#260)
+- Fix exception when Pub API could not be reached (#261)
 
 ## 1.7.0 - 2023-09-17
 

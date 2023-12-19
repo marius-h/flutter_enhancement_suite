@@ -5,8 +5,8 @@ import com.google.gson.JsonSyntaxException
 import com.intellij.openapi.progress.ProgressManager
 import com.intellij.util.io.HttpRequests
 import de.mariushoefler.flutterenhancementsuite.exceptions.GetLatestPackageVersionException
-import de.mariushoefler.flutterenhancementsuite.exceptions.PubApiCouldNotBeReached
-import de.mariushoefler.flutterenhancementsuite.exceptions.PubApiUnknownFormat
+import de.mariushoefler.flutterenhancementsuite.exceptions.PubApiCouldNotBeReachedException
+import de.mariushoefler.flutterenhancementsuite.exceptions.PubApiUnknownFormatException
 import de.mariushoefler.flutterenhancementsuite.models.PubPackage
 import de.mariushoefler.flutterenhancementsuite.models.PubPackageSearch
 import de.mariushoefler.flutterenhancementsuite.models.PubScore
@@ -41,13 +41,13 @@ object PubApi {
                 Gson().fromJson(response, PubPackageSearch::class.java)
             }
         } catch (e: IOException) {
-            throw PubApiCouldNotBeReached(e)
+            throw PubApiCouldNotBeReachedException(e)
         } catch (e: JsonSyntaxException) {
-            throw PubApiUnknownFormat(e)
+            throw PubApiUnknownFormatException(e)
         }
     }
 
-    @Throws(PubApiCouldNotBeReached::class)
+    @Throws(PubApiCouldNotBeReachedException::class)
     fun getPackage(name: String, function: (response: Response<PubPackage>) -> Unit) {
         pubApiService.getPackage(name).enqueue(object : Callback<PubPackage> {
             override fun onResponse(call: Call<PubPackage>, response: Response<PubPackage>) {
@@ -59,12 +59,12 @@ object PubApi {
             }
 
             override fun onFailure(call: Call<PubPackage>, t: Throwable) {
-                throw PubApiCouldNotBeReached(Exception(t))
+                throw PubApiCouldNotBeReachedException(Exception(t))
             }
         })
     }
 
-    @Throws(PubApiCouldNotBeReached::class)
+    @Throws(PubApiCouldNotBeReachedException::class)
     fun getPackageScore(name: String, function: (response: Response<PubScore>) -> Unit) {
         pubApiService.getPackageScore(name).enqueue(object : Callback<PubScore> {
             override fun onResponse(call: Call<PubScore>, response: Response<PubScore>) {
@@ -72,23 +72,27 @@ object PubApi {
             }
 
             override fun onFailure(call: Call<PubScore>, t: Throwable) {
-                throw PubApiCouldNotBeReached(Exception(t))
+                throw PubApiCouldNotBeReachedException(Exception(t))
             }
         })
     }
 
-    @Throws(GetLatestPackageVersionException::class)
+    @Throws(GetLatestPackageVersionException::class, PubApiCouldNotBeReachedException::class)
     fun getPackageLatestVersion(packageName: String): String {
         dependencyCache[packageName]?.let {
             return it
         }
 
         pubApiService.getPackage(packageName).execute().let { response ->
-            response.body()?.let {
-                it.getLatestVersion()?.let { latestVersion ->
-                    dependencyCache[packageName] = latestVersion
-                    return latestVersion
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    it.getLatestVersion()?.let { latestVersion ->
+                        dependencyCache[packageName] = latestVersion
+                        return latestVersion
+                    }
                 }
+            } else {
+                throw PubApiCouldNotBeReachedException(Exception(response.message()))
             }
         }
 
