@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Changed
+- Use super-initalizer for key parameter in templates (#272)
+
 ## 1.7.1 - 2023-12-20
 
 ### Changed
