@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.7.1 - 2023-12-20
+
 ### Changed
 - Ignore package versions which were retracted from pub.dev (#262)
 
